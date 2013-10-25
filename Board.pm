@@ -69,43 +69,62 @@ sub display {
     );
 
     binmode STDOUT, ":encoding(UTF-8)";     # we're going to be outputting UTF8 characters
+    _ansi_cursor_home();
 
     for (my $y=0; $y<$self->height; $y++) {
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
             if (abs($cell) >= 1 && abs($cell) <= 9) {
                 if ($cell > 0) {
-                    bg_color( $number_color[$cell][0] );
+                    _bg_color( $number_color[$cell][0] );
                     print "\e[37m";     # white foreground
                 } else {
-                    fg_color( $number_color[abs($cell)][1] );
+                    _fg_color( $number_color[abs($cell)][1] );
                     print "\e[107m";    # white background
                 }
                 printf "%2s", $cell;
             } elsif ($cell == 10) {
                 print "\e[90m";         # gray foreground
-                bg_color( 237 );        # dark gray
+                _bg_color( 237 );        # dark gray
 
                 print " X";
             } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 400) {
                 print "\e[37m";         # white foreground
-                bg_color( 240 );        # medium gray
+                _bg_color( 240 );        # medium gray
                 print $arrows[$cell / 100];
             }
         }
         print "\e[0m";
-        print "\n";
+        #print "\n";
+        _ansi_newline();
     }
-    print "\n\n";
+    #print "\n\n";
+    #_ansi_newline();
+    #_ansi_newline();
+    _ansi_erase_below();
 }
 
-    sub fg_color {
+    sub _fg_color {
         my $color = shift;
         print "\e[38;5;${color}m";
     }
-    sub bg_color {
+    sub _bg_color {
         my $color = shift;
         print "\e[48;5;${color}m";
+    }
+    
+    # clear the line, at the same time we're doing a newline
+    sub _ansi_newline {
+        print "\n\e[K";
+    }
+    sub _ansi_cursor_home {
+        print "\e[1;1H";
+        print "\e[K";
+    }
+    # After we've reached the last row, move down one line, and call this.  It will erase the rest
+    # of the screen.
+    sub _ansi_erase_below {
+        print "\e[J";
     }
 
 1;
