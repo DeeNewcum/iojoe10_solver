@@ -12,7 +12,7 @@ has 'height', is => 'ro';
 has 'cells', is => 'rw';
     # $self->cells  is a list-of-list structure.
     #       $self->cells->[$y][$x]
-    #       (0,0) is at the top-left corner
+    #       (0,0) is at the bottom-left corner
     # Each cell contains a number:
     #       -11          empty space
     #       10          wall
@@ -73,7 +73,7 @@ sub display {
     binmode STDOUT, ":encoding(UTF-8)";     # we're going to be outputting UTF8 characters
     _ansi_cursor_home();
 
-    for (my $y=0; $y<$self->height; $y++) {
+    for (my $y=$self->height-1; $y>=0; $y--) {
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
             if (abs($cell) <= 9) {
