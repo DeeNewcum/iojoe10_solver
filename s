@@ -5,6 +5,7 @@
 
     use lib '.';
     use Board;
+    use IsUnsolvable;
 
     use Data::Dumper;
 
@@ -20,6 +21,8 @@ $b->cells->[4] = [qw[ 4 1 8 100 6 7 ]];
 $b->cells->[5] = [qw[ 3 -2 4 10 5 1 ]];
 
 #print Dumper $b;
+
+IsUnsolvable::is_unsolvable__noclipping_mark1($b);
 
 $b->display();
 
