@@ -4,6 +4,8 @@ package Board;
     use warnings;
 
     use Moose;
+    use Storable;
+
     use Data::Dumper;
 
 
@@ -36,6 +38,13 @@ sub BUILD {
                           1..$self->width() ]
                   } 1..$self->height() ]
     );
+}
+
+
+sub clone {
+    my $self = shift;
+    return bless Storable::dclone($self),
+                 ref($self);
 }
 
 

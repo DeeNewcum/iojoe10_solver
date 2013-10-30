@@ -21,7 +21,11 @@ $b->cells->[0] = [qw[ 3 -2 4 10 5 1 ]];
 
 #print Dumper $b;
 
+my $c = $b->clone;
+#print Dumper $c; exit;
+$c->display();
+
 #IsUnsolvable::is_unsolvable__noclipping_mark1();
 
-$b->display();
+#$b->display();
 
