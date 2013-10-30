@@ -14,7 +14,7 @@ has 'cells', is => 'rw';
     #       $self->cells->[$y][$x]
     #       (0,0) is at the top-left corner
     # Each cell contains a number:
-    #       0           empty space
+    #       -11          empty space
     #       10          wall
     #       1 to 9      movable block
     #       -1 to -9    moveable block
@@ -32,7 +32,7 @@ sub BUILD {
     $self->cells(
             [ map {
                     [ map
-                          { 0 }
+                          { -11 }
                           1..$self->width() ]
                   } 1..$self->height() ]
     );
@@ -76,7 +76,7 @@ sub display {
     for (my $y=0; $y<$self->height; $y++) {
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
-            if (abs($cell) >= 1 && abs($cell) <= 9) {
+            if (abs($cell) <= 9) {
                 if ($cell > 0) {
                     _bg_color( $number_color[$cell][0] );
                     print "\e[37m";     # white foreground
@@ -88,8 +88,10 @@ sub display {
             } elsif ($cell == 10) {
                 print "\e[90m";         # gray foreground
                 _bg_color( 237 );        # dark gray
-
                 print " X";
+            } elsif ($cell == -11) {
+                _bg_color( 0 );       # black background
+                print "  ";
             } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 400) {
                 print "\e[37m";         # white foreground
                 _bg_color( 240 );        # medium gray
