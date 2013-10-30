@@ -74,6 +74,7 @@ sub display {
     _ansi_cursor_home();
 
     for (my $y=$self->height-1; $y>=0; $y--) {
+        printf "%2d  ", $y+1;
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
             if (abs($cell) <= 9) {
@@ -102,6 +103,13 @@ sub display {
         #print "\n";
         _ansi_newline();
     }
+    _ansi_newline();
+    print "    ";
+    for (my $x=0; $x<$self->width; $x++) {
+        print " ", chr(ord("a") + $x);
+    }
+    _ansi_newline();
+
     #print "\n\n";
     #_ansi_newline();
     #_ansi_newline();
