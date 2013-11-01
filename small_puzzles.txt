@@ -1,0 +1,31 @@
+Some of the smaller puzzles that are in the "10" game.  These are intended to be used for early
+testing, since smaller boards are easier to solve.
+
+
+========[ 3x3 ]========
+
+- Tricky / 11
+
+========[ 4x4 ]========
+
+- Blocks / 1
+- Blocks / 2
+- Blocks / 7
+- Blocks / 9
+- Blocks / 12
+- Blocks / 13
+- Blocks / 16
+
+- Tricky / 1
+- Tricky / 2
+- Tricky / 12
+
+- Difficult / 3
+- Difficult / 6
+- Difficult / 10
+
+========[ 5x5 ]========
+
+- Tricky / 5
+- Tricky / 7
+- Tricky / 8
