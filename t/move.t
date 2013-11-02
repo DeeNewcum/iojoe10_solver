@@ -1,5 +1,14 @@
+#!/usr/bin/perl
+
+# tests for:
+#   - Move::new()
+#   - Move::toString()
+
+
     use strict;
     use warnings;
+
+    BEGIN {-t and eval "use lib '..'"}
 
     use Test::Simple tests => 3;
     use Move;

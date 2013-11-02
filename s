@@ -9,11 +9,6 @@
 
     use Data::Dumper;
 
-my $m = new Move('d4v');
-print Dumper $m;
-print $m->toString(), "\n";
-exit;
-
 
 my $b;
 

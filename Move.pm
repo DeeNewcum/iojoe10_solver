@@ -57,6 +57,9 @@ sub toString {
 
 # Move the pieces on the board to reflect the specified move.
 #
+# Modifies the existing board.  If you want to keep a copy of the board before the move was made,
+# make a copy of the board before you apply the move (using Board::clone()).
+#
 # Returns true if it was a legal move, false if it was illegal.
 sub apply {
     my $self = shift;
@@ -83,6 +86,9 @@ sub apply {
             && $board->{cells}[$just_after_collision[0]][$just_after_collision[1]] == -11);
 
     # LEFTOFF -- continue from here...  figure out what to do now that we hit something
+    die Dumper {start => [ $self->x, $self->y ],
+                just_after_collision => \@just_after_collision,
+                just_before_collision => \@just_before_collision };
 }
 
     # returns true/false, indicating if the point lies inside the board
