@@ -120,7 +120,7 @@ sub apply {
     if (exists $sliding_blocks{$cell}) {
         # No, just a sliding block.
         if ($just_before_collision[0] == $self->y
-         && $just_before_collision[1] == $self->y)
+         && $just_before_collision[1] == $self->x)
         {
             return 0;       # The block didn't end up moving.
         } else {
