@@ -6,6 +6,7 @@ package TreeTraversal;
     use Board;
     use Move;
 
+    use Time::HiRes qw( time );
     use Data::Dumper;
 
 sub list_available_moves {
@@ -33,8 +34,13 @@ sub IDDFS {
 
     for (my $depth=1;  ; $depth++) {
         print "==== trying to depth $depth ====\n";
+        my $started = time();
+
         my $ret = _IDDFS($board, $depth);
         return $ret if defined($ret);
+
+        my $duration = time() - $started;
+        printf "%6.2f seconds\n", $duration;
     }
 
     return undef;

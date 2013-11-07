@@ -9,10 +9,12 @@
 
     use Data::Dumper;
 
-my $board = new Board( width => 2, height => 2);
+# level:  Tricky-11
+my $board = new Board( width => 3, height => 3);
 
-$board->cells->[1] = [qw[   7 -11 ]];
-$board->cells->[0] = [qw[ -11   3 ]];
+$board->cells->[2] = [qw[   2  -2   4 ]];
+$board->cells->[1] = [qw[   5  -4   7 ]];
+$board->cells->[0] = [qw[   6   2   2 ]];
 
 
 my $move_list = TreeTraversal::IDDFS($board);
