@@ -126,6 +126,7 @@ sub apply {
         } else {
             $board->{cells}[ $self->y ][ $self->x ] = -11;
             $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
+            return 1;
         }
     }
 
