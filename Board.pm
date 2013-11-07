@@ -48,11 +48,24 @@ sub clone {
 }
 
 
+# Returns the value at a specific cell.
+sub at {
+    my $self = shift;
+    my ($y, $x) = @_;
+
+    return $self->cells->[$y][$x];
+}
+
+
 # display the board
 # (assumes the user has a 256-color capable terminal)
 #       http://is.gd/256cols
 sub display {
     my $self = shift;
+
+    # prepare the output to accept UTF8 characters
+    binmode STDOUT, ':utf8';
+    binmode STDERR, ':utf8';
 
     # The "1" moveable tile is a distinctive color.  As is every other.
     # What color is it?
@@ -73,17 +86,20 @@ sub display {
     );
     my @arrows = (
         "",
-        " \x{2191}",       # 100
-        " \x{2192}",       # 200
-        " \x{2193}",       # 300
-        " \x{2190}",       # 400
+        " \x{2191}",       # 100 -- up
+        " \x{2192}",       # 200 -- right
+        " \x{2193}",       # 300 -- down
+        " \x{2190}",       # 400 -- left
+        " \x{21d4}",       # 500 -- left/right
+        " \x{21d5}",       # 600 -- up/down
+        "\x{21d4}\x{21d5}", # 700 -- all directions
     );
 
     binmode STDOUT, ":encoding(UTF-8)";     # we're going to be outputting UTF8 characters
-    _ansi_cursor_home();
+    #_ansi_cursor_home();
 
     for (my $y=$self->height-1; $y>=0; $y--) {
-        printf "%2d  ", $y+1;
+        printf "%2d ", $y+1;
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
             if (abs($cell) <= 9) {
@@ -97,12 +113,12 @@ sub display {
                 printf "%2s", $cell;
             } elsif ($cell == 10) {
                 print "\e[90m";         # gray foreground
-                _bg_color( 237 );        # dark gray
+                _bg_color( 235 );        # dark gray
                 print " X";
             } elsif ($cell == -11) {
                 _bg_color( 0 );       # black background
                 print "  ";
-            } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 400) {
+            } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 700) {
                 print "\e[37m";         # white foreground
                 _bg_color( 240 );        # medium gray
                 print $arrows[$cell / 100];
@@ -112,8 +128,8 @@ sub display {
         #print "\n";
         _ansi_newline();
     }
-    _ansi_newline();
-    print "    ";
+    #_ansi_newline();
+    print "   ";
     for (my $x=0; $x<$self->width; $x++) {
         print " ", chr(ord("a") + $x);
     }
@@ -122,7 +138,7 @@ sub display {
     #print "\n\n";
     #_ansi_newline();
     #_ansi_newline();
-    _ansi_erase_below();
+    #_ansi_erase_below();
 }
 
     sub _fg_color {
