@@ -23,10 +23,9 @@ $board->cells->[2] = [qw[   5 -11   3 ]];
 $board->cells->[1] = [qw[ 500 -11   7 ]];
 $board->cells->[0] = [qw[ -11 -11 -11 ]];
 
-select STDERR;
-$board->display();
-select STDOUT;
-
+    #select STDERR;
+    $board->display()   if -t STDOUT;
+    #select STDOUT;
 
 ok(ok_move($board, 'c3<',      [  8, -11, -11] ));
 ok(ok_move($board, 'c3v',      [-11,  10, -11] ));
@@ -45,10 +44,12 @@ sub ok_move {
 
     $m->apply($b);
 
-    select STDERR;
-    print "========[ $move ]========\n";
-    $b->display();
-    select STDOUT;
+    #select STDERR;
+    if (-t STDOUT) {
+        print "========[ $move ]========\n";
+        $b->display();
+    }
+    #select STDOUT;
 
     my $ok = 1;
     if ($move =~ /[<>]$/) {     # $row_col is a row
@@ -93,19 +94,4 @@ sub ok_move {
     }
 
     return $ok;
-}
-
-sub showmove {
-    my ($board, $move) = @_;
-
-    my $b = $board->clone;
-
-    my $m = new Move($move);
-
-    $m->apply($b);
-
-    select STDERR;
-    print "========[ $move ]========\n";
-    $b->display();
-    select STDOUT;
 }
