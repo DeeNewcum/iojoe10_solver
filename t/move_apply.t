@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 4;
+    use Test::Simple tests => 6;
 
     use Board;
     use Move;
@@ -28,10 +28,12 @@ $board->display();
 select STDOUT;
 
 
-ok(ok_move($board, 'c3<',      [8, -11, -11] ));
-ok(ok_move($board, 'c3v',      [-11, 10, -11] ));
-ok(ok_move($board, 'c2v',      [7, -11, 3] ));
-ok(ok_move($board, 'c2<',      [500, 7, -11] ));
+ok(ok_move($board, 'c3<',      [  8, -11, -11] ));
+ok(ok_move($board, 'c3v',      [-11,  10, -11] ));
+ok(ok_move($board, 'c2v',      [  7, -11,   3] ));
+ok(ok_move($board, 'c2<',      [500,   7, -11] ));
+ok(ok_move($board, 'a2>',      [-11, 500,   7] ));
+ok(ok_move($board, 'a2v',      [-11, 500,   5] ));
 
 
 sub ok_move {
