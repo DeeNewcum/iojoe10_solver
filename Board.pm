@@ -92,7 +92,8 @@ sub display {
         " \x{2190}",       # 400 -- left
         " \x{21d4}",       # 500 -- left/right
         " \x{21d5}",       # 600 -- up/down
-        "\x{21d4}\x{21d5}", # 700 -- all directions
+        #"\x{21d4}\x{21d5}", # 700 -- all directions
+        " \x{253c}",       # 700 -- all directions
     );
 
     binmode STDOUT, ":encoding(UTF-8)";     # we're going to be outputting UTF8 characters

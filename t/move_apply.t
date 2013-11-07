@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 6;
+    use Test::Simple tests => 14;
 
     use Board;
     use Move;
@@ -33,6 +33,32 @@ ok(ok_move($board, 'c2v',      [  7, -11,   3] ));
 ok(ok_move($board, 'c2<',      [500,   7, -11] ));
 ok(ok_move($board, 'a2>',      [-11, 500,   7] ));
 ok(ok_move($board, 'a2v',      undef ));
+
+
+
+
+$board = new Board( width=>4, height=>4 );
+
+$board->cells->[3] = [qw[ -11 -11 -11 -11 ]];
+$board->cells->[2] = [qw[ 100 600 -11 -11 ]];
+$board->cells->[1] = [qw[ -11 -11 700 -11 ]];
+$board->cells->[0] = [qw[ -11 -11 -11 -11 ]];
+
+    #select STDERR;
+    $board->display()   if -t STDOUT;
+    #select STDOUT;
+
+ok(ok_move($board, 'a3^',      [ -11, -11, -11, 100 ] ));
+ok(ok_move($board, 'a3v',      undef ));
+
+ok(ok_move($board, 'b3^',      [ -11, -11, -11, 600 ] ));
+ok(ok_move($board, 'b3v',      [ 600, -11, -11, -11 ] ));
+ok(ok_move($board, 'b3>',      undef ));
+
+ok(ok_move($board, 'c2>',      [ -11, -11, -11, 700 ] ));
+ok(ok_move($board, 'c2<',      [ 700, -11, -11, -11 ] ));
+ok(ok_move($board, 'c2^',      [ -11, -11, -11, 700 ] ));
+
 
 
 # parameters:
