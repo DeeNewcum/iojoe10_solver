@@ -64,6 +64,8 @@ sub toString {
             $dir_chars{$self->dir};
 }
 
+    sub apply_DEBUG { 0 }
+
 # Move the pieces on the board to reflect the specified move.
 #
 # Modifies the existing board.  If you want to keep a copy of the board before the move was made,
@@ -75,9 +77,7 @@ sub apply {
     my $self = shift;
     my ($board) = @_;
 
-    my $DEBUG = 0;      # SHOULD BE 0, unless you're doing development
-
-    print "apply -- making move:  ", $self->toString, "\n"      if $DEBUG;
+    print "apply -- making move:  ", $self->toString, "\n"      if apply_DEBUG();
 
     return 0 if (!_in_bounds($board, $self->x, $self->y));
 
@@ -98,22 +98,21 @@ sub apply {
     my @just_after_collision  = ($self->y, $self->x);
 
     while (1) {
-        print "apply -- ", _pos(@just_after_collision), "\n"        if $DEBUG;
+        print "apply -- ", _pos(@just_after_collision), "\n"        if apply_DEBUG();
         @just_before_collision = @just_after_collision;
         $just_after_collision[0] += $dir[0];
         $just_after_collision[1] += $dir[1];
         if (! _in_bounds($board, @just_after_collision)) {
-            print "apply -- out of bounds\n"    if $DEBUG;
+            print "apply -- out of bounds\n"    if apply_DEBUG();
             last;
         } elsif ($board->at(@just_after_collision) != -11) {
-            print "apply -- collided with:  ", $board->at(@just_after_collision), "\n"
-                    if $DEBUG;
+            print "apply -- collided with:  ", $board->at(@just_after_collision), "\n" if apply_DEBUG();
             last;
         }
     };
 
-    print "apply -- \@just_after_colission: ", _pos(@just_after_collision), "\n"        if $DEBUG;
-    print "apply -- \@just_before_colission: ", _pos(@just_before_collision), "\n"      if $DEBUG;
+    print "apply -- \@just_after_colission: ", _pos(@just_after_collision), "\n"        if apply_DEBUG();
+    print "apply -- \@just_before_colission: ", _pos(@just_before_collision), "\n"      if apply_DEBUG();
 
     # Is this a numerical block?
 

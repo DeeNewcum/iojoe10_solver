@@ -9,6 +9,9 @@ package TreeTraversal;
     use Time::HiRes qw( time );
     use Data::Dumper;
 
+my $num_moves = 0;      # the number of times that Move::apply() has been called
+
+
 sub list_available_moves {
     my ($board) = shift;
 
@@ -35,12 +38,16 @@ sub IDDFS {
     for (my $depth=1;  ; $depth++) {
         print "==== trying to depth $depth ====\n";
         my $started = time();
+        $num_moves = 0;
 
         my $ret = _IDDFS($board, $depth);
         return $ret if defined($ret);
 
         my $duration = time() - $started;
-        printf "%6.2f seconds\n", $duration;
+        printf "%-15s  %40s\n",
+            sprintf("%6.2f sec", $duration),
+            sprintf("%s moves", commify($num_moves));
+        #printf "%6.2f seconds\n", commify($num_moves), $duration;
     }
 
     return undef;
@@ -55,6 +62,7 @@ sub _IDDFS {
 
     foreach my $move (@moves) {
         my $new_board = $board->clone;
+        $num_moves++;
         $move->apply($new_board)
             or next;
         if ($new_board->has_won) {
@@ -100,6 +108,9 @@ sub display_solution {
 }
 
 
+
+# add commas to a number
+sub commify {(my$text=reverse$_[0])=~s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;scalar reverse$text}
 
 
 1;
