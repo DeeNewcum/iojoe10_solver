@@ -17,18 +17,35 @@
     use Data::Dumper;
 
 
-$b = new Board( width=>3, height=>3 );
+my $board = new Board( width=>3, height=>3 );
 
-$b->cells->[2] = [qw[   5 -11   3 ]];
-$b->cells->[1] = [qw[ -11 -11   7 ]];
-$b->cells->[0] = [qw[ -11 -11 -11 ]];
+$board->cells->[2] = [qw[   5 -11   3 ]];
+$board->cells->[1] = [qw[  10 -11   7 ]];
+$board->cells->[0] = [qw[ -11 -11 -11 ]];
+
 
 select STDERR;
-$b->display();
+$board->display();
 select STDOUT;
 
 
 
-my $m = new Move('c3<');
+showmove($board, 'c3<');
+showmove($board, 'c3v');
+showmove($board, 'c2v');
+showmove($board, 'c2<');
 
-$m->apply( $b );
+sub showmove {
+    my ($board, $move) = @_;
+
+    my $b = $board->clone;
+
+    my $m = new Move($move);
+
+    $m->apply($b);
+
+    select STDERR;
+    print "========[ $move ]========\n";
+    $b->display();
+    select STDOUT;
+}
