@@ -55,7 +55,8 @@ sub _IDDFS {
 
     foreach my $move (@moves) {
         my $new_board = $board->clone;
-        $move->apply($new_board);
+        $move->apply($new_board)
+            or next;
         if ($new_board->has_won) {
             return [$move];
         }
