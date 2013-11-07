@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+    use strict;
+    use warnings;
+
+    use TreeTraversal;
+    use Board;
+    use Move;
+
+    use Data::Dumper;
+
+my $board = new Board( width => 2, height => 2);
+
+$board->cells->[1] = [qw[   7 -11 ]];
+$board->cells->[0] = [qw[ -11   3 ]];
+
+
+my $move_list = TreeTraversal::IDDFS($board);
+
+if (defined($move_list)) {
+    TreeTraversal::display_solution($move_list, $board);
+} else {
+    print "No solution found.\n";
+}

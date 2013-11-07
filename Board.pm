@@ -48,6 +48,23 @@ sub clone {
 }
 
 
+# returns true/false, whether the current position is a winning position
+sub has_won {
+    my $self = shift;
+
+    for (my $y=0; $y<$self->height; $y++) {
+        for (my $x=0; $x<$self->width; $x++) {
+            if ($self->{cells}[$y][$x] != 0
+                && abs($self->{cells}[$y][$x]) < 10)
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+
 # Returns the value at a specific cell.
 sub at {
     my $self = shift;
