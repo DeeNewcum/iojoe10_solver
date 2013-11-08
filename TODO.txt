@@ -1,9 +1,9 @@
 
 
-- Add 'demo1', 'demo2', etc. scripts, starting with *extremely* simple boards, and progressing
-    to slightly harder boards.  Try to hit the sweet spot of being as complex as possible, that
-    the current solver can still solve.  (which isn't very complex at all, but at least it's
-    more complex than the very first trial)
+- Add several boards, starting with some *extremely* simple boards, and progressing to
+    slightly harder boards.  Try to hit the sweet spot of being as complex as possible, that the
+    current solver can still solve.  (which isn't very complex at all, but at least it's more
+    complex than the very first trial)
 
 
 - implement A* or similar

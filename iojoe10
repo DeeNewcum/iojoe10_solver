@@ -9,13 +9,12 @@
 
     use Data::Dumper;
 
-# level:  Tricky-11
-my $board = new Board( width => 3, height => 3);
+my $filename = shift
+    or die "please specify the filename of a board to solve\n";
 
-$board->cells->[2] = [qw[   2  -2   4 ]];
-$board->cells->[1] = [qw[   5  -4   7 ]];
-$board->cells->[0] = [qw[   6   2   2 ]];
+my $board = Board::new_from_file($filename);
 
+$board->display;
 
 my $move_list = TreeTraversal::IDDFS($board);
 

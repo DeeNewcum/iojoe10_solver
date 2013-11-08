@@ -41,6 +41,35 @@ sub BUILD {
 }
 
 
+# load a board from a text file
+sub new_from_file {
+    my ($filename) = @_;
+
+    -e $filename or die "$filename doesn't exist\n";
+
+    open my $fh, '<', $filename     or die "error opening $filename -- $!\n";
+    my @lines = <$fh>;
+    close $fh;
+
+    @lines = map { s/#.*//; chomp; $_ } @lines;     # remove comments (and newlines)
+    @lines = grep { /\S/ } @lines;                  # remove blank lines
+
+    my ($height, $width);
+    $height = scalar(@lines);
+    $width = scalar(split ' ', $lines[0]);
+
+    my $board = new Board(width => $width, height => $height);
+
+    for (my $y=0; $y<$height; $y++) {
+        my @cells = split ' ', $lines[$height - 1 - $y];
+        @cells = map {int $_} @cells;
+        $board->{cells}[$y] = \@cells;
+    }
+
+    return $board;
+}
+
+
 sub clone {
     my $self = shift;
     return bless Storable::dclone($self),
