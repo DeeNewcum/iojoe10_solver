@@ -65,6 +65,53 @@ sub has_won {
 }
 
 
+our %to_char = (
+    -11 => ' ',
+
+      0 => '0',
+      1 => '1',
+      2 => '2',
+      3 => '3',
+      4 => '4',
+      5 => '5',
+      6 => '6',
+      7 => '7',
+      8 => '8',
+      9 => '9',
+
+     -1 => 'A',
+     -2 => 'B',
+     -3 => 'C',
+     -4 => 'D',
+     -5 => 'E',
+     -6 => 'F',
+     -7 => 'G',
+     -8 => 'H',
+     -9 => 'I',
+
+     10 => 'X',
+
+    100 => '^',
+    200 => '>',
+    300 => 'v',
+    400 => '<',
+    500 => '-',
+    600 => '|',
+    700 => '+',
+);
+sub hash {
+    my $self = shift;
+    my $str = '';
+    for (my $y=$self->height-1; $y>=0; $y--) {
+        for (my $x=0; $x<$self->width; $x++) {
+            $str .= $to_char{ $self->at($y, $x) };
+        }
+        $str .= "\n";
+    }
+    return $str;
+}
+
+
 # Returns the value at a specific cell.
 sub at {
     my $self = shift;

@@ -40,7 +40,8 @@ sub IDDFS {
         my $started = time();
         $num_moves = 0;
 
-        my $ret = _IDDFS($board, $depth);
+        my %seen;
+        my $ret = _IDDFS($board, $depth, \%seen);
         return $ret if defined($ret);
 
         my $duration = time() - $started;
@@ -56,7 +57,7 @@ sub IDDFS {
 
 # Returns a list-ref of moves, if a solution was found.
 sub _IDDFS {
-    my ($board, $depth_remaining) = @_;
+    my ($board, $depth_remaining, $seen) = @_;
 
     my @moves = @{ list_available_moves($board) };
 
@@ -70,8 +71,9 @@ sub _IDDFS {
         }
 
         next if ($depth_remaining <= 0);
+        next if $seen->{ $new_board->hash }++;
 
-        my $ret = _IDDFS( $new_board, $depth_remaining - 1);
+        my $ret = _IDDFS( $new_board, $depth_remaining - 1, $seen);
         if (defined($ret)) {
             unshift @$ret, $move;
             return $ret;
