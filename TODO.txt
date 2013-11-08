@@ -1,24 +1,23 @@
 
-- consider using SSS*  or  A*  or  B*   or    Dijkstra's algorithm
 
-        - while it takes a lot of space, we can't do alpha-beta pruning,
+- Add 'demo1', 'demo2', etc. scripts, starting with *extremely* simple boards, and progressing
+    to slightly harder boards.  Try to hit the sweet spot of being as complex as possible, that
+    the current solver can still solve.  (which isn't very complex at all, but at least it's
+    more complex than the very first trial)
+
+
+- implement A* or similar
+
+        - while it takes a lot of RAM, we can't do alpha-beta pruning,
             since this is a single-player game
 
-
-    https://en.wikipedia.org/wiki/Branch_and_bound
     https://en.wikipedia.org/wiki/Combinatorial_optimization
     https://en.wikipedia.org/wiki/A*_search_algorithm#Variants_of_A.2A
         https://en.wikipedia.org/wiki/IDA*
-    https://en.wikipedia.org/wiki/Beam_search
 
 
-"A* search is one of the best general-purpose graph search algorithms when there's a way to
-estimate the distance to the goal"
+    "A* search is one of the best general-purpose graph search algorithms when there's a way to
+    estimate the distance to the goal"
 
 
-
-
-
-
-
-https://metacpan.org/pod/List::PriorityQueue
+    https://metacpan.org/pod/List::PriorityQueue
