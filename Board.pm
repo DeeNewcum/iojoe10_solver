@@ -146,7 +146,7 @@ sub at {
     my $self = shift;
     my ($y, $x) = @_;
 
-    return $self->cells->[$y][$x];
+    return $self->{cells}[$y][$x];
 }
 
 
