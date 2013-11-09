@@ -79,7 +79,7 @@ sub apply {
 
     print "apply -- making move:  ", $self->toString, "\n"      if apply_DEBUG();
 
-    return 0 if (!_in_bounds($board, $self->x, $self->y));
+    return 0 if (!_in_bounds($board, $self->y, $self->x));
 
     my $cell = $board->at( $self->y, $self->x );
     my @dir = @{ $direction[ $self->dir ] };
@@ -153,7 +153,7 @@ sub apply {
 
     # returns true/false, indicating if the point lies inside the board
     sub _in_bounds {
-        my ($board, $x, $y) = @_;
+        my ($board, $y, $x) = @_;
         return ($x >=0 && $x < $board->width
                 && $y >=0 && $y < $board->height);
     }
