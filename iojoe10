@@ -7,6 +7,7 @@
     use Board;
     use Move;
 
+    use Time::HiRes qw( time );
     use Data::Dumper;
 
 my $filename = shift
@@ -16,10 +17,13 @@ my $board = Board::new_from_file($filename);
 
 $board->display;
 
+my $started = time();
 my $move_list = TreeTraversal::IDDFS($board);
+my $elapsed = time() - $started;
 
 if (defined($move_list)) {
     TreeTraversal::display_solution($move_list, $board);
+    printf "Solution found in %.2f seconds.\n", $elapsed;
 } else {
     print "No solution found.\n";
 }
