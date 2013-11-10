@@ -1,7 +1,8 @@
 # Routines that try to determine if the current board position is unsolvable.
 #
-# It's important to detect when we've hit a dead-end as soon as possible, so we can back out and try
-# another way.
+# It's important to detect when we've hit a dead-end as soon as possible, since detecting a failed
+# path early allows us to avoid the huge number of child-branches that we otherwise would have tried
+# to explore.
 
 
 package IsUnsolvable;

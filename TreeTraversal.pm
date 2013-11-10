@@ -5,11 +5,13 @@ package TreeTraversal;
 
     use Board;
     use Move;
+    use IsUnsolvable;
 
     use Time::HiRes qw( time );
     use Data::Dumper;
 
-my $num_moves = 0;      # the number of times that Move::apply() has been called
+our $num_moves = 0;      # the number of times that Move::apply() has been called
+my $display_every_n = 0;
 
 
 sub list_available_moves {
@@ -70,12 +72,14 @@ sub _IDDFS {
             return [$move];
         }
 
-        if ($num_moves % 1000 == 0) {
-            $new_board->display;        # display the board every 1,000 moves
-        }
-
         next if ($depth_remaining <= 0);
         next if $seen->{ $new_board->hash }++;
+        next if IsUnsolvable::noclipping_mark1($new_board);
+
+        $display_every_n++;
+        if ($display_every_n % 1000 == 0) {
+            $new_board->display;        # display the board every 1,000 moves
+        }
 
         my $ret = _IDDFS( $new_board, $depth_remaining - 1, $seen);
         if (defined($ret)) {

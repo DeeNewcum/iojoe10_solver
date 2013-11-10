@@ -27,7 +27,12 @@ my $elapsed = time() - $started;
 
 if (defined($move_list)) {
     TreeTraversal::display_solution($move_list, $board);
-    printf "Solution found in %.2f seconds.\n", $elapsed;
+    printf "Solution found in %.2f seconds\n" .
+           "                  %d moves\n" .
+           "for an average of %d us per move\n",
+                $elapsed,
+                $TreeTraversal::num_moves,
+                1000000 * $elapsed / $TreeTraversal::num_moves;
 } else {
     print "No solution found.\n";
 }
