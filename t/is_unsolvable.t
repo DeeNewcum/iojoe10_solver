@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 1;
+    use Test::Simple tests => 4;
 
     use IsUnsolvable;
     use Board;
@@ -20,6 +20,24 @@
 ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
           5 -11   4 
         -11 -11   7 
+        -11 -11   5 
+EOF
+
+ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
+          5 -11   3 
+        -11 -11   7 
+        -11 -11   5 
+EOF
+
+ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
+          5 -11   3 
+        -11   5   9 
+          5 -11   5 
+EOF
+
+ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
+          5 -11   1 
+        -11   5   9 
         -11 -11   5 
 EOF
 
