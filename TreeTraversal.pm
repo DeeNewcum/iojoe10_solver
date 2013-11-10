@@ -70,6 +70,10 @@ sub _IDDFS {
             return [$move];
         }
 
+        if ($num_moves % 1000 == 0) {
+            $new_board->display;        # display the board every 1,000 moves
+        }
+
         next if ($depth_remaining <= 0);
         next if $seen->{ $new_board->hash }++;
 

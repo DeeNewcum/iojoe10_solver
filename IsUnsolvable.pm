@@ -9,6 +9,8 @@ package IsUnsolvable;
     use strict;
     use warnings;
 
+    use Board;
+
     use Data::Dumper;
 
 
@@ -41,35 +43,51 @@ package IsUnsolvable;
 sub noclipping_mark1 {
     my $board = shift;
 
-    # make a list of all the numberical pieces that are still free
-    my @pieces;
-    for (my $y=0; $y<$self->height; $y++) {
-        for (my $x=0; $x<$self->width; $x++) {
-            my $cell = $self->cells->[$y][$x];
-            if (abs($cell) >= 1 && abs($cell) <= 9) {
-                push @pieces, $cell;
+    my %pieces = _list_pieces($board);
+
+    # If there are any negative pieces, then this algorithm can't handle it.  Give up.
+    my @pieces = sort keys %pieces;
+    return 0 if ($pieces[0] < 0);
+
+    OUTER:
+    for my $current_piece (reverse @pieces) {
+        last if ($current_piece < 5);
+
+        for my $match_piece (1..(10 - $current_piece)) {
+            if (exists $pieces{$match_piece}) {
+                next OUTER;
             }
         }
-    }
-    @pieces = sort @pieces;
-    #die Dumper \@pieces;
-    my %pieces;
-    foreach my $p (@pieces) {
-        $pieces{$p}++;
-    }
-    die Dumper \%pieces;
 
-    for my $current_piece (5..9) {
-        next unless $pieces{$current_piece};
-
-        if ($current_piece == 5) {
-            if ($pieces{5} <
-            return 
-        }
+        return 1;
     }
-    # LEFTOFF:   It's somewhat obvious what we do if they're all positive, but what do we do if
-    #            there are any negatives?
 
+    return 0;
 }
+
+
+    sub _list_pieces {
+        my ($board) = @_;
+
+        # make a list of all the numberical pieces that are still free
+        my @pieces;
+        for (my $y=0; $y<$board->height; $y++) {
+            for (my $x=0; $x<$board->width; $x++) {
+                my $cell = $board->{cells}[$y][$x];
+                if (abs($cell) >= 1 && abs($cell) <= 9) {
+                    push @pieces, $cell;
+                }
+            }
+        }
+        @pieces = sort @pieces;
+        #die Dumper \@pieces;
+
+        my %pieces;
+        foreach my $p (@pieces) {
+            $pieces{$p}++;
+        }
+
+        return %pieces;
+    }
 
 1;

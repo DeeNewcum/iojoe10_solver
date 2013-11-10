@@ -51,6 +51,14 @@ sub new_from_file {
     my @lines = <$fh>;
     close $fh;
 
+    return new_from_string(  join("", @lines) );
+}
+
+
+sub new_from_string {
+    my ($string) = @_;
+
+    my @lines = split /[\n\r]/, $string;
     @lines = map { s/#.*//; chomp; $_ } @lines;     # remove comments (and newlines)
     @lines = grep { /\S/ } @lines;                  # remove blank lines
 
