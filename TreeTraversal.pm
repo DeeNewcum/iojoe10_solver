@@ -10,7 +10,8 @@ package TreeTraversal;
     use Time::HiRes qw( time );
     use Data::Dumper;
 
-our $num_moves = 0;      # the number of times that Move::apply() has been called
+my $num_moves = 0;      # the number of times that Move::apply() has been called
+my $started;
 my $display_every_n = 0;
 
 
@@ -37,23 +38,29 @@ sub list_available_moves {
 sub IDDFS {
     my ($board) = @_;
 
+    $num_moves = 0;
+    $started = time();
+
     for (my $depth=1;  ; $depth++) {
         print "==== trying to depth $depth ====\n";
-        my $started = time();
-        $num_moves = 0;
 
         my %seen;
         my $ret = _IDDFS($board, $depth, \%seen);
         return $ret if defined($ret);
 
-        my $duration = time() - $started;
-        printf "%-15s  %40s\n",
-            sprintf("%6.2f sec", $duration),
-            sprintf("%s moves", commify($num_moves));
-        #printf "%6.2f seconds\n", commify($num_moves), $duration;
+        print_stats();
     }
 
     return undef;
+}
+
+# show the stats so far
+sub print_stats {
+    my $elapsed = time() - $started;
+    printf "         %12s moves,   %.2f seconds,   %d microseconds per\n",
+                commify($num_moves),
+                $elapsed,
+                1000000 * $elapsed / $num_moves;
 }
 
 
@@ -79,6 +86,7 @@ sub _IDDFS {
         $display_every_n++;
         if ($display_every_n % 1000 == 0) {
             $new_board->display;        # display the board every 1,000 moves
+            print_stats();
         }
 
         my $ret = _IDDFS( $new_board, $depth_remaining - 1, $seen);
