@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+# The main entry point.
+# 
+# Give it a board to solve, and it will start cranking away.
+
     use strict;
     use warnings;
 
