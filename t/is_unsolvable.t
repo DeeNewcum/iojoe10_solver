@@ -18,27 +18,27 @@
     use Data::Dumper;
 
 ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
-          5 -11   4 
-        -11 -11   7 
-        -11 -11   5 
+          5   .   4 
+          .   .   7 
+          .   .   5 
 EOF
 
 ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
-          5 -11   3 
-        -11 -11   7 
-        -11 -11   5 
+          5   .   3 
+          .   .   7 
+          .   .   5 
 EOF
 
 ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
-          5 -11   3 
-        -11   5   9 
-          5 -11   5 
+          5   .   3 
+          .   5   9 
+          5   .   5 
 EOF
 
 ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
-          5 -11   1 
-        -11   5   9 
-        -11 -11   5 
+          5   .   1 
+          .   5   9 
+          .   .   5 
 EOF
 
 
