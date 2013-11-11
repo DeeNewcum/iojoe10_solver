@@ -80,6 +80,8 @@ sub new_from_string {
                 $cells[$x] = int $cells[$x];
             }
         }
+        scalar(@cells) == $width
+            or die "ERROR on row " . ($y + 1) . " -- Every row must have the same width\n";
         $board->{cells}[$y] = \@cells;
     }
 
