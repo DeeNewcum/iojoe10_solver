@@ -21,9 +21,7 @@ my $board = Board::new_from_file($filename);
 
 $board->display;
 
-my $started = time();
 my $move_list = TreeTraversal::IDDFS($board);
-my $elapsed = time() - $started;
 
 if (defined($move_list)) {
     print "==== SOLUTION ====\n";
