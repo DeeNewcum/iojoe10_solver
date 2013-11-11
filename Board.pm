@@ -183,7 +183,7 @@ sub display {
     #   contrast with a white foreground...   the second is the background color version, with good
     #   contrast with a white background)
     my @number_color = (
-        [],         # nada
+        [0, 0],     # 0 = black on white
         [1, 1],     # 1 = red
         [172, 172], # 2 = orange
         [3, 94],    # 3 = yellow
