@@ -57,7 +57,7 @@ sub IDDFS {
 # show the stats so far
 sub print_stats {
     my $elapsed = time() - $started;
-    printf "         %12s moves,   %.2f seconds,   %d microseconds per\n",
+    printf "         %12s moves,   %.2f seconds,   %d microseconds per move\n",
                 commify($num_moves),
                 $elapsed,
                 1000000 * $elapsed / $num_moves;
