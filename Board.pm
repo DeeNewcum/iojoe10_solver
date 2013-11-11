@@ -70,7 +70,16 @@ sub new_from_string {
 
     for (my $y=0; $y<$height; $y++) {
         my @cells = split ' ', $lines[$height - 1 - $y];
-        @cells = map {int $_} @cells;
+        for (my $x=0; $x<@cells; $x++) {
+            if ($cells[$x] eq '.') {        # ". and "XX" are syntactic sugar, to make it easier to
+                                            # read boards...  you can still use the full value
+                $cells[$x] = -11;
+            } elsif (lc($cells[$x]) eq 'xx') {
+                $cells[$x] = 10;
+            } else {
+                $cells[$x] = int $cells[$x];
+            }
+        }
         $board->{cells}[$y] = \@cells;
     }
 
