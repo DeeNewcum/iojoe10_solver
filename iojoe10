@@ -26,6 +26,7 @@ my $move_list = TreeTraversal::IDDFS($board);
 my $elapsed = time() - $started;
 
 if (defined($move_list)) {
+    print "==== SOLUTION ====\n";
     TreeTraversal::display_solution($move_list, $board);
     TreeTraversal::print_stats();
 } else {
