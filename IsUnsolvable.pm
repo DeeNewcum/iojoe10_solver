@@ -12,7 +12,12 @@ package IsUnsolvable;
 
     use Board;
 
+    use Memoize;
+
     use Data::Dumper;
+
+
+memoize('_noclipping_mark3');
 
 
 # TODO:
@@ -44,7 +49,7 @@ package IsUnsolvable;
 sub noclipping_mark1 {
     my $board = shift;
 
-    my %pieces = _list_pieces($board);
+    my %pieces = _uniq_c(_list_pieces($board));
 
     # If there are any negative pieces, then this algorithm can't handle it.  Give up.
     my @pieces = sort keys %pieces;
@@ -83,12 +88,93 @@ sub noclipping_mark1 {
         @pieces = sort @pieces;
         #die Dumper \@pieces;
 
-        my %pieces;
-        foreach my $p (@pieces) {
-            $pieces{$p}++;
+        return @pieces;
+    }
+
+    # Does the same thing as $(uniq -c)
+    # That is, it takes a list in, and returns a hash, where the values of the hash indicate 
+    # the number of times that element is repeated.
+    sub _uniq_c {
+        my (@list) = @_;
+
+        my %hash;
+        foreach my $item (@list) {
+            $hash{$item}++;
         }
 
-        return %pieces;
+        return %hash;
     }
+
+
+# Returns:
+#       true        Board is definitely unsolvable.
+#       false       Board may be solvable or unsolvable, we can't determine that.
+sub noclipping_mark3 {
+    my ($board) = @_;
+
+    return _noclipping_mark3( _list_pieces($board) );
+}
+
+
+
+# Parameters:
+#       @pieces     The list of pieces (the output of _list_pieces()).
+#                   Note: MUST be in sorted order   (for memoization purposes)
+#
+# Returns:
+#       true        There doesn't exist any combination of pieces that is a solution.
+#       false       There does exist at least one possible combination of pieces that is a solution.
+#
+# Commentary:
+#       This algorithm is FAR from ideal.  A better algorithm is something like is described in
+#       The Art of Computer Programming, section 7.2.1.4.  However, the entire section 7.2 makes my
+#       brain melt.             http://www.cs.utsa.edu/~wagner/knuth/
+#
+#           (note to self: if I DO want to understand TAOCP s7.2.1.4, talk to the folks at
+#                          https://groups.google.com/forum/#!forum/ps1-moo  )
+#
+#       However, I think we can get away with an extremely suboptimal algorithm due to one key
+#       thing -- we're memoizing this subroutine.  We need to memoize it anyway, because the caller
+#       is going to call us a lot, for basically the same input.  Thus, the memoization serves two
+#       purposes -- 1) to help out the caller, and 2) to smooth over the fact that our algorithm
+#       is piss-poor.
+sub _noclipping_mark3 {
+    my (@pieces) = @_;
+
+    if (scalar(grep {$_ != 0 && $_ != 10} @pieces) == 0) {
+        return 0;       # base case
+    }
+
+    # generate all possible pairs in this list
+    for (my $pair1=0; $pair1<@pieces; $pair1++) {
+        for (my $pair2=$pair1+1; $pair2<@pieces; $pair2++) {
+            # skip this pairing, if the sum is > 10
+            my $sum = $pieces[$pair1] + $pieces[$pair2];
+            next if ($sum > 10);
+
+            #my $depth = 6 - scalar(@pieces);
+            #my $indent = "  "x$depth;
+            #print $indent, join(" ", @pieces), "\n";
+            #print $indent, "    $pieces[$pair1] + $pieces[$pair2] => $sum\n";
+
+            # make a copy of the list, remove the two pieces, replace with a piece that combines them
+            my @new_pieces = @pieces;
+            splice @new_pieces, $pair2, 1,  ();
+            splice @new_pieces, $pair1, 1,  ();
+            @new_pieces = sort (@new_pieces, $sum);
+
+            my $ret = _noclipping_mark3( @new_pieces );
+
+            #print "${indent}YAY!\n" if (!$ret);
+            #print "\n";
+
+            return 0        if (!$ret);     # We can stop searching right now.  We found at least
+                                            # one possible combination of pieces that's a solution.
+        }
+    }
+
+    return 1;       # We tried every possible combination, and none of them were solutions.
+}
+
 
 1;
