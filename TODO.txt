@@ -1,4 +1,31 @@
 
+- I think I have IsUnsolvable::noclipping_mark3() worked out.  Pseudocode:
+
+
+        function noclipping_mark3( @pieces ) {
+            # @pieces is a sorted list of the pieces, by value
+
+            enumerate all possible pairs from the list {
+
+                remove pair from the pieces list, and replace with its sum
+
+                if sum > 10, skip this pair
+
+                ret = noclipping_mark3( @new_pieces )
+
+                if ret indicates that @new_pieces is solveble, then return ASAP, indicating
+                          that @pieces is solvable too
+            }
+
+            return, indicating our inputs are unsolvable
+        }
+
+    Although the above algorithm is FAR from ideal, there's a key trick here -- 
+    WE ARE GOING TO MEMOIZE the results of mark3().  We need to memoize it anyway, since
+    the parent is going to call it a lot.  However, memoization *also* significantly reduces the
+    problem of it being a suboptimal algorithm.
+
+
 
 - Add several boards, starting with some *extremely* simple boards, and progressing to
     slightly harder boards.  Try to hit the sweet spot of being as complex as possible, that the
