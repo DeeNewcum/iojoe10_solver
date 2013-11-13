@@ -11,6 +11,7 @@ package TreeTraversal;
     use Data::Dumper;
 
 my $num_moves = 0;      # the number of times that Move::apply() has been called
+my $num_boards = 0;     # the number of unique board configurations we've evaluated so far
 my $started;
 my $display_every_n = 0;
 
@@ -59,8 +60,9 @@ sub IDDFS {
 # show the stats so far
 sub print_stats {
     my $elapsed = time() - $started;
-    printf "         %12s moves,   %.2f seconds,   %d microseconds per move\n",
+    printf "         %12s moves,   %8s boards,   %.2f seconds,   %d microseconds per move\n",
                 commify($num_moves),
+                commify($num_boards),
                 $elapsed,
                 1000000 * $elapsed / $num_moves;
 }
@@ -87,6 +89,7 @@ sub _IDDFS {
 
         next if ($depth_remaining <= 0);
         next if $seen->{ $new_board->hash }++;
+        $num_boards++;
         #next if IsUnsolvable::noclipping_mark1($new_board);
         next if IsUnsolvable::noclipping_mark3($new_board);
 

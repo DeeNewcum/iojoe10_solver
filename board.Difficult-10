@@ -1,0 +1,8 @@
+#!/usr/bin/env ./iojoe10
+
+# Official level :   "10 is Difficult", level 10
+
+  5   4  XX   7
+  3  XX  XX   5
+  5   3   0   2
+  2   4   0  XX
