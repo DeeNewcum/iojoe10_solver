@@ -22,3 +22,14 @@
     http://www.youtube.com/playlist?list=PL473C810C4140E164
 
     https://metacpan.org/pod/List::PriorityQueue
+
+
+
+- implement the new features of the game's new release      (multiplication, inversion)
+
+- contact the author, see if they're interested in this at all
+        (it's very possible they have already built their own)
+
+            https://twitter.com/10TheGame
+            https://twitter.com/iojoetweets
+            http://www.iojoe.com/about.html     simon@iojoe.com
