@@ -1,3 +1,8 @@
+- I suspect that sliding blocks aren't being moved around by some routines
+        (in particular, TreeTraversal.pm)
+    You can see this to some extent in ./board.Tricky-2, but write a smaller board that
+    elucidates this.
+
 
 - implement A* or similar
 

@@ -24,7 +24,7 @@ sub list_available_moves {
     for (my $y=0; $y<$board->height; $y++) {
         for (my $x=0; $x<$board->width; $x++) {
             my $cell = $board->{cells}[$y][$x];
-            next unless (Move::_is_piece_combinable($cell));
+            next unless (Move::_is_piece_movable($cell));
 
             foreach my $dir (1..4) {
                 push @moves, new Move(x => $x, y => $y, dir => $dir);
@@ -94,7 +94,7 @@ sub _IDDFS {
         next if IsUnsolvable::noclipping_mark3($new_board);
 
         $display_every_n++;
-        if ($display_every_n % 1000 == 0) {
+        if ($display_every_n % 500 == 0) {
             $new_board->display;        # display the board every 1,000 moves
             print_stats();
         }
