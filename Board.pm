@@ -74,10 +74,12 @@ sub new_from_string {
             if ($cells[$x] eq '.') {        # ". and "XX" are syntactic sugar, to make it easier to
                                             # read boards...  you can still use the full value
                 $cells[$x] = -11;
-            } elsif (lc($cells[$x]) eq 'xx') {
+            } elsif ($cells[$x] =~ /^x+$/i) {
                 $cells[$x] = 10;
-            } else {
+            } elsif ($cells[$x] =~ /^-?[0-9]+$/) {
                 $cells[$x] = int $cells[$x];
+            } else {
+                die "Unreconized token:   $cells[$x]\n";
             }
         }
         scalar(@cells) == $width
@@ -113,7 +115,7 @@ sub has_won {
 }
 
 
-our %to_char = (
+our %to_hash = (
     -11 => ' ',
 
       0 => '0',
@@ -152,7 +154,7 @@ sub hash {
     my $str = '';
     for (my $y=$self->height-1; $y>=0; $y--) {
         for (my $x=0; $x<$self->width; $x++) {
-            $str .= $to_char{ $self->at($y, $x) };
+            $str .= $to_hash{ $self->at($y, $x) };
         }
         $str .= "\n";
     }

@@ -15,7 +15,7 @@
     use Data::Dumper;
 
 my $filename = shift
-    or die "please specify the filename of a board to solve\n";
+    or die join("", <DATA>);
 
 my $board = Board::new_from_file($filename);
 
@@ -30,3 +30,36 @@ if (defined($move_list)) {
 } else {
     print "No solution found.\n";
 }
+
+
+
+__DATA__
+Please specify the filename of a board to solve.
+
+
+Files are whitespace-delimited.
+
+Pieces are represented by:
+
+    Movable numbers             -10, -9, ... -1, 0, 1, ... 9
+
+    A wall                      X or XX
+
+    A blank space               .
+
+    Sliders:
+        up                      100
+        right                   200
+        down                    300
+        left                    400
+        left/right              500
+        up/down                 600
+        all four directions     700
+
+    Invert block                +-
+
+Things that aren't added yet:
+
+    Multiply blocks
+
+
