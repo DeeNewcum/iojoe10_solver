@@ -100,6 +100,8 @@ sub toString {
             $sum = 10;          # -10 and 10 are both walls, but for simplicity, we'll internally store them both as 10
         }
 
+        return undef if ($sum > 10 || $sum < -10);
+
         return $sum;
     }
 
@@ -185,8 +187,8 @@ sub apply {
 
         my $combined = _combine_pieces($cell, $hit_cell);
 
-        if (!defined($combined) || abs($combined) > 10) {
-            return 0;       # illegal move
+        if (!defined($combined)) {
+            return 0;       # illegal move -- the pairing was > 10
         }
 
         $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $combined;

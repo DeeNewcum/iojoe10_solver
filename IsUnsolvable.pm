@@ -158,7 +158,7 @@ sub _noclipping_mark3 {
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
         for (my $pair2=@pieces-1; $pair2>$pair1; $pair2--) {
             my $sum = Move::_combine_pieces( $pieces[$pair1], $pieces[$pair2] );
-            next if (!defined($sum) || abs($sum) > 10);        # skip this pairing if the sum is > 10
+            next if (!defined($sum));        # skip this pairing if the sum is > 10
 
             if (MARK3_DEBUG) {
                 printf "%-30s  %s\n",
