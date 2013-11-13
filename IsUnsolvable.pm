@@ -138,12 +138,20 @@ sub noclipping_mark3 {
 #       is going to call us a lot, for basically the same input.  Thus, the memoization serves two
 #       purposes -- 1) to help out the caller, and 2) to smooth over the fact that our algorithm
 #       is piss-poor.
+        sub MARK3_DEBUG {0}
 sub _noclipping_mark3 {
     my (@pieces) = @_;
 
     if (scalar(grep {$_ != 0 && $_ != 10} @pieces) == 0) {
         return 0;       # base case
     }
+
+    my $indent;
+    if (MARK3_DEBUG) {
+        my $depth = 10 - scalar(@pieces);
+        $indent = "  "x$depth;
+    }
+
 
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
@@ -152,26 +160,29 @@ sub _noclipping_mark3 {
             my $sum = $pieces[$pair1] + $pieces[$pair2];
             next if ($sum > 10);
 
-            #my $depth = 10 - scalar(@pieces);
-            #my $indent = "  "x$depth;
-            #print $indent, join(" ", @pieces), "\n";
-            #print $indent, "    $pieces[$pair1] + $pieces[$pair2] => $sum\n";
+            if (MARK3_DEBUG) {
+                printf "%-30s  %s\n",
+                        $indent . join(" ", @pieces),
+                        "$pieces[$pair1] + $pieces[$pair2] => $sum";
+            }
 
             # make a copy of the list, remove the two pieces, replace with a piece that combines them
             my @new_pieces = @pieces;
             splice @new_pieces, $pair2, 1,  ();
             splice @new_pieces, $pair1, 1,  ();
-            @new_pieces = sort (@new_pieces, $sum);
+            @new_pieces = sort {$a <=> $b} (@new_pieces, $sum)
+                    unless ($sum == 10 || $sum == 0);
 
             my $ret = _noclipping_mark3( @new_pieces );
 
-            #print "${indent}YAY!\n" if (!$ret);
-            #print "\n";
+            print "${indent}YAY!\n" if (MARK3_DEBUG && !$ret);
 
             return 0        if (!$ret);     # We can stop searching right now.  We found at least
                                             # one possible combination of pieces that's a solution.
         }
     }
+
+    print "${indent}BOO\n"      if MARK3_DEBUG;
 
     return 1;       # We tried every possible combination, and none of them were solutions.
 }
