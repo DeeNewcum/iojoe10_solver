@@ -147,12 +147,12 @@ sub _noclipping_mark3 {
 
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
-        for (my $pair2=$pair1+1; $pair2<@pieces; $pair2++) {
+        for (my $pair2=@pieces-1; $pair2>$pair1; $pair2--) {
             # skip this pairing, if the sum is > 10
             my $sum = $pieces[$pair1] + $pieces[$pair2];
             next if ($sum > 10);
 
-            #my $depth = 6 - scalar(@pieces);
+            #my $depth = 10 - scalar(@pieces);
             #my $indent = "  "x$depth;
             #print $indent, join(" ", @pieces), "\n";
             #print $indent, "    $pieces[$pair1] + $pieces[$pair2] => $sum\n";

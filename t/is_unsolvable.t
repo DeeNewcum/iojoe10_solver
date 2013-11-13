@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 6;
+    use Test::Simple tests => 8;
 
     use IsUnsolvable;
     use Board;
@@ -44,8 +44,10 @@ EOF
 
 
 ok(ok_unsolv_list( _noclipping_mark3 => 1, qw[       1 9   8 2   7 4             ]));
-
 ok(ok_unsolv_list( _noclipping_mark3 => 0, qw[       1 9   8 2   7 3             ]));
+
+ok(ok_unsolv_list( _noclipping_mark3 => 1, qw[      -1 2 9   8 2   6 5             ]));
+ok(ok_unsolv_list( _noclipping_mark3 => 0, qw[      -1 2 9   8 2   6 4             ]));
 
 
 sub ok_unsolv {
