@@ -81,7 +81,8 @@ sub _IDDFS {
 
         next if ($depth_remaining <= 0);
         next if $seen->{ $new_board->hash }++;
-        next if IsUnsolvable::noclipping_mark1($new_board);
+        #next if IsUnsolvable::noclipping_mark1($new_board);
+        next if IsUnsolvable::noclipping_mark3($new_board);
 
         $display_every_n++;
         if ($display_every_n % 1000 == 0) {
