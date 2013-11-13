@@ -26,6 +26,8 @@ has 'cells', is => 'rw';
     #       500         left/right moveable wall
     #       600         up/down moveable wall
     #       700         any direction moveable wall
+    #
+    #       800         invert      "+-"
 
 
 sub BUILD {
@@ -76,6 +78,8 @@ sub new_from_string {
                 $cells[$x] = -11;
             } elsif ($cells[$x] =~ /^x+$/i) {
                 $cells[$x] = 10;
+            } elsif ($cells[$x] eq '+-') {
+                $cells[$x] = 800;
             } elsif ($cells[$x] =~ /^-?[0-9]+$/) {
                 $cells[$x] = int $cells[$x];
             } else {
@@ -145,9 +149,11 @@ our %to_hash = (
     200 => '>',
     300 => 'v',
     400 => '<',
-    500 => '-',
-    600 => '|',
-    700 => '+',
+    500 => '-',     # left/right
+    600 => '|',     # up/down
+    700 => '+',     # all four directions
+
+    800 => '/',     # invert
 );
 sub hash {
     my $self = shift;
@@ -217,7 +223,7 @@ sub display {
         printf "%2d ", $y+1;
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
-            if (abs($cell) <= 9) {
+            if (abs($cell) <= 9) {                                              # numerical block
                 if ($cell > 0) {
                     _bg_color( $number_color[$cell][0] );
                     print "\e[37m";     # white foreground
@@ -226,17 +232,21 @@ sub display {
                     print "\e[107m";    # white background
                 }
                 printf "%2s", $cell;
-            } elsif ($cell == 10) {
+            } elsif ($cell == 10) {                                             # wall
                 print "\e[90m";         # gray foreground
                 _bg_color( 235 );        # dark gray
                 print " X";
-            } elsif ($cell == -11) {
+            } elsif ($cell == -11) {                                            # space
                 _bg_color( 0 );       # black background
                 print "  ";
-            } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 700) {
+            } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 700) {        # sliding blocks
                 print "\e[37m";         # white foreground
                 _bg_color( 240 );        # medium gray
                 print $arrows[$cell / 100];
+            } elsif ($cell == 800) {
+                _fg_color( 240 );       # medium gray
+                _bg_color( 15 );       # white
+                print "+-";
             }
         }
         print "\e[0m";

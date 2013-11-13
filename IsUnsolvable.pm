@@ -11,6 +11,7 @@ package IsUnsolvable;
     use warnings;
 
     use Board;
+    use Move;
 
     use Memoize;
 
@@ -80,7 +81,7 @@ sub noclipping_mark1 {
         for (my $y=0; $y<$board->height; $y++) {
             for (my $x=0; $x<$board->width; $x++) {
                 my $cell = $board->{cells}[$y][$x];
-                if (abs($cell) >= 1 && abs($cell) <= 9) {
+                if (Move::_is_piece_combinable( $cell )) {
                     push @pieces, $cell;
                 }
             }
@@ -156,9 +157,8 @@ sub _noclipping_mark3 {
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
         for (my $pair2=@pieces-1; $pair2>$pair1; $pair2--) {
-            # skip this pairing, if the sum is > 10
-            my $sum = $pieces[$pair1] + $pieces[$pair2];
-            next if ($sum > 10);
+            my $sum = Move::_combine_pieces( $pieces[$pair1], $pieces[$pair2] );
+            next if (!defined($sum) || abs($sum) > 10);        # skip this pairing if the sum is > 10
 
             if (MARK3_DEBUG) {
                 printf "%-30s  %s\n",

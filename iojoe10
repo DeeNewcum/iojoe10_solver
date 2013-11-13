@@ -41,7 +41,7 @@ Files are whitespace-delimited.
 
 Pieces are represented by:
 
-    Movable numbers             -10, -9, ... -1, 0, 1, ... 9
+    Movable numbers             -9, ... -1, 0, 1, ... 9
 
     A wall                      X or XX
 

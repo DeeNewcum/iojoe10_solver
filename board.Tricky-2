@@ -1,0 +1,8 @@
+#!/usr/bin/env ./iojoe10
+
+# Official level :   "10 is Tricky", level 2
+
+  3   4   8  -1
+  1  XX  XX   6
+  5 700 700   2
+  4   5   2   1

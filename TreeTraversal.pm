@@ -23,7 +23,7 @@ sub list_available_moves {
     for (my $y=0; $y<$board->height; $y++) {
         for (my $x=0; $x<$board->width; $x++) {
             my $cell = $board->{cells}[$y][$x];
-            next if ($cell == -11 || $cell == 10);
+            next unless (Move::_is_piece_combinable($cell));
 
             foreach my $dir (1..4) {
                 push @moves, new Move(x => $x, y => $y, dir => $dir);
@@ -49,6 +49,8 @@ sub IDDFS {
         return $ret if defined($ret);
 
         print_stats();
+
+        #die "quitting after first round\n";
     }
 
     return undef;
@@ -69,12 +71,16 @@ sub _IDDFS {
     my ($board, $depth_remaining, $seen) = @_;
 
     my @moves = @{ list_available_moves($board) };
+    #die move_list_toString(\@moves) . "\n";
+
+    #@moves = ( new Move('c2^' )  );        warn "DEBUG ONLY\n";
 
     foreach my $move (@moves) {
         my $new_board = $board->clone;
         $num_moves++;
         $move->apply($new_board)
             or next;
+        #$new_board->display;            warn "DEBUG ONLY\n";
         if ($new_board->has_won) {
             return [$move];
         }

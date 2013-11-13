@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 14;
+    use Test::Simple tests => 15;
 
     use Board;
     use Move;
@@ -37,12 +37,16 @@ ok(ok_move($board, 'a2v',      undef ));
 
 
 
-$board = new Board( width=>4, height=>4 );
+#####################################################
+################### sliders #########################
+#####################################################
 
-$board->cells->[3] = [qw[ -11 -11 -11 -11 ]];
-$board->cells->[2] = [qw[ 100 600 -11 -11 ]];
-$board->cells->[1] = [qw[ -11 -11 700 -11 ]];
-$board->cells->[0] = [qw[ -11 -11 -11 -11 ]];
+$board = Board::new_from_string(<<'EOF');
+       .   .   .   .
+     100 600   .   .
+       .   . 700   .
+       .   .   .   .
+EOF
 
     #select STDERR;
     $board->display()   if -t STDOUT;
@@ -58,6 +62,21 @@ ok(ok_move($board, 'b3>',      undef ));
 ok(ok_move($board, 'c2>',      [ -11, -11, -11, 700 ] ));
 ok(ok_move($board, 'c2<',      [ 700, -11, -11, -11 ] ));
 ok(ok_move($board, 'c2^',      [ -11, -11, -11, 700 ] ));
+
+
+
+#####################################################
+############# invert and multiply ###################
+#####################################################
+
+
+$board = Board::new_from_string(<<'EOF');
+     800   .   2
+       7   .   .
+       .   .   .
+EOF
+
+ok(ok_move($board, 'c3<',      [ -2, -11, -11 ] ));
 
 
 

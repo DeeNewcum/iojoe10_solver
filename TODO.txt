@@ -24,12 +24,15 @@
     https://metacpan.org/pod/List::PriorityQueue
 
 
+- implement multiplication
 
-- implement the new features of the game's new release      (multiplication, inversion)
+
+- MAKE SURE this works on Putty....
+        - so far, I have kind of strict requirements for the terminal....  256 colors and utf8
 
 - contact the author, see if they're interested in this at all
         (it's very possible they have already built their own)
 
             https://twitter.com/10TheGame
             https://twitter.com/iojoetweets
-            http://www.iojoe.com/about.html     simon@iojoe.com
+            http://www.iojoe.com/about.html     simon @ iojoe.com

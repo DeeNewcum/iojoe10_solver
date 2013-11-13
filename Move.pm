@@ -64,6 +64,46 @@ sub toString {
             $dir_chars{$self->dir};
 }
 
+
+    sub _is_piece_movable {
+        my ($cell) = @_;
+        return 1 if ($cell % 100 == 0 && $cell >= 100 && $cell <= 700);
+        return 1 if (abs($cell) <= 9);
+        return 0;
+    }
+
+    # Can this cell combine with others?
+    sub _is_piece_combinable {
+        my ($cell) = @_;
+        return 1 if (abs($cell) <= 9);
+        return 1 if ($cell == 800);         # invert
+        return 0;
+    }
+
+    # Returns undef if this was an illegal move.
+    # Otherwise returns the combined value.
+    sub _combine_pieces {
+        my ($cell1, $cell2) = @_;
+
+        if ($cell1 == 800 || $cell2 == 800) {
+            if ($cell1 == 800 && $cell2 == 800) {
+                return undef;       # error, can't be combined
+            } elsif ($cell1 == 800) {
+                return -1 * $cell2;
+            } else {
+                return -1 * $cell1;
+            }
+        }
+
+        my $sum = $cell1 + $cell2;
+        if ($sum == -10) {
+            $sum = 10;          # -10 and 10 are both walls, but for simplicity, we'll internally store them both as 10
+        }
+
+        return $sum;
+    }
+
+
     sub apply_DEBUG { 0 }
 
 # Move the pieces on the board to reflect the specified move.
@@ -84,7 +124,7 @@ sub apply {
     my $cell = $board->at( $self->y, $self->x );
     my @dir = @{ $direction[ $self->dir ] };
     
-    if (abs($cell) > 9 && $cell % 100 != 0) {
+    if (!_is_piece_movable($cell)) {
         return 0;       # This is an illegal move -- this isn't a movable cell.
     }
     if (exists $sliding_blocks{$cell}) {
@@ -114,10 +154,11 @@ sub apply {
     print "apply -- \@just_after_colission: ", _pos(@just_after_collision), "\n"        if apply_DEBUG();
     print "apply -- \@just_before_colission: ", _pos(@just_before_collision), "\n"      if apply_DEBUG();
 
-    # Is this a numerical block?
+    # Is this a sliding block, or a numerical block?
 
     if (exists $sliding_blocks{$cell}) {
-        # No, just a sliding block.
+
+        # This is a sliding block.
         if ($just_before_collision[0] == $self->y
          && $just_before_collision[1] == $self->x)
         {
@@ -131,20 +172,24 @@ sub apply {
 
     # Okay, this is a numerical block.
 
-    # Did we hit a non-numerical block, or the side of the board?
     my $hit_cell = $board->at( @just_after_collision );
-    if (!_in_bounds($board, @just_after_collision) || abs($hit_cell) > 9) {
+    if (!_in_bounds($board, @just_after_collision) || !_is_piece_combinable($hit_cell)) {
+        # We hit a numerical block, or the side of the board.
         if ( $just_before_collision[0] == $self->y && $just_before_collision[1] == $self->x) {
             return 0;       # The block didn't end up moving.
         }
         $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
         $board->{cells}[ $self->y ][ $self->x ] = -11;
     } else {
-        # We hit a numerical block.
-        if ($hit_cell + $cell > 10) {
+        # We hit a block we can combine with.
+
+        my $combined = _combine_pieces($cell, $hit_cell);
+
+        if (!defined($combined) || abs($combined) > 10) {
             return 0;       # illegal move
         }
-        $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $cell + $hit_cell;
+
+        $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $combined;
         $board->{cells}[ $self->y ][ $self->x ] = -11;
     }
 
