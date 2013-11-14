@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Proposed level :   "10 is Routing", level 1
+
+# Note: 7x7 is the largest any official board is, so perhaps this board should be compacted a
+# little.
+
+ . . . . . .
+ X X 5 X X .
+ X X 7 X X .
+ X X 4 X X .
+ X X 6 X . .
+ X 5 3 X . .
