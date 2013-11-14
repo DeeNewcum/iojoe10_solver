@@ -1,0 +1,8 @@
+#!/usr/bin/env ../../iojoe10
+
+# This board can't be solved unless the following feature is working properly:
+#               sliders
+
+  3   .   .   .
+ XX   .   .  XX
+  7 600   .  XX

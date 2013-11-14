@@ -1,0 +1,8 @@
+#!/usr/bin/env ../../iojoe10
+
+# This board can't be solved unless the following feature is working properly:
+#               invert
+
+  2   .  +-
+  .   .   .
+  .   5   7
