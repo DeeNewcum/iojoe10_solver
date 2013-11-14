@@ -22,6 +22,7 @@
 
     http://www.policyalmanac.org/games/aStarTutorial.htm
     https://en.wikipedia.org/wiki/A*_search_algorithm
+    http://www.autonlab.org/tutorials/astar08.pdf
     http://web.mit.edu/eranki/www/tutorials/search/
     http://theory.stanford.edu/~amitp/GameProgramming/index.html
     http://www.youtube.com/playlist?list=PL473C810C4140E164
@@ -30,12 +31,6 @@
 
 
 - implement multiplication
-
-
-- MAKE SURE this works on Putty....
-        - so far, I have kind of strict requirements for the terminal....  256 colors and utf8
-        - it would be much easier for iojoe and for others to use, if it wasn't so strict
-
 
 
 - release to a few people:

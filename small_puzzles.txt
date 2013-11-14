@@ -1,35 +1,65 @@
 Some of the smaller puzzles that are in the "10" game.  These are intended to be used for early
 testing, since smaller boards are easier to solve.
 
+========[ 2 blocks ]========
+
+- Intro-1
+- Intro-2
+
+========[ 3 blocks ]========
+
+- Intro-4
+
+========[ 8 blocks ]========
+
+- Intro-3
+
+========[ 9 blocks ]========
+
+- Intro-7
+- Intro-8
+- Intro-9
+
+========[ 10 blocks ]========
+
+- Intro-5
+- Simple-1
+- Simple-2
+- Simple-4
+
+
+
+
+
 
 ========[ 3x3 ]========
 
-- Intro / 7
-- Intro / 8
-- Intro / 9
+- Intro-7
+- Intro-8
+- Intro-9
 
-- Tricky / 11
+- Tricky-11
 
 ========[ 4x4 ]========
 
-- Blocks / 1
-- Blocks / 2
-- Blocks / 7
-- Blocks / 9
-- Blocks / 12
-- Blocks / 13
-- Blocks / 16
+- Blocks-1
+- Blocks-2
+- Blocks-7
+- Blocks-9
+- Blocks-12
+- Blocks-13
+- Blocks-16
 
-- Tricky / 1
-- Tricky / 2
-- Tricky / 12
+- Tricky-1
+- Tricky-2
+- Tricky-12
 
-- Difficult / 3
-- Difficult / 6
-- Difficult / 10
+- Difficult-3
+- Difficult-6
+- Difficult-10
 
 ========[ 5x5 ]========
 
-- Tricky / 5
-- Tricky / 7
-- Tricky / 8
+- Tricky-5
+- Tricky-7
+- Tricky-8

@@ -233,11 +233,11 @@ sub display {
                 }
                 printf "%2s", $cell;
             } elsif ($cell == 10) {                                             # wall
-                print "\e[90m";         # gray foreground
-                _bg_color( 235 );        # dark gray
+                _fg_color( 240 );       # dark gray
+                _bg_color( 237 );       # dark gray
                 print " X";
             } elsif ($cell == -11) {                                            # space
-                _bg_color( 0 );       # black background
+                _bg_color( 233 );       # black background
                 print "  ";
             } elsif ($cell % 100 == 0 && $cell >= 100 && $cell <= 700) {        # sliding blocks
                 print "\e[37m";         # white foreground
