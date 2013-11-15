@@ -10,6 +10,16 @@ testing, since smaller boards are easier to solve.
 
 - Intro-4
 
+========[ 4 blocks ]========
+
+- Inverting-2
+- Inverting-8
+- Inverting-10
+
+========[ 6 blocks ]========
+
+- Inverting-4
+
 ========[ 8 blocks ]========
 
 - Intro-3
@@ -19,6 +29,7 @@ testing, since smaller boards are easier to solve.
 - Intro-7
 - Intro-8
 - Intro-9
+- Tricky-11
 
 ========[ 10 blocks ]========
 
@@ -26,8 +37,28 @@ testing, since smaller boards are easier to solve.
 - Simple-1
 - Simple-2
 - Simple-4
+- Inverting-12
 
+========[ 11 blocks ]========
 
+- Inverting-11
+
+========[ 12 blocks ]========
+
+- Blocks-12
+- Tricky-2
+- Tricky-12
+
+========[ 13 blocks ]========
+
+- Blocks-16
+- Difficult-3
+- Difficult-24
+
+========[ 14 blocks ]========
+
+- Hard-4
+- Inverting-9
 
 
 

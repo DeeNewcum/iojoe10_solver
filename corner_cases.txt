@@ -17,11 +17,24 @@ To confirm, go to Inverting-5, and do these moves:
 
 What happens if you leave an invert-block, but deal with all other blocks?
 ==========================================================================
-Do you win the game, or not?  There are some boards where there are two invert blocks.
+In v1.1.2, you win the game.
+
+To confirm, go to Inverting-7, and do these moves:
+    E2<
+    D2^ D3^ D4^
+    E3v
+    C3> E3v E4v
+    C2> C1^ C4^
+    (it's fairly easy from there)
+
+
 
 
 What happens if you leave a multiply-block, but deal with all other blocks?
 ===========================================================================
-Do you win the game, or not?
+In v1.1.2, you win the game.
+
+To confirm, go to Inverting-12, and do these moves:
+    C4> A3^ D3< A2^ D2< D1^ D3< B4v A4> C4V     (it's obvious from there)
 
 

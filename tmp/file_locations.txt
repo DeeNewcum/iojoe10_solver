@@ -1,0 +1,15 @@
+
+==== Android ====
+
+(root mode)  /data/data/air.com.iojoe.A10/
+
+
+==== Browser ====
+
+http://games.mochiads.com/c/g/10_v896155/ten_browser.swf
+
+
+
+I was hoping to be able to insert my own levels into the game, but it looks like I would have to
+do quite a bit of digging in the .swf to make that happen:
+        https://twitter.com/10TheGame/status/401410040856195072
