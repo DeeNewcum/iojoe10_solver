@@ -7,6 +7,7 @@ package TreeTraversal;
     use Move;
     use IsUnsolvable;
 
+    use List::PriorityQueue;
     use Time::HiRes qw( time );
     use Data::Dumper;
 
@@ -108,6 +109,92 @@ sub _IDDFS {
 
     return undef;
 }
+
+
+    # given a node, generate a list of the nodes that are one step away from this node0
+    sub _get_neighbors {
+        my ($board) = @_;
+        my @neighbors;
+        for my $move (@{ list_available_moves($board) }) {
+            my $new_board = $board->clone;
+            $move->apply($new_board)
+                or next;
+            $new_board->came_from = $board;
+            $new_board->came_from_move = $move;
+            push @neighbors, $new_board;
+        }
+        return @neighbors;
+    }
+
+
+sub A_star {
+    my ($board) = @_;
+
+    my $open_set = new List::PriorityQueue;
+    my %closed_set;
+    my %seen;       # Keeps track of which nodes we've seen, and of the mapping from
+                    # hash-string => object.  I was having difficulties integrating this into
+                    # $open_set and %closed_set, so for now it will be separate.
+
+    my $fgrprnt = $board->hash;
+    $seen{ $fgrprnt } = $board;
+    $open_set->insert($board, 0);
+    $board->g = 0;
+
+    my $we_reached_the_end;
+    OUTER: while (1) {
+        $fgrprnt = $open_set->pop();       # get the node with the lowest number from the priority queue
+        my $current = $seen{ $fgrprnt };
+
+        for my $neighbor (_get_neighbors($current)) {
+            next if IsUnsolvable::noclipping_mark3($neighbor);
+            if ($neighbor->has_won) {
+                $we_reached_the_end = $neighbor;
+                last OUTER;
+            };
+            $neighbor->g = $current->g + 1;
+            if (!defined($neighbor->h)) {
+                $neighbor->h = heuristic($neighbor);
+            }
+            $neighbor->f = $neighbor->g + $neighbor->h;
+
+            my $fingerprint = $neighbor->hash;
+            if (exists $seen{$fingerprint}) {
+                my $other_copy = $seen{$fingerprint};
+                next if ($other_copy->f <= $neighbor->f);
+            }
+
+            $seen{$fingerprint} = $neighbor;
+            $open_set->insert( $fingerprint, $neighbor->f );
+        }
+
+        $closed_set{ $current->hash } = 1;
+    }
+    if (defined($we_reached_the_end)) {
+        my @move_list;
+        while (defined($we_reached_the_end)) {
+            push(@move_list, $we_reached_the_end->came_from_move)
+                    if defined($we_reached_the_end->came_from_move);
+            $we_reached_the_end = $we_reached_the_end->came_from;
+        }
+        return \@move_list;
+    } else {
+        return undef;
+    }
+}
+
+
+# Come up with the best estimate we can for how far we are from the 
+sub heuristic {
+    my ($board) = @_;
+
+    return 0;       # revert to Dijkstra's algorithm
+
+    my @combinable_pieces = IsUnsolvable::_list_pieces($board);
+    return scalar(@combinable_pieces);      # the number of pieces that are out of place
+}
+
+
 
 sub move_list_toString {
     my ($moves) = shift;

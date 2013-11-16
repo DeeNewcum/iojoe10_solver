@@ -30,6 +30,14 @@ has 'cells', is => 'rw';
     #       800         invert      "+-"
 
 
+# Variables needed for_the A* search algorithm
+has 'f', is => 'rw';        # g + h -- our estimate of the total distance from the start node to the end node, travelling through this node
+has 'g', is => 'rw';        # distance from start node to this node
+has 'h', is => 'rw';        # our guess of how far we are from the end node
+has 'came_from', is => 'rw';   # Breadcrumbs that allow us to trace our way to the beginning, once we found the end.
+has 'came_from_move', is => 'rw';       # What move was made to get us from the predecessor?
+
+
 sub BUILD {
     my $self = shift;
 
@@ -155,6 +163,8 @@ our %to_hash = (
 
     800 => '/',     # invert
 );
+# Generate a fingerprint for this board.  This provides a quick way to compare boards to see if
+# they're the same position.
 sub hash {
     my $self = shift;
     my $str = '';

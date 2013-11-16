@@ -26,7 +26,8 @@ my $board = Board::new_from_file($filename);
 
 $board->display;
 
-my $move_list = TreeTraversal::IDDFS($board);
+#my $move_list = TreeTraversal::IDDFS($board);
+my $move_list = TreeTraversal::A_star($board);
 
 if (defined($move_list)) {
     print "==== SOLUTION ====\n";

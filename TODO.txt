@@ -14,12 +14,16 @@
 
 
 
-    http://www.policyalmanac.org/games/aStarTutorial.htm
-    https://en.wikipedia.org/wiki/A*_search_algorithm
     http://www.autonlab.org/tutorials/astar08.pdf
-    http://web.mit.edu/eranki/www/tutorials/search/
-    http://theory.stanford.edu/~amitp/GameProgramming/index.html
+    http://www.gamasutra.com/view/feature/131724/smart_move_intelligent_.php?page=5
     http://www.youtube.com/playlist?list=PL473C810C4140E164
+
+    articles with pseudocode, or have discussions of implementation details:
+        https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
+        http://www.policyalmanac.org/games/aStarTutorial.htm
+        http://web.mit.edu/eranki/www/tutorials/search/
+        http://theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
+
 
     https://metacpan.org/pod/List::PriorityQueue
 
