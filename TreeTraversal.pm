@@ -142,8 +142,9 @@ sub A_star {
 
     my $fgrprnt = $board->hash;
     $seen{ $fgrprnt } = $board;
-    $open_set->insert($fgrprnt, 0);
     $board->{g} = 0;
+    $board->{f} = heuristic($board);
+    $open_set->insert($fgrprnt, $board->{f});
 
     my $we_reached_the_end;
     OUTER: while (1) {
@@ -151,8 +152,10 @@ sub A_star {
         my $current = $seen{ $fgrprnt };
 
         $current->display       if ASTAR_DEBUG;
-        $current->display;
-        print "\t\tf = $current->{f}\n";
+        if ($num_boards % 50 == 0) {
+            $current->display;
+            print "\t\tf = $current->{f}\t\tg = $current->{g}\n";
+        }
         #print_stats();
 
         for my $neighbor (_get_neighbors($current)) {
@@ -203,7 +206,7 @@ sub A_star {
 sub heuristic {
     my ($board) = @_;
 
-    return 0;       # revert to Dijkstra's algorithm
+    #return 0;       # revert to Dijkstra's algorithm
 
     my @combinable_pieces = IsUnsolvable::_list_pieces($board);
     return scalar(@combinable_pieces);      # the number of pieces that are out of place
