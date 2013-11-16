@@ -65,7 +65,7 @@ sub print_stats {
                 commify($num_moves),
                 commify($num_boards),
                 $elapsed,
-                1000000 * $elapsed / $num_moves;
+                1000000 * $elapsed / ($num_moves + 1);
 }
 
 
@@ -119,13 +119,15 @@ sub _IDDFS {
             my $new_board = $board->clone;
             $move->apply($new_board)
                 or next;
-            $new_board->came_from = $board;
-            $new_board->came_from_move = $move;
+            $num_moves++;
+            $new_board->{came_from} = $board;
+            $new_board->{came_from_move} = $move;
             push @neighbors, $new_board;
         }
         return @neighbors;
     }
 
+    sub ASTAR_DEBUG { 0 }
 
 sub A_star {
     my ($board) = @_;
@@ -136,32 +138,45 @@ sub A_star {
                     # hash-string => object.  I was having difficulties integrating this into
                     # $open_set and %closed_set, so for now it will be separate.
 
+    $started = time();
+
     my $fgrprnt = $board->hash;
     $seen{ $fgrprnt } = $board;
-    $open_set->insert($board, 0);
-    $board->g = 0;
+    $open_set->insert($fgrprnt, 0);
+    $board->{g} = 0;
 
     my $we_reached_the_end;
     OUTER: while (1) {
         $fgrprnt = $open_set->pop();       # get the node with the lowest number from the priority queue
         my $current = $seen{ $fgrprnt };
 
+        $current->display       if ASTAR_DEBUG;
+        $current->display;
+        print "\t\tf = $current->{f}\n";
+        #print_stats();
+
         for my $neighbor (_get_neighbors($current)) {
             next if IsUnsolvable::noclipping_mark3($neighbor);
+            $neighbor->display       if ASTAR_DEBUG;
             if ($neighbor->has_won) {
                 $we_reached_the_end = $neighbor;
                 last OUTER;
             };
-            $neighbor->g = $current->g + 1;
+            $neighbor->{g} = $current->g + 1;
             if (!defined($neighbor->h)) {
-                $neighbor->h = heuristic($neighbor);
+                $neighbor->{h} = heuristic($neighbor);
             }
-            $neighbor->f = $neighbor->g + $neighbor->h;
+            $neighbor->{f} = $neighbor->g + $neighbor->h;
+            print "\t\tf = $neighbor->{f}\n",
+                  "\t\tg = $neighbor->{g}\n",
+                  "\t\th = $neighbor->{h}\n"        if ASTAR_DEBUG;
 
             my $fingerprint = $neighbor->hash;
             if (exists $seen{$fingerprint}) {
                 my $other_copy = $seen{$fingerprint};
                 next if ($other_copy->f <= $neighbor->f);
+            } else {
+                $num_boards++;
             }
 
             $seen{$fingerprint} = $neighbor;

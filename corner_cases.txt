@@ -25,6 +25,7 @@ To confirm, go to Inverting-7, and do these moves:
     E3v
     C3> E3v E4v
     C2> C1^ C4^
+    B4< A4v
     (it's fairly easy from there)
 
 
