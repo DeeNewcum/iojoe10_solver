@@ -143,7 +143,7 @@ sub A_star {
     my $fgrprnt = $board->hash;
     $seen{ $fgrprnt } = $board;
     $board->{g} = 0;
-    $board->{f} = heuristic($board);
+    $board->{f} = $board->{h} = heuristic($board);
     $open_set->insert($fgrprnt, $board->{f});
 
     my $we_reached_the_end;
@@ -152,9 +152,9 @@ sub A_star {
         my $current = $seen{ $fgrprnt };
 
         $current->display       if ASTAR_DEBUG;
-        if ($num_boards % 50 == 0) {
+        if (0 || $num_boards % 50 == 0) {
             $current->display;
-            print "\t\tf = $current->{f}\t\tg = $current->{g}\n";
+            print "\t\tf = $current->{f}\t\tg = $current->{g}\t\th = $current->{h}\n";
         }
         #print_stats();
 
