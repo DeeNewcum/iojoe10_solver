@@ -225,4 +225,6 @@ sub apply {
     }
 
 
+__PACKAGE__->meta->make_immutable();       # http://stackoverflow.com/a/3166324/1042525
+
 1;

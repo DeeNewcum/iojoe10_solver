@@ -1,3 +1,8 @@
+- A* is implemented, but it seems slow.
+  Also, it doesn't seem to "dive towards the goal" like the Wikipedia article suggests.
+        It seems to act more like breadth-first search.
+
+
 - implement A* or similar
 
         - while it takes a lot of RAM, we can't do alpha-beta pruning,
