@@ -6,7 +6,7 @@ package Move;
     use strict;
     use warnings;
 
-    use Moose;
+    use Moo;
 
     use Data::Dumper;
 
@@ -225,6 +225,6 @@ sub apply {
     }
 
 
-__PACKAGE__->meta->make_immutable();       # http://stackoverflow.com/a/3166324/1042525
+#__PACKAGE__->meta->make_immutable();       # useful in Moose -- http://stackoverflow.com/a/3166324/1042525
 
 1;

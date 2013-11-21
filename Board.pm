@@ -3,7 +3,7 @@ package Board;
     use strict;
     use warnings;
 
-    use Moose;
+    use Moo;
     use Storable;
 
     use Data::Dumper;

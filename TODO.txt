@@ -36,6 +36,11 @@
 - implement multiplication
 
 
+- possible constant-time optimizations:
+
+    - install Class::XSAccessor   (Moo says it can speed things up if this is installed)
+
+
 - release to a few people:
 
     - contact the author, see if they're interested in this at all
