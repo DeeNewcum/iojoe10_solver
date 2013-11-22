@@ -1,6 +1,3 @@
-- A* NEVER GIVES THE CORRECT SOLUTION FOR easy.08pieces
-        (and has never given a correct solution either)
-
 - A* is implemented, but it seems slow.
   Even when A* beats IDDFS overall, its per-move-time is 300-500% higher.  Why?
 

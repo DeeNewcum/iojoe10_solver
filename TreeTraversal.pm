@@ -191,7 +191,7 @@ sub A_star {
     if (defined($we_reached_the_end)) {
         my @move_list;
         while (defined($we_reached_the_end)) {
-            push(@move_list, $we_reached_the_end->came_from_move)
+            unshift(@move_list, $we_reached_the_end->came_from_move)
                     if defined($we_reached_the_end->came_from_move);
             $we_reached_the_end = $we_reached_the_end->came_from;
         }
