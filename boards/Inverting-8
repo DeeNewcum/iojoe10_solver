@@ -1,0 +1,14 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Inverting is Fun", level 8
+# 
+# 7x7 4pc
+
+ 
+200 9  .  .  .  1 XX
+  . .  .  .  .  .  .
+ XX .  .  .  .  . XX
+ x5 .  .  +- .  . x2
+ XX .  .  .  .  . XX
+  . .  .  .  .  .  .
+ XX 1  .  .  .  8 400

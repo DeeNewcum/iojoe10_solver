@@ -67,16 +67,17 @@ sub toString {
 
     sub _is_piece_movable {
         my ($cell) = @_;
-        return 1 if ($cell % 100 == 0 && $cell >= 100 && $cell <= 700);
-        return 1 if (abs($cell) <= 9);
+        return 1 if ($cell % 100 == 0 && $cell >= 100 && $cell <= 700);     # sliding blocks
+        return 1 if (abs($cell) <= 9);          # numerical blocks
         return 0;
     }
 
     # Can this cell combine with others?
     sub _is_piece_combinable {
         my ($cell) = @_;
-        return 1 if (abs($cell) <= 9);
-        return 1 if ($cell == 800);         # invert
+        return 1 if (abs($cell) <= 9);                  # numerical blocks
+        return 1 if ($cell == 800);                     # invert
+        return 1 if ($cell >= 52 && $cell <= 59);       # multiplication
         return 0;
     }
 
@@ -85,24 +86,39 @@ sub toString {
     sub _combine_pieces {
         my ($cell1, $cell2) = @_;
 
-        if ($cell1 == 800 || $cell2 == 800) {
-            if ($cell1 == 800 && $cell2 == 800) {
-                return undef;       # error, can't be combined
-            } elsif ($cell1 == 800) {
-                return -1 * $cell2;
-            } else {
-                return -1 * $cell1;
-            }
+        if (!_is_piece_movable($cell1) && !_is_piece_movable($cell2)) {
+            # Both of these pieces are combinable.
+            # However, neither is movable, so they couldn't have come into contact with each other.
+            # (eg. two inverts, or two multiplies, or an invert and a multiply)
+            return undef;       # error, can't be combined
         }
 
-        my $sum = $cell1 + $cell2;
-        if ($sum == -10) {
-            $sum = 10;          # -10 and 10 are both walls, but for simplicity, we'll internally store them both as 10
+        if (!_is_piece_movable($cell2)) {
+            # If one piece is unmovable, make sure it's $cell1.  This reduces the number of
+            # if-statements we have to do below.
+            my $temp = $cell2;
+            $cell2 = $cell1;
+            $cell1 = $temp;
         }
 
-        return undef if ($sum > 10 || $sum < -10);
+        if ($cell1 == 800) {        # invert
+            return -1 * $cell2;
+        }
 
-        return $sum;
+        my $combined;
+        if ($cell1 >= 52 && $cell1 <= 59) {     # multiply
+            $combined = ($cell1 - 50) * $cell2;
+        } else {
+            $combined = $cell1 + $cell2;
+        }
+
+        if ($combined == -10) {
+            $combined = 10;          # -10 and 10 are both walls, but for simplicity, we'll internally store them both as 10
+        }
+
+        return undef if ($combined > 10 || $combined < -10);
+
+        return $combined;
     }
 
 

@@ -19,6 +19,7 @@ Inverting-5     [8]
 
         # <30 seconds
 Inverting-6     [15]
+Inverting-10    [4]
 Inverting-11    [12]
 Difficult-10    [12]
 

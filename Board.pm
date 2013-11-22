@@ -28,6 +28,8 @@ has 'cells', is => 'rw';
     #       700         any direction moveable wall
     #
     #       800         invert      "+-"
+    #
+    #       52 to 59    x2, x3, x4, ... x9
 
 
 # Variables needed for_the A* search algorithm
@@ -86,6 +88,8 @@ sub new_from_string {
                 $cells[$x] = -11;
             } elsif ($cells[$x] =~ /^x+$/i) {
                 $cells[$x] = 10;
+            } elsif ($cells[$x] =~ /^x([2-9])$/i) {        # multiplication
+                $cells[$x] = 50 + $1;
             } elsif ($cells[$x] eq '+-') {
                 $cells[$x] = 800;
             } elsif ($cells[$x] =~ /^-?[0-9]+$/) {
@@ -167,6 +171,15 @@ our %to_hash = (
     700 => '+',     # all four directions
 
     800 => '/',     # invert
+
+    52 => 'u',
+    53 => 'w',
+    54 => 'y',
+    55 => 'z',
+    56 => 'U',
+    57 => 'W',
+    58 => 'Y',
+    59 => 'Z',
 );
 # Generate a fingerprint for this board.  This provides a quick way to compare boards to see if
 # they're the same position.
@@ -258,10 +271,14 @@ sub display {
                 print "\e[37m";         # white foreground
                 _bg_color( 240 );        # medium gray
                 print $arrows[$cell / 100];
-            } elsif ($cell == 800) {
+            } elsif ($cell == 800) {                                            # invert
                 _fg_color( 240 );       # medium gray
                 _bg_color( 15 );       # white
                 print "+-";
+            } elsif ($cell >= 52 && $cell <= 59) {
+                _bg_color( 34 );        # green
+                _fg_color( 15 );        # white
+                print "x" . int($cell - 50);
             }
         }
         print "\e[0m";

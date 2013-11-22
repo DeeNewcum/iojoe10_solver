@@ -5,9 +5,6 @@
   ways that blocks could move.
 
 
-- implement multiplication
-
-
 - Implement IsUnsolvable::geographically_isolated().
   Test it on:
         Inverting-11

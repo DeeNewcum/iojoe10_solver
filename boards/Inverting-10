@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Inverting is Fun", level 10
+# 
+# 6x6 4pc
+
+ 
+XX XX XX  .  .  .
+XX  4 +-  .  .  .
+XX x2  1  .  .  .
+ .  .  .  1 x2 XX
+ .  .  .  +- 4 XX
+ .  .  . XX XX XX
