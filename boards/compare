@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+# Compare the performance of IDDFS and A*
+
+    use strict;
+    use warnings;
+
+my $board = shift
+    or die "Specify a board to compare.\n";
+
+print "======== A* ========\n";
+system "./$board | tail -1";
+
+print "\n\n";
+print "======== IDDFS ========\n";
+system "./$board --iddfs | tail -1";

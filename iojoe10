@@ -19,15 +19,19 @@
     use Time::HiRes qw( time );
     use Data::Dumper;
 
-my $filename = shift
-    or die join("", <DATA>);
+my $filename;
+parse_cmdline();
 
 my $board = Board::new_from_file($filename);
 
 $board->display;
 
-#my $move_list = TreeTraversal::IDDFS($board);
-my $move_list = TreeTraversal::A_star($board);
+my $move_list;
+if ($ARGV{'--iddfs'}) {
+    $move_list = TreeTraversal::IDDFS($board);
+} else {
+    $move_list = TreeTraversal::A_star($board);
+}
 
 if (defined($move_list)) {
     print "==== SOLUTION ====\n";
@@ -39,9 +43,30 @@ if (defined($move_list)) {
 
 
 
-__DATA__
-Please specify the filename of a board to solve.
+# Changes the following variables in the global scope:
+#       - $filename
+#       - %ARGV       (see https://metacpan.org/pod/Getopt::Casual)
+sub parse_cmdline {
+    # do a bit of manual parsing before Getopt::Casual takes over
+    if (@ARGV && $ARGV[0] !~ /^-/ && -e $ARGV[0]) {
+        $filename = shift @ARGV;
+    } else {
+        usage();
+    }
+    eval "use Getopt::Casual";
 
+    sub usage {print <DATA>; exit 1}
+    $ARGV{'--help'} || $ARGV{'-h'} and usage();
+    $ARGV{'--dump_args'} and die Dumper(\%ARGV);
+}
+
+
+__DATA__
+Usage:
+    iojoe10 <board_filename> <options>
+
+
+######## board format ########
 
 Files are whitespace-delimited.
 
@@ -67,5 +92,11 @@ Pieces are represented by:
 Things that aren't added yet:
 
     Multiply blocks
+
+
+######## options ########
+
+--iddfs
+        Use the IDDFS search algorithm.  (default is A*)
 
 
