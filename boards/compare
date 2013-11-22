@@ -8,9 +8,21 @@
 my $board = shift
     or die "Specify a board to compare.\n";
 
-print "======== A* ========\n";
-system "./$board | tail -1";
+my @lines;
 
-print "\n\n";
-print "======== IDDFS ========\n";
-system "./$board --iddfs | tail -1";
+@lines = qx[ ./$board ];
+summarize_output('A*',  \@lines);
+
+@lines = qx[ ./$board --iddfs ];
+summarize_output('IDDFS',  \@lines);
+
+
+sub summarize_output {
+    my ($title, $lines) = @_;
+    my $summary = $lines->[-1];
+    $summary =~ s/^\s{10}//;
+    chomp $summary;
+    printf "%-20s %s\n",
+        $title,
+        $summary;
+}

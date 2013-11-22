@@ -1,0 +1,15 @@
+======== easy.08pieces ========
+A*                         2,023 moves,        493 boards,   0.37 seconds,   181 microseconds per move
+IDDFS                      6,765 moves,        874 boards,   0.34 seconds,   50 microseconds per move
+======== easy.09pieces ========
+A*                        34,908 moves,      6,346 boards,   6.73 seconds,   192 microseconds per move
+IDDFS                    159,044 moves,     16,803 boards,   8.00 seconds,   50 microseconds per move
+======== Tricky-11 ========
+A*                         3,247 moves,        817 boards,   0.80 seconds,   246 microseconds per move
+IDDFS                     15,031 moves,      2,719 boards,   0.79 seconds,   52 microseconds per move
+======== Inverting-4 ========
+A*                         1,317 moves,        420 boards,   0.41 seconds,   309 microseconds per move
+IDDFS                     18,155 moves,      2,351 boards,   0.95 seconds,   52 microseconds per move
+======== Simple-2 ========
+A*                        90,323 moves,     19,701 boards,   21.08 seconds,   233 microseconds per move
+IDDFS                    121,436 moves,      8,020 boards,   6.30 seconds,   51 microseconds per move

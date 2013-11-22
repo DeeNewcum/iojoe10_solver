@@ -1,6 +1,5 @@
 - A* is implemented, but it seems slow.
-  Also, it doesn't seem to "dive towards the goal" like the Wikipedia article suggests.
-        It seems to act more like breadth-first search.
+  Even when A* beats IDDFS overall, its per-move-time is 300-500% higher.  Why?
 
 
 - implement A* or similar
