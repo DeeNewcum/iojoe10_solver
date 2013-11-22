@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 10;
+    use Test::Simple tests => 6;
 
     use IsUnsolvable;
     use Board;
@@ -17,40 +17,14 @@
 
     use Data::Dumper;
 
-ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
-          5   .   4 
-          .   .   7 
-          .   .   5 
-EOF
+ok(ok_unsolv_list( _noclipping => 1, qw[       1 9   8 2   7 4             ]));
+ok(ok_unsolv_list( _noclipping => 0, qw[       1 9   8 2   7 3             ]));
 
-ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
-          5   .   3 
-          .   .   7 
-          .   .   5 
-EOF
+ok(ok_unsolv_list( _noclipping => 1, qw[      -1 2 9   8 2   6 5             ]));
+ok(ok_unsolv_list( _noclipping => 0, qw[      -1 2 9   8 2   6 4             ]));
 
-ok(ok_unsolv( noclipping_mark1 => <<'EOF', 1));
-          5   .   3 
-          .   5   9 
-          5   .   5 
-EOF
-
-ok(ok_unsolv( noclipping_mark1 => <<'EOF', 0));
-          5   .   1 
-          .   5   9 
-          .   .   5 
-EOF
-
-
-
-ok(ok_unsolv_list( _noclipping_mark3 => 1, qw[       1 9   8 2   7 4             ]));
-ok(ok_unsolv_list( _noclipping_mark3 => 0, qw[       1 9   8 2   7 3             ]));
-
-ok(ok_unsolv_list( _noclipping_mark3 => 1, qw[      -1 2 9   8 2   6 5             ]));
-ok(ok_unsolv_list( _noclipping_mark3 => 0, qw[      -1 2 9   8 2   6 4             ]));
-
-ok(ok_unsolv_list( _noclipping_mark3 => 1, qw[      1 9   8 4 -2   6 4 -1            ]));
-ok(ok_unsolv_list( _noclipping_mark3 => 0, qw[      1 9   8 4 -2   6 5 -1            ]));
+ok(ok_unsolv_list( _noclipping => 1, qw[      1 9   8 4 -2   6 4 -1            ]));
+ok(ok_unsolv_list( _noclipping => 0, qw[      1 9   8 4 -2   6 5 -1            ]));
 
 
 sub ok_unsolv {

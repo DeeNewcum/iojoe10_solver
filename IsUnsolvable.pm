@@ -18,13 +18,7 @@ package IsUnsolvable;
     use Data::Dumper;
 
 
-memoize('_noclipping_mark3');
-
-
-# TODO:
-#       - detect when a numerical piece becomes geographically isolated from the others
-#               (though this is a bit tricky...   if it's isolated, but still has enough
-#                peers in its isolated section to reach 10, then it's still okay)
+memoize('_noclipping');
 
 
 
@@ -33,87 +27,14 @@ memoize('_noclipping_mark3');
 # for a moment that every piece can float around freely.  If the pieces still can't find a match
 # given unrestricted movement, then the current board is obviously unsolvable.
 #
-# "Mark1" is the most simplistic approach.  We just look at one piece at a time, and ignore all
-# others.  Is there some way that THIS piece and match up with any other piece, ignoring all other
-# [competing] pieces?  If there's any piece that isn't true for, then this board is unsovlable.
 #
-# "Mark2" is slightly more sophisticated.  If there are no negative pieces on the board, then Mark2
-# tries to match up all moveable pieces together, but taking into account all other pairings.
-# This may be O(n^2), we'll see.  However, if there are any negative pieces on the board, then 
-# it gives up.  Mark2 is blind whenever there are negative pieces around.
-#
-# "Mark3" will hopefully do what Mark2 does, but do its job even when there are negative pieces are
-# around.  I have no idea what O() this will be.
-#
-# Returns true if the board is definitely unsolvable.
-# Returns false if it doesn't know if it's solvable or not.
-sub noclipping_mark1 {
-    my $board = shift;
-
-    my %pieces = _uniq_c(_list_pieces($board));
-
-    # If there are any negative pieces, then this algorithm can't handle it.  Give up.
-    my @pieces = sort keys %pieces;
-    return 0 if ($pieces[0] < 0);
-
-    OUTER:
-    for my $current_piece (reverse @pieces) {
-        last if ($current_piece < 5);
-
-        for my $match_piece (1..(10 - $current_piece)) {
-            if (exists $pieces{$match_piece}) {
-                next OUTER;
-            }
-        }
-
-        return 1;
-    }
-
-    return 0;
-}
-
-
-    sub _list_pieces {
-        my ($board) = @_;
-
-        # make a list of all the numberical pieces that are still free
-        my @pieces;
-        for (my $y=0; $y<$board->height; $y++) {
-            for (my $x=0; $x<$board->width; $x++) {
-                my $cell = $board->{cells}[$y][$x];
-                if (Move::_is_piece_combinable( $cell )) {
-                    push @pieces, $cell;
-                }
-            }
-        }
-        @pieces = sort @pieces;
-        #die Dumper \@pieces;
-
-        return @pieces;
-    }
-
-    # Does the same thing as $(uniq -c)
-    # That is, it takes a list in, and returns a hash, where the values of the hash indicate 
-    # the number of times that element is repeated.
-    sub _uniq_c {
-        my (@list) = @_;
-
-        my %hash;
-        foreach my $item (@list) {
-            $hash{$item}++;
-        }
-
-        return %hash;
-    }
-
-
 # Returns:
 #       true        Board is definitely unsolvable.
 #       false       Board may be solvable or unsolvable, we can't determine that.
-sub noclipping_mark3 {
+sub noclipping {
     my ($board) = @_;
 
-    return _noclipping_mark3( _list_pieces($board) );
+    return _noclipping( _list_pieces($board) );
 }
 
 
@@ -139,8 +60,8 @@ sub noclipping_mark3 {
 #       is going to call us a lot, for basically the same input.  Thus, the memoization serves two
 #       purposes -- 1) to help out the caller, and 2) to smooth over the fact that our algorithm
 #       is piss-poor.
-        sub MARK3_DEBUG {0}
-sub _noclipping_mark3 {
+        sub NOCLIPPING_DEBUG {0}
+sub _noclipping {
     my (@pieces) = @_;
 
     if (scalar(grep {$_ != 0 && $_ != 10} @pieces) == 0) {
@@ -148,7 +69,7 @@ sub _noclipping_mark3 {
     }
 
     my $indent;
-    if (MARK3_DEBUG) {
+    if (NOCLIPPING_DEBUG) {
         my $depth = 10 - scalar(@pieces);
         $indent = "  "x$depth;
     }
@@ -160,7 +81,7 @@ sub _noclipping_mark3 {
             my $sum = Move::_combine_pieces( $pieces[$pair1], $pieces[$pair2] );
             next if (!defined($sum));        # skip this pairing if the sum is > 10
 
-            if (MARK3_DEBUG) {
+            if (NOCLIPPING_DEBUG) {
                 printf "%-30s  %s\n",
                         $indent . join(" ", @pieces),
                         "$pieces[$pair1] + $pieces[$pair2] => $sum";
@@ -173,19 +94,40 @@ sub _noclipping_mark3 {
             @new_pieces = sort {$a <=> $b} (@new_pieces, $sum)
                     unless ($sum == 10 || $sum == 0);
 
-            my $ret = _noclipping_mark3( @new_pieces );
+            my $ret = _noclipping( @new_pieces );
 
-            print "${indent}YAY!\n" if (MARK3_DEBUG && !$ret);
+            print "${indent}YAY!\n" if (NOCLIPPING_DEBUG && !$ret);
 
             return 0        if (!$ret);     # We can stop searching right now.  We found at least
                                             # one possible combination of pieces that's a solution.
         }
     }
 
-    print "${indent}BOO\n"      if MARK3_DEBUG;
+    print "${indent}BOO\n"      if NOCLIPPING_DEBUG;
 
     return 1;       # We tried every possible combination, and none of them were solutions.
 }
+
+
+    sub _list_pieces {
+        my ($board) = @_;
+
+        # make a list of all the numberical pieces that are still free
+        my @pieces;
+        for (my $y=0; $y<$board->height; $y++) {
+            for (my $x=0; $x<$board->width; $x++) {
+                my $cell = $board->{cells}[$y][$x];
+                if (Move::_is_piece_combinable( $cell )) {
+                    push @pieces, $cell;
+                }
+            }
+        }
+        @pieces = sort @pieces;
+        #die Dumper \@pieces;
+
+        return @pieces;
+    }
+
 
 
 1;

@@ -171,7 +171,7 @@ sub A_star {
         }
 
         for my $neighbor (_get_neighbors($current)) {
-            next if IsUnsolvable::noclipping_mark3($neighbor);
+            next if IsUnsolvable::noclipping($neighbor);
             $neighbor->display       if ASTAR_DEBUG;
             if ($neighbor->has_won) {
                 $we_reached_the_end = $neighbor;
