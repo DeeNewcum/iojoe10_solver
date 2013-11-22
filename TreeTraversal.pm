@@ -250,6 +250,7 @@ sub display_solution {
         $board->display;
         print "\n";
     }
+    print "\t\t\t", join(' ', map {$_->toString} @$moves), "\n";
 }
 
 

@@ -1,0 +1,11 @@
+#!/usr/bin/env /home/dee/git/iojoe10_solver/iojoe10
+
+# One of the boards that's used by the automatic-testing.
+# Therefore, it's important that there be strictly only ONE possible sequence of moves that sovles it.
+
+# This is a minor variation of auto_1.  The solution-order doesn't change, but the pieces do
+# test a different code-path.
+
+X  .  .  .  . x2  .  X x9  .  .  5
+X  X  .  X  X  .  X  X  X  .  X  X
+3  .  .  X  .  .  .  .  . -1  .  X

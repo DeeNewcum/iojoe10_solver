@@ -14,14 +14,6 @@
         https://en.wikipedia.org/wiki/A*_search_algorithm#Bounded_relaxation
 
 
-- Come up with some test cases for the solver as a whole.
-  While this might seem difficult to verify, I should be able to come up with contrived boards
-  that **limit the number of solutions**.  For instance, there's a one-way mechanism, that allows
-  blocks to come in, but not be let out.  This could be expanded somewhat to limit the possible
-  ways that blocks could move.
-        - t/boards/slider3  is an extant example
-
-
 - Implement IsUnsolvable::geographically_isolated().
   Test it on:
         Inverting-11
