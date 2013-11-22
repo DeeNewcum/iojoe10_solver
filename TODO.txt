@@ -19,6 +19,7 @@
   that **limit the number of solutions**.  For instance, there's a one-way mechanism, that allows
   blocks to come in, but not be let out.  This could be expanded somewhat to limit the possible
   ways that blocks could move.
+        - t/boards/slider3  is an extant example
 
 
 - Implement IsUnsolvable::geographically_isolated().
