@@ -1,0 +1,8 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Inverting Is Fun", level 11
+
+  3   2   3   8
+ XX   5   4  XX
+  8   3  XX  XX
+  6   2   8  +-
