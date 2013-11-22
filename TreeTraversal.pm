@@ -15,6 +15,7 @@ my $num_moves = 0;      # the number of times that Move::apply() has been called
 my $num_boards = 0;     # the number of unique board configurations we've evaluated so far
 my $started;
 my $display_every_n = 0;
+my $display_every_n_secs = 0;
 
 
 sub list_available_moves {
@@ -61,10 +62,16 @@ sub IDDFS {
 # show the stats so far
 sub print_stats {
     my $elapsed = time() - $started;
-    printf "         %12s moves,   %8s boards,   %.2f seconds,   %d microseconds per move\n",
+    my $elapsed_str;
+    if ($elapsed < 20) {
+        $elapsed_str = sprintf "%.2f seconds", $elapsed;
+    } else {
+        $elapsed_str = sprintf "%d:%02d", int($elapsed / 60), int($elapsed) % 60;
+    }
+    printf "         %12s moves,   %8s boards,   %15s,   %d microseconds per move\n",
                 commify($num_moves),
                 commify($num_boards),
-                $elapsed,
+                $elapsed_str,
                 1000000 * $elapsed / ($num_moves + 1);
 }
 
@@ -152,11 +159,15 @@ sub A_star {
         my $current = $seen{ $fgrprnt };
 
         $current->display       if ASTAR_DEBUG;
-        if (0 || $num_boards % 50 == 0) {
+        my $t = time();
+        if ($t - $display_every_n_secs > 3) {
+            $display_every_n_secs = $t;
             $current->display;
+                my $duration = int(time - $started);
             print "\t\tf = $current->{f}\t\tg = $current->{g}\t\th = $current->{h}\n";
+                    #sprintf "%d:%02d\n", int($duration / 60), $duration % 60;
+            print_stats();
         }
-        #print_stats();
 
         for my $neighbor (_get_neighbors($current)) {
             next if IsUnsolvable::noclipping_mark3($neighbor);

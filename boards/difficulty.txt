@@ -1,0 +1,33 @@
+            These boards are rated by how difficult they are for our solver, with
+            easier ones listed first.
+
+            Brackets indicate the number of pieces.
+
+
+        # <1 second
+easy.08pieces   [8]
+Tricky-11       [9]
+Inverting-4     [6]
+Simple-1        [11]
+Simple-2        [10]
+easy.09pieces   [9]
+Blocks-16       [13]
+
+        # <10 seconds
+Blocks-9        [14]
+Inverting-5     [8]
+
+        # <30 seconds
+Inverting-6     [15]
+Inverting-11    [12]
+Difficult-10    [12]
+
+        # <60 seconds
+Blocks-12       [13]
+Hard-4          [14]
+
+
+######### currently unsolvable within < 2-5 minutes (whenever I get impatient) ############
+Tricky-2        [12]
+Blocks-1        [15]
+Hard-3          [21]

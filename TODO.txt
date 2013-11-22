@@ -1,9 +1,10 @@
 - implement multiplication
 
 
-- implement IsUnsolvable::geographically_isolated()
-        - test it on Inverting-11
-
+- Implement IsUnsolvable::geographically_isolated().
+  Test it on:
+        Inverting-11
+        Blocks-12
 
 - Are there any ways to improve the heuristic?  That seems like one of the best ways to speed up A*.
         - have it prioritize combining  9s, 8s, and 1s, over other combinations

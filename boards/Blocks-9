@@ -1,0 +1,10 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Blocks", level 9
+# 
+# 4x4 14pcs
+
+ -1  6 -2 XX
+  4  1  7  5
+  8 XX  2  6
+  4  6  1  3
