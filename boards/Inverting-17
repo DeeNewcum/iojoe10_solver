@@ -1,0 +1,12 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Inverting is Fun", level 17
+# 
+# 6x6 16pcs
+
+XX  3  8  5  2 XX
+ 1 >>  .  . vv  9
+ 4  .  . +-  .  2
+ 6  . +-  .  .  7
+ 5 ^^  .  . <<  4
+XX  6  5  7  8 XX
