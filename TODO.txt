@@ -7,9 +7,11 @@
         moves in an optimal solution.  Then when we report the final statistics, report
         how much longer the found-solution is than the optimal field.
 
+
 - Add an "alpha" parameter as a cmdline parameter, as mentioned here:
         http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
         https://en.wikipedia.org/wiki/A*_search_algorithm#Bounded_relaxation
+
 
 - Come up with some test cases for the solver as a whole.
   While this might seem difficult to verify, I should be able to come up with contrived boards

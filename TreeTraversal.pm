@@ -156,6 +156,7 @@ sub A_star {
     my $we_reached_the_end;
     OUTER: while (1) {
         $fgrprnt = $open_set->pop();       # get the node with the lowest number from the priority queue
+        last if (!defined($fgrprnt));       # no nodes in the queue
         my $current = $seen{ $fgrprnt };
 
         $current->display       if ASTAR_DEBUG;

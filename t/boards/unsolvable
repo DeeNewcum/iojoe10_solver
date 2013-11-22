@@ -1,0 +1,10 @@
+#!/usr/bin/env ../../iojoe10
+
+# This board can't be solved.  The proper behavior is for the solver to detect this situation,
+# behave properly, and report the situation.
+# 
+# Currently IDDFS has problems with this:
+#       https://github.com/DeeNewcum/iojoe10_solver/issues/1
+
+  7   .
+  .   2
