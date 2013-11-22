@@ -79,13 +79,13 @@ Pieces are represented by:
     A blank space               .
 
     Sliders:
-        up                      100
-        right                   200
-        down                    300
-        left                    400
-        left/right              500
-        up/down                 600
-        all four directions     700
+        up                      ^^
+        right                   >>
+        down                    vv
+        left                    <<
+        left/right              <>
+        up/down                 ^v
+        all four directions     RK      (rook / castle)
 
     Invert block                +-
 

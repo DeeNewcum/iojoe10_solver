@@ -69,6 +69,19 @@ sub new_from_file {
 }
 
 
+my %from_string = (
+    'xx'        =>  10,         # wall
+    'x'         =>  10,         # wall
+    '+-'        => 800,         # invert
+    '.'         => -11,         # space / empty cell
+    '^^'        => 100,         # slider -- up
+    '>>'        => 200,         # slider -- right
+    'vv'        => 300,         # slider -- down
+    '<<'        => 400,         # slider -- left
+    '<>'        => 500,         # slider -- left/right
+    '^v'        => 600,         # slider -- up/down
+    'rk'        => 700,         # slider -- all around      (RK = rook)
+);
 sub new_from_string {
     my ($string) = @_;
 
@@ -85,16 +98,11 @@ sub new_from_string {
     for (my $y=0; $y<$height; $y++) {
         my @cells = split ' ', $lines[$height - 1 - $y];
         for (my $x=0; $x<@cells; $x++) {
-            if ($cells[$x] eq '.') {        # ". and "XX" are syntactic sugar, to make it easier to
-                                            # read boards...  you can still use the full value
-                $cells[$x] = -11;
-            } elsif ($cells[$x] =~ /^x+$/i) {
-                $cells[$x] = 10;
-            } elsif ($cells[$x] =~ /^x([2-9])$/i) {        # multiplication
+            if (exists $from_string{lc($cells[$x])}) {
+                $cells[$x] = $from_string{lc($cells[$x])};
+            } elsif ($cells[$x] =~ /^x([2-9])$/i) {         # multiplication
                 $cells[$x] = 50 + $1;
-            } elsif ($cells[$x] eq '+-') {
-                $cells[$x] = 800;
-            } elsif ($cells[$x] =~ /^-?[0-9]+$/) {
+            } elsif ($cells[$x] =~ /^-?[0-9]+$/) {          # numerical block
                 $cells[$x] = int $cells[$x];
             } else {
                 die "Unreconized token:   $cells[$x]\n";
