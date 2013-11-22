@@ -264,11 +264,20 @@ sub get_combined_groups {
 
     # Make each move, and remember which groups got combined.
     foreach my $move (@$move_list) {
+        my $last_board = $board->clone;
         my ($y1, $x1) = ($move->y, $move->x);           # position before the move
         my ($y2, $x2) = @{ $move->apply($board) };      # position after the move
+        my $combined_with = $last_board->at($y2, $x2);  # what piece was at this location, just before the move?
         # combine the two groups
-        unshift @{ $grid_groups[$y2][$x2] }, 
-                @{ $grid_groups[$y1][$x1] };
+        if (($combined_with >= 52 && $combined_with <= 59) || $combined_with == 800) {
+            # Whenever we multiply something, we have to wrap it in parentheses, because we're using
+            # infix notation.
+            unshift @{ $grid_groups[$y2][$x2] }, 
+                       $grid_groups[$y1][$x1];
+        } else {
+            unshift @{ $grid_groups[$y2][$x2] }, 
+                    @{ $grid_groups[$y1][$x1] };
+        }
         $grid_groups[$y1][$x1] = undef;
     }
 
@@ -345,13 +354,34 @@ sub display_solution {
     print "\n";
     foreach my $group (@groups) {
         print "\t";
-        foreach my $piece (@$group) {
-            Board::display_one_piece( $piece );
-            print "  ";
-        }
+        _display_group($group);
         print "\n\n";
     }
 }
+
+
+    sub _display_group {
+        my ($group) = @_;
+
+        my $first = 1;
+        for (my $ctr=0; $ctr<@$group; $ctr++) {
+            my $piece = $group->[$ctr];
+            if (ref($piece)) {
+                print " + "     if (!$first);
+                print "( "      ;#if (@$piece > 1);
+                _display_group($piece);
+                print " )"      ;#if (@$piece > 1);
+            } elsif ($piece == 800) {
+                print " * -1";
+            } elsif ($piece >= 52 && $piece <= 59) {
+                print " * ", $piece - 50;
+            } else {
+                print " + "     if (!$first);
+                print $piece;
+            }
+            $first = 0;
+        }
+    }
 
 
 
