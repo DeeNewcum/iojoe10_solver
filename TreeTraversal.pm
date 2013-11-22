@@ -267,6 +267,7 @@ sub get_combined_groups {
         my $last_board = $board->clone;
         my ($y1, $x1) = ($move->y, $move->x);           # position before the move
         my ($y2, $x2) = @{ $move->apply($board) };      # position after the move
+        next if ($last_board->at($y1, $x1) % 100 == 0);     # movable blocks don't combine
         my $combined_with = $last_board->at($y2, $x2);  # what piece was at this location, just before the move?
         # combine the two groups
         if (($combined_with >= 52 && $combined_with <= 59) || $combined_with == 800) {
