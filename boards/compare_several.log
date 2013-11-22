@@ -1,15 +1,18 @@
 ======== easy.08pieces ========
-A*                           140 moves,         87 boards,   0.03 seconds,   177 microseconds per move
-IDDFS                      6,765 moves,        874 boards,   0.33 seconds,   49 microseconds per move
+A*                           140 moves,         87 boards,   0.03 seconds,   179 microseconds per move
+IDDFS                      6,765 moves,        874 boards,   0.34 seconds,   49 microseconds per move
+======== Tricky-11 ========
+A*                           624 moves,        129 boards,   0.10 seconds,   162 microseconds per move
+IDDFS                     15,031 moves,      2,719 boards,   0.78 seconds,   51 microseconds per move
+======== Inverting-4 ========
+A*                           766 moves,        273 boards,   0.16 seconds,   202 microseconds per move
+IDDFS                     18,155 moves,      2,351 boards,   0.94 seconds,   51 microseconds per move
+======== Simple-2 ========
+A*                           201 moves,        172 boards,   0.05 seconds,   227 microseconds per move
+IDDFS                    121,436 moves,      8,020 boards,   6.41 seconds,   52 microseconds per move
 ======== easy.09pieces ========
 A*                           394 moves,        190 boards,   0.07 seconds,   168 microseconds per move
-IDDFS                    159,044 moves,     16,803 boards,   7.82 seconds,   49 microseconds per move
-======== Tricky-11 ========
-A*                           624 moves,        129 boards,   0.10 seconds,   160 microseconds per move
-IDDFS                     15,031 moves,      2,719 boards,   0.76 seconds,   50 microseconds per move
-======== Inverting-4 ========
-A*                           766 moves,        273 boards,   0.15 seconds,   198 microseconds per move
-IDDFS                     18,155 moves,      2,351 boards,   0.91 seconds,   50 microseconds per move
-======== Simple-2 ========
-A*                           201 moves,        172 boards,   0.04 seconds,   219 microseconds per move
-IDDFS                    121,436 moves,      8,020 boards,   6.44 seconds,   53 microseconds per move
+IDDFS                    159,044 moves,     16,803 boards,   7.60 seconds,   47 microseconds per move
+======== Inverting-5 ========
+A*                         8,616 moves,      2,587 boards,   2.85 seconds,   330 microseconds per move
+IDDFS                    650,859 moves,     48,694 boards,   46.00 seconds,   70 microseconds per move

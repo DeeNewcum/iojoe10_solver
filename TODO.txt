@@ -1,37 +1,3 @@
-- A* is implemented, but it seems slow.
-  Even when A* beats IDDFS overall, its per-move-time is 300-500% higher.  Why?
-
-
-- implement A* or similar
-
-        - while it takes a lot of RAM, we can't do alpha-beta pruning,
-            since this is a single-player game
-
-    https://en.wikipedia.org/wiki/Combinatorial_optimization
-    https://en.wikipedia.org/wiki/A*_search_algorithm#Variants_of_A.2A
-        https://en.wikipedia.org/wiki/IDA*
-
-
-    "A* search is one of the best general-purpose graph search algorithms when there's a way to
-    estimate the distance to the goal"
-
-
-
-
-    http://www.autonlab.org/tutorials/astar08.pdf
-    http://www.gamasutra.com/view/feature/131724/smart_move_intelligent_.php?page=5
-    http://www.youtube.com/playlist?list=PL473C810C4140E164
-
-    articles with pseudocode, or have discussions of implementation details:
-        https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
-        http://www.policyalmanac.org/games/aStarTutorial.htm
-        http://web.mit.edu/eranki/www/tutorials/search/
-        http://theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
-
-
-    https://metacpan.org/pod/List::PriorityQueue
-
-
 - implement multiplication
 
 
@@ -67,6 +33,9 @@
                 http://jayisgames.com/archives/2013/10/10.php
 
 
+- A* seems to be taking more time-per-move than IDDFS.
+  Is this an apples-to-apples comparison?  Is the metric when running IDDFS accurate?
+
 
 - Create a new series of boards for inclusion with the game, called "10 is Routing".
   The emphasis here is on path-finding / routing pieces through a path, and providing little
@@ -86,3 +55,21 @@
         make it wider.     Use Term::Readkey?   http://stackoverflow.com/a/1782149/1042525
         Or just assume it's 80 cols wide, in which case we can fit 5 boards wide...
 
+
+
+
+
+- notes from implementing A*:
+
+    "A* search is one of the best general-purpose graph search algorithms when there's a way to
+    estimate the distance to the goal"
+
+    http://www.autonlab.org/tutorials/astar08.pdf
+    http://www.gamasutra.com/view/feature/131724/smart_move_intelligent_.php?page=5
+    http://www.youtube.com/playlist?list=PL473C810C4140E164
+
+    articles with pseudocode, or have discussions of implementation details:
+        https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
+        http://www.policyalmanac.org/games/aStarTutorial.htm
+        http://web.mit.edu/eranki/www/tutorials/search/
+        http://theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
