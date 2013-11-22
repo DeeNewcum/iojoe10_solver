@@ -74,7 +74,6 @@ sub _noclipping {
         $indent = "  "x$depth;
     }
 
-
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
         for (my $pair2=@pieces-1; $pair2>$pair1; $pair2--) {
@@ -100,6 +99,15 @@ sub _noclipping {
 
             return 0        if (!$ret);     # We can stop searching right now.  We found at least
                                             # one possible combination of pieces that's a solution.
+        }
+
+        # We also want to try to just remove ths one piece, if it's possible to win without
+        # combining it.
+        if (Move::_can_win_without_combining($pieces[$pair1])) {
+            my @new_pieces = @pieces;
+            splice @new_pieces, $pair1, 1,  ();
+            my $ret = _noclipping( @new_pieces );
+            return 0        if (!$ret);
         }
     }
 

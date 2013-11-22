@@ -72,13 +72,22 @@ sub toString {
         return 0;
     }
 
-    # Can this cell combine with others?
+    # Can this piece combine with others?
     sub _is_piece_combinable {
         my ($cell) = @_;
         return 1 if (abs($cell) <= 9);                  # numerical blocks
         return 1 if ($cell == 800);                     # invert
         return 1 if ($cell >= 52 && $cell <= 59);       # multiplication
         return 0;
+    }
+
+    # Can this piece be left uncombined, and you can still win?
+    #           (assumption:  Only pass combinable pieces to this)
+    # See the document "corner_cases.txt".
+    sub _can_win_without_combining {
+        my ($cell) = @_;
+        return 1 if ($cell == 800);                     # invert
+        return 1 if ($cell >= 52 && $cell <= 59);       # multiplication
     }
 
     # Returns undef if this was an illegal move.
