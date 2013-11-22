@@ -9,7 +9,7 @@
         how much longer the found-solution is than the optimal field.
 
 
-- Add an "alpha" parameter as a cmdline parameter, as mentioned here:
+- Add a --relax cmdline parameter, as mentioned here:
         http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
         https://en.wikipedia.org/wiki/A*_search_algorithm#Bounded_relaxation
 
@@ -26,6 +26,17 @@
         - Is there any way to extract the data when IsUnsolvable::noclipping_mark3 knows FOR SURE
           that two or more blocks need to combine eventually?  If so, we should *absolutely*
           prioritize those before any other moves.
+
+
+- Are there any ways to improve the algorithm, other than the heuristic?
+
+        - Is there any way to apply Jump Point Search to "10"?
+          What if we 1) *imagined* that we could move pieces around, without being 100% confident
+          that we could, 2) explored whether that gets us closer to the destination, and 
+          3) if it DOES get us closer to the destination, then we go back and double-check that
+          the mental leap taken in Step #1 is actually possible?
+                  http://harablog.wordpress.com/2011/09/07/jump-point-search/
+
 
 - possible constant-time optimizations:
 
@@ -45,15 +56,6 @@
     - post in some other places:
                 http://jayisgames.com/archives/2013/10/10.php
 
-
-- A* seems to be taking more time-per-move than IDDFS.
-  I'm not sure this is a fair comparison, however.  IDDFS visits nodes several times, and there
-  are several caching mechanisms in the algorithm.  These caches will make IDDFS appear to be faster
-  (per-move) than A*, but this is an illusion.
-
-        - If the IDDFS metric is inaccurate, then we haven't been getting proper information about
-          how much of a time-penalty we get from fingerprinting or other "optional" features.
-          TODO: Re-evaluate these on A* instead.
 
 
 - Create a new series of boards for inclusion with the game, called "10 is Routing".
@@ -77,18 +79,43 @@
 
 
 
+- The "number of moves" metric is incorrect at the very beginning of a large board.  A* actually
+  evaluates ALL first-level moves, always, up-front.  It looks like the current metric only counts
+  moves after we pull them off of the open set.  We should change this so it counts moves AS they're
+  being put onto the open set.
+
+
+- Notes about time-per-move in A* versus IDDFS:
+  A* seems to take more time-per-move than IDDFS.  I'm not sure this is a fair comparison, however.
+  IDDFS visits nodes several times, and there are several caching mechanisms in the algorithm.
+  These caches will make IDDFS appear to be faster (per-move) than A*, but this is an illusion.
+
+        - If the IDDFS metric is inaccurate, then we haven't been getting proper information about
+          how much of a time-penalty we get from fingerprinting or other "optional" features.
+          TODO: Re-evaluate these on A* instead.
+
 
 - notes from implementing A*:
 
     "A* search is one of the best general-purpose graph search algorithms when there's a way to
     estimate the distance to the goal"
 
+    http://www.cs.ualberta.ca/~tony/RecentPapers/Draft.5.2.pdf
     http://www.autonlab.org/tutorials/astar08.pdf
     http://www.gamasutra.com/view/feature/131724/smart_move_intelligent_.php?page=5
+    https://en.wikibooks.org/wiki/Artificial_Intelligence/Search/Heuristic_search/Astar_Search
     http://www.youtube.com/playlist?list=PL473C810C4140E164
+    http://heyes-jones.com/astar.php
+    http://www.gamasutra.com/view/feature/131505/toward_more_realistic_pathfinding.php?print=1
 
     articles with pseudocode, or have discussions of implementation details:
         https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
         http://www.policyalmanac.org/games/aStarTutorial.htm
         http://web.mit.edu/eranki/www/tutorials/search/
         http://theory.stanford.edu/~amitp/GameProgramming/ImplementationNotes.html
+        http://wiki.gamegardens.com/Path_Finding_Tutorial#Pseudo-code_A.2A
+
+    advice on optimizing A*, making it FASTER
+        http://www.seas.upenn.edu/~cis568/presentations/AStar.pdf
+        http://harablog.wordpress.com/2011/09/07/jump-point-search/
+
