@@ -11,10 +11,12 @@
         Blocks-12
 
 - Are there any ways to improve the heuristic?  That seems like one of the best ways to speed up A*.
-        - have it prioritize combining  9s, 8s, and 1s, over other combinations
+
+        - have it prioritize combining  9s and 8s (and maybe 1s?) over other combinations
+
         - Is there any way to extract the data when IsUnsolvable::noclipping_mark3 knows FOR SURE
-          that two blocks need to pair up eventually?  If so, we should *absolutely* prioritize 
-          those before any other moves.
+          that two or more blocks need to combine eventually?  If so, we should *absolutely*
+          prioritize those before any other moves.
 
 - possible constant-time optimizations:
 
