@@ -138,8 +138,11 @@ sub toString {
 # Modifies the existing board.  If you want to keep a copy of the board before the move was made,
 # make a copy of the board before you apply the move (using Board::clone()).
 #
-# Returns a boolean indicating whether anything changed on the board.
-# False means either an illegal move, or a legal move that resulted in no real change.
+# Return value is true/false, indicating whether anything changed on the board.
+# False means either an illegal move, or a legal move that resulted in no change.
+#
+# When a change was made, the return value is a listref of the coordinates that the piece stopped
+# at.
 sub apply {
     my $self = shift;
     my ($board) = @_;
@@ -193,7 +196,7 @@ sub apply {
         } else {
             $board->{cells}[ $self->y ][ $self->x ] = -11;
             $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
-            return 1;
+            return \@just_before_collision;
         }
     }
 
@@ -207,6 +210,8 @@ sub apply {
         }
         $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
         $board->{cells}[ $self->y ][ $self->x ] = -11;
+
+        return \@just_before_collision;
     } else {
         # We hit a block we can combine with.
 
@@ -218,9 +223,9 @@ sub apply {
 
         $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $combined;
         $board->{cells}[ $self->y ][ $self->x ] = -11;
-    }
 
-    return 1;
+        return \@just_after_collision;
+    }
 }
 
     # returns true/false, indicating if the point lies inside the board

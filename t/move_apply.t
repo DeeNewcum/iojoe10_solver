@@ -93,7 +93,7 @@ sub ok_move {
 
     my $apply_ret = $m->apply($b);
 
-    if (defined($row_col) != ~~$apply_ret) {
+    if (defined($row_col) != !!$apply_ret) {
         return 0;
     }
 
