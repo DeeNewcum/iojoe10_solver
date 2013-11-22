@@ -43,13 +43,15 @@ has 'came_from_move', is => 'rw';       # What move was made to get us from the 
 sub BUILD {
     my $self = shift;
 
-    $self->cells(
-            [ map {
-                    [ map
-                          { -11 }
-                          1..$self->width() ]
-                  } 1..$self->height() ]
-    );
+    if (!defined($self->{cells})) {
+        $self->cells(
+                [ map {
+                        [ map
+                              { -11 }
+                              1..$self->width() ]
+                      } 1..$self->height() ]
+        );
+    }
 }
 
 
@@ -109,13 +111,11 @@ sub new_from_string {
 
 sub clone {
     my $self = shift;
-
-    my $cloned = new Board(
-         width  => $self->{width},
+    return new Board(
+        width  => $self->{width},
         height => $self->{height},
+        cells  => Storable::dclone( $self->cells ),
     );
-    $cloned->{cells} = Storable::dclone( $self->cells );
-    return $cloned;
 }
 
 
