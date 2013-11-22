@@ -36,6 +36,9 @@
 - A* seems to be taking more time-per-move than IDDFS.
   Is this an apples-to-apples comparison?  Is the metric when running IDDFS accurate?
 
+        - if the IDDFS metric is inaccurate, then we haven't been getting proper information about
+          how much of a time-penalty we get from hashing or other "optional" features
+
 
 - Create a new series of boards for inclusion with the game, called "10 is Routing".
   The emphasis here is on path-finding / routing pieces through a path, and providing little
