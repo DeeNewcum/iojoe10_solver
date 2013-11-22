@@ -81,6 +81,14 @@ sub toString {
         return 0;
     }
 
+    # Is this piece combinable, but non-numeric?
+    #       (ie. is it an invert or multiply)
+    sub _is_piece_nonnumeric_combinable {
+        my ($cell) = @_;
+        return 0 if (abs($cell) <= 9);
+        return _is_piece_combinable($cell);
+    }
+
     # Can this piece be left uncombined, and you can still win?
     #           (assumption:  Only pass combinable pieces to this)
     # See the document "corner_cases.txt".
