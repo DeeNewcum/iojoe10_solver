@@ -96,7 +96,7 @@ sub _IDDFS {
         }
 
         next if ($depth_remaining <= 0);
-        next if $seen->{ $new_board->hash }++;
+        next if $seen->{ $new_board->fingerprint }++;
         $num_boards++;
         #next if IsUnsolvable::noclipping_mark1($new_board);
         next if IsUnsolvable::noclipping_mark3($new_board);
@@ -142,12 +142,12 @@ sub A_star {
     my $open_set = new List::PriorityQueue;
     my %closed_set;
     my %seen;       # Keeps track of which nodes we've seen, and of the mapping from
-                    # hash-string => object.  I was having difficulties integrating this into
+                    # fingerprint-string => object.  I was having difficulties integrating this into
                     # $open_set and %closed_set, so for now it will be separate.
 
     $started = time();
 
-    my $fgrprnt = $board->hash;
+    my $fgrprnt = $board->fingerprint;
     $seen{ $fgrprnt } = $board;
     $board->{g} = 0;
     $board->{f} = $board->{h} = heuristic($board);
@@ -186,7 +186,7 @@ sub A_star {
                   "\t\tg = $neighbor->{g}\n",
                   "\t\th = $neighbor->{h}\n"        if ASTAR_DEBUG;
 
-            my $fingerprint = $neighbor->hash;
+            my $fingerprint = $neighbor->fingerprint;
             if (exists $seen{$fingerprint}) {
                 my $other_copy = $seen{$fingerprint};
                 next if ($other_copy->f <= $neighbor->f);
@@ -198,7 +198,7 @@ sub A_star {
             $open_set->insert( $fingerprint, $neighbor->f );
         }
 
-        $closed_set{ $current->hash } = 1;
+        $closed_set{ $current->fingerprint } = 1;
     }
     if (defined($we_reached_the_end)) {
         my @move_list;

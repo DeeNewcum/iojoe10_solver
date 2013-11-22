@@ -52,7 +52,7 @@
   (per-move) than A*, but this is an illusion.
 
         - If the IDDFS metric is inaccurate, then we haven't been getting proper information about
-          how much of a time-penalty we get from hashing or other "optional" features.
+          how much of a time-penalty we get from fingerprinting or other "optional" features.
           TODO: Re-evaluate these on A* instead.
 
 

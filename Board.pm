@@ -136,7 +136,7 @@ sub has_won {
 }
 
 
-our %to_hash = (
+our %to_fingerprint = (
     -11 => ' ',
 
       0 => '0',
@@ -183,12 +183,12 @@ our %to_hash = (
 );
 # Generate a fingerprint for this board.  This provides a quick way to compare boards to see if
 # they're the same position.
-sub hash {
+sub fingerprint {
     my $self = shift;
     my $str = '';
     for (my $y=$self->height-1; $y>=0; $y--) {
         for (my $x=0; $x<$self->width; $x++) {
-            $str .= $to_hash{ $self->at($y, $x) };
+            $str .= $to_fingerprint{ $self->at($y, $x) };
         }
         $str .= "\n";
     }
