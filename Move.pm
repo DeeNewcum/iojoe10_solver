@@ -85,15 +85,15 @@ sub toString {
     # Otherwise returns the combined value.
     sub _combine_pieces {
         my ($cell1, $cell2) = @_;
-
-        if (!_is_piece_movable($cell1) && !_is_piece_movable($cell2)) {
-            # Both of these pieces are combinable.
-            # However, neither is movable, so they couldn't have come into contact with each other.
-            # (eg. two inverts, or two multiplies, or an invert and a multiply)
-            return undef;       # error, can't be combined
-        }
-
+        
         if (!_is_piece_movable($cell2)) {
+            if (!_is_piece_movable($cell1)) {
+                # Both of these pieces are combinable.
+                # However, neither is movable, so they couldn't have come into contact with each other.
+                # (eg. two inverts, or two multiplies, or an invert and a multiply)
+                return undef;       # error, can't be combined
+            }
+
             # If one piece is unmovable, make sure it's $cell1.  This reduces the number of
             # if-statements we have to do below.
             my $temp = $cell2;
