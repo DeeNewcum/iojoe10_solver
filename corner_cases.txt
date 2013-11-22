@@ -35,7 +35,10 @@ What happens if you leave a multiply-block, but deal with all other blocks?
 ===========================================================================
 In v1.1.2, you win the game.
 
-To confirm, go to Inverting-12, and do these moves:
+To confirm, go to Multiplying-4, and do these moves:
+    b3^ b4> c2> d2^ d4v
+
+Another way to confirm, using Inverting-12:
     C4> A3^ D3< A2^ D2< D1^ D3< B4v A4> C4V     (it's obvious from there)
 
 
