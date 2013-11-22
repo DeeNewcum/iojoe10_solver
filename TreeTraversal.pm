@@ -99,8 +99,7 @@ sub _IDDFS {
         next if ($depth_remaining <= 0);
         next if $seen->{ $new_board->fingerprint }++;
         $num_boards++;
-        #next if IsUnsolvable::noclipping_mark1($new_board);
-        next if IsUnsolvable::noclipping_mark3($new_board);
+        next if IsUnsolvable::noclipping($new_board);
 
         $display_every_n++;
         if ($display_every_n % 500 == 0) {
