@@ -41,6 +41,10 @@
 
 - Are there any ways to improve the heuristic?  That seems like one of the best ways to speed up A*.
         - have it prioritize combining  9s, 8s, and 1s, over other combinations
+        - In some cases, we know that two pieces MUST be combined at some point.
+                (because of the work done in IsUnsolvable::noclipping_mark3())
+          Is it possible to extract that information, and use it to avoid exploring paths that
+          misuse either of that pair of pieces?
     
 
 
