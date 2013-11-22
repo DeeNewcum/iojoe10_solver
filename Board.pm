@@ -217,15 +217,15 @@ sub display {
 
     # The "1" moveable tile is a distinctive color.  As is every other.
     # What color is it?
-    #   (for each line, there's two colors:  the first is the foreground color version, with good
-    #   contrast with a white foreground...   the second is the background color version, with good
-    #   contrast with a white background)
+    # Each line contains:
+    #   1. bg color for use with positive numbers, it should have good contrast with a white foreground
+    #   2. fg color for use with negative numbers, it should have good contrast with a white background
     my @number_color = (
         [0, 0],     # 0 = black on white
         [1, 1],     # 1 = red
-        [172, 172], # 2 = orange
-        [3, 94],    # 3 = yellow
-        [40, 40],   # 4 = light green
+        [202, 202], # 2 = orange
+        [3, 3],    # 3 = yellow
+        [34, 34],   # 4 = light green
         [28, 28],   # 5 = medium green
         [22, 22],   # 6 = dark green
         [63, 63],   # 7 = light blue
@@ -258,7 +258,7 @@ sub display {
             if (abs($cell) <= 9) {                                              # numerical block
                 if ($cell > 0) {
                     _bg_color( $number_color[$cell][0] );
-                    print "\e[37m";     # white foreground
+                    _fg_color( 15 );     # white foreground
                 } else {
                     _fg_color( $number_color[abs($cell)][1] );
                     print "\e[107m";    # white background
