@@ -1,3 +1,10 @@
+- Come up with some test cases for the solver as a whole.
+  While this might seem difficult to verify, I should be able to come up with contrived boards
+  that **limit the number of solutions**.  For instance, there's a one-way mechanism, that allows
+  blocks to come in, but not be let out.  This could be expanded somewhat to limit the possible
+  ways that blocks could move.
+
+
 - implement multiplication
 
 
@@ -8,10 +15,6 @@
 
 - Are there any ways to improve the heuristic?  That seems like one of the best ways to speed up A*.
         - have it prioritize combining  9s, 8s, and 1s, over other combinations
-        - In some cases, we know that two pieces MUST be combined at some point.
-                (because of the work done in IsUnsolvable::noclipping_mark3())
-          Is it possible to extract that information, and use it to avoid exploring paths that
-          misuse either of that pair of pieces?
     
 
 

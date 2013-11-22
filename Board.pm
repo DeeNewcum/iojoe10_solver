@@ -112,17 +112,6 @@ sub clone {
     );
     $cloned->{cells} = Storable::dclone( $self->cells );
     return $cloned;
-
-    #my %dont_clone = (
-    #    came_from => delete $self->{came_from},
-    #    came_from_move => delete $self->{came_from_move},
-    #);
-    #my $cloned = bless Storable::dclone($self),
-    #                 ref($self);
-    #while (my ($var, $val) = each %dont_clone) {
-    #    $self->{$var} = $val;
-    #}
-    #return $cloned;
 }
 
 
