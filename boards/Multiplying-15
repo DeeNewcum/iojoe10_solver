@@ -1,0 +1,10 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Multiplying is Fun", level 15
+# 
+# 4x4 13pcs
+
+ 5  7 XX  4
+-2 x3 x2  7
+ 4  3  6  8
+ 3  2  5  3

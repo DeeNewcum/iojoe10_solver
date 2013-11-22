@@ -1,0 +1,9 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Multiplying is Fun", level 8
+# 
+# 3x3 8pcs
+
+ 2  5  9
+-2  5  5
+ 4  6 x3
