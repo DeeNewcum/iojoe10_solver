@@ -48,18 +48,16 @@ sub noclipping {
 #       false       There does exist at least one possible combination of pieces that is a solution.
 #
 # Commentary:
-#       This algorithm is FAR from ideal.  A better algorithm is something like is described in
+#       This algorithm is seemingly less than ideal. A better algorithm is something like described in
 #       The Art of Computer Programming, section 7.2.1.4.  However, the entire section 7.2 makes my
 #       brain melt.             http://www.cs.utsa.edu/~wagner/knuth/
 #
+#       However, this algorithm still functions optimally!  This is because we need to memoize it,
+#       because the caller calls us a lot with the same inputs.  Amazing bonus -- memoizing it also
+#       fixes the problems with its inefficiency.
+#
 #           (note to self: if I DO want to understand TAOCP s7.2.1.4, talk to the folks at
 #                          https://groups.google.com/forum/#!forum/ps1-moo  )
-#
-#       However, I think we can get away with an extremely suboptimal algorithm due to one key
-#       thing -- we're memoizing this subroutine.  We need to memoize it anyway, because the caller
-#       is going to call us a lot, for basically the same input.  Thus, the memoization serves two
-#       purposes -- 1) to help out the caller, and 2) to smooth over the fact that our algorithm
-#       is piss-poor.
         sub NOCLIPPING_DEBUG {0}
 sub _noclipping {
     my (@pieces) = @_;
