@@ -225,12 +225,80 @@ sub heuristic {
 }
 
 
+# After a solution is found, go through and calculate which pieces got combined together.
+#
+# This can be useful to display to the user.  It's also useful in automated testing.
+#
+# Returns a list-of-lists, where:
+#       - The outer list is the group that got combined together.  Its contents should always
+#         combine to be 10  (or -10).
+#         Note though that pieces that didn't get combined (see _can_win_without_combining()),
+#         they will be left in a group of their own.
+#       - The inner list contains individual pieces.  The variable-type of a piece is the same type
+#         that's used in Board::cells.
+#         The order of this list is the order that they were combined in.
+sub get_combined_groups {
+    my ($move_list, $board) = @_;
+
+    $board = $board->clone;     # don't corrupt the one that was passed to us
+
+    my $width = $board->width;
+    my $height = $board->height;
+
+    # We're going to go through the sequence of moves in a minute.  While we're doing that,
+    # the group information will live on a grid.
+    #
+    # Early on, there will be many groups, but they will get consolidated as groups get combined
+    # during each move.
+    my @grid_groups;
+    for (my $y=0; $y<$height; $y++) {
+        for (my $x=0; $x<$width; $x++) {
+            if (Move::_is_piece_combinable( $board->{cells}[$y][$x] )) {
+                # at the beginning, each group just contains the piece that it started with
+                $grid_groups[$y][$x] = [ $board->{cells}[$y][$x] ];
+            } else {
+                $grid_groups[$y][$x] = undef;
+            }
+        }
+    }
+
+    # Make each move, and remember which groups got combined.
+    foreach my $move (@$move_list) {
+        my ($y1, $x1) = ($move->y, $move->x);           # position before the move
+        my ($y2, $x2) = @{ $move->apply($board) };      # position after the move
+        # combine the two groups
+        unshift @{ $grid_groups[$y2][$x2] }, 
+                @{ $grid_groups[$y1][$x1] };
+        $grid_groups[$y1][$x1] = undef;
+    }
+
+    # Pull the groups out of the grid, put them into a plain list.
+    my @group_list;
+    for (my $y=0; $y<$height; $y++) {
+        for (my $x=0; $x<$width; $x++) {
+            if (defined($grid_groups[$y][$x])) {
+                push @group_list, $grid_groups[$y][$x];
+            }
+        }
+    }
+
+    # The order of the groups is arbitrary, but it can be nice to display the simplest groups first,
+    # then the most complex groups, and finally the groups that didn't get combined.
+    @group_list = sort {_group_sort($a) <=> _group_sort($b)} @group_list;
+
+    return @group_list;
+}
+        sub _group_sort {
+            my ($group) = @_;
+            return (scalar(@$group) == 1) ? 99 : scalar(@$group);
+        }
+
 
 sub move_list_toString {
-    my ($moves) = shift;
+    my ($move_list) = shift;
 
     my $str = '';
-    foreach my $move (@$moves) {
+    foreach my $move (@$move_list) {
         $str .= $move->toString . "  ";
     }
     return $str;
@@ -238,19 +306,32 @@ sub move_list_toString {
 
 
 sub display_solution {
-    my ($moves, $board) = @_;
+    my ($move_list, $orig_board) = @_;
 
-    $board = $board->clone;     # don't corrupt the one that was passed to us
+    my $board = $orig_board->clone;     # don't corrupt the one that was passed to us
 
     $board->display;
 
-    foreach my $move (@$moves) {
+    foreach my $move (@$move_list) {
         $move->apply($board);
         print "  " x ($board->width + 3), $move->toString, "\n";
         $board->display;
         print "\n";
     }
-    print "\t\t\t", join(' ', map {$_->toString} @$moves), "\n";
+    print "\t\t\t", join(' ', map {$_->toString} @$move_list), "\n";
+
+    my @groups = get_combined_groups($move_list, $orig_board);
+    
+    ## display the groups
+    print "\n";
+    foreach my $group (@groups) {
+        print "\t";
+        foreach my $piece (@$group) {
+            Board::display_one_piece( $piece );
+            print "  ";
+        }
+        print "\n\n";
+    }
 }
 
 
