@@ -288,15 +288,6 @@ sub get_combined_groups {
                             || _group_subsort($b) <=> _group_subsort($a)
                        } @group_list;
 
-    # Within each group, the current order is how they were combined.  While that might be practical,
-    # it can be nicer to view it with the highest-numbered pieces listed first.
-    #       (however, whenever there's an invert or multiply piece, we can't move the position of
-    #       that invert or multiply...  but we CAN sort the list to the left of it, and sort the
-    #       list to the right)
-    for (my $ctr=0; $ctr<@group_list; $ctr++) {
-        $group_list[$ctr] = _group_pieces_sort( $group_list[$ctr] );
-    }
-
     return @group_list;
 }
         # Shorter groups first, then the longer groups, followed by groups that didn't get combined.
@@ -321,31 +312,6 @@ sub get_combined_groups {
                 }
                 return undef;
             }
-
-
-        sub _group_pieces_sort {
-            my ($group) = @_;
-            #local $Data::Dumper::Indent = 0;
-            #print Dumper(['_group_pieces_sort', @_]), "\n";
-            # Is there an invert or a multiply anywhere in the list?
-            my $inv_mul_pos = _first_index {Move::_is_piece_nonnumeric_combinable $_} @$group;
-            if (!defined($inv_mul_pos)) {
-                return [ sort {$b <=> $a} @$group ];
-            } else {
-                #die Dumper $group, $inv_mul_pos;
-                my $right_list = [ splice @$group, $inv_mul_pos + 1 ];
-                my $inv_mul = pop @$group;
-                my $left_list = $group;
-                #print Dumper(['going to recurse',left => $left_list, right=>$right_list]), "\n";
-
-                # Now we have two lists, the pieces to the left of the inv/mul, and the pieces to
-                # the right of the inv/mul.
-                # Sort these two lists separately, and then glue everything back together.
-                $left_list  = _group_pieces_sort( $left_list );
-                $right_list = _group_pieces_sort( $right_list );
-                return [ @$left_list, $inv_mul, @$right_list ];
-            }
-        }
 
 
 sub move_list_toString {
