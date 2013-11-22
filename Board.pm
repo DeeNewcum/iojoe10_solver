@@ -247,8 +247,12 @@ sub display {
     binmode STDOUT, ":encoding(UTF-8)";     # we're going to be outputting UTF8 characters
     #_ansi_cursor_home();
 
+    # We have a special mode, where if we're just passed one block, we ONLY display that,
+    # nothing else, not even a newline.
+    my $oneblock = ($self->height == 1 && $self->width == 1);
+
     for (my $y=$self->height-1; $y>=0; $y--) {
-        printf "%2d ", $y+1;
+        printf "%2d ", $y+1     unless $oneblock;
         for (my $x=0; $x<$self->width; $x++) {
             my $cell = $self->cells->[$y][$x];
             if (abs($cell) <= 9) {                                              # numerical block
@@ -283,19 +287,29 @@ sub display {
         }
         print "\e[0m";
         #print "\n";
+        _ansi_newline()     unless $oneblock;
+    }
+    if (!$oneblock) {
+        #_ansi_newline();
+        print "   ";
+        for (my $x=0; $x<$self->width; $x++) {
+            print " ", chr(ord("a") + $x);
+        }
         _ansi_newline();
     }
-    #_ansi_newline();
-    print "   ";
-    for (my $x=0; $x<$self->width; $x++) {
-        print " ", chr(ord("a") + $x);
-    }
-    _ansi_newline();
 
     #print "\n\n";
     #_ansi_newline();
     #_ansi_newline();
     #_ansi_erase_below();
+}
+
+# This is terribly inefficient, but we don't use it that much.
+sub display_one_piece {
+    my ($piece) = @_;
+    my $board = new Board(width => 1, height => 1);
+    $board->{cells}[0][0] = $piece;
+    $board->display();
 }
 
     sub _fg_color {
