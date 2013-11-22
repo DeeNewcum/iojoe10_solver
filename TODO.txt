@@ -1,7 +1,8 @@
 - This points out that A* can be FAST or ACCURATE but not both.
         http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
-  Because of my dogged pursuit of speed, it's likely I will end up comprimising accuracy.
-  Therefore, I need metrics that show exactly how much accuracy is comprimised.
+  Because of my dogged pursuit of speed, it's likely I will end up compromising accuracy.
+  Therefore, I need metrics that show exactly how much accuracy is compromised, to make sure
+  I don't overdo it.
 
   TODO: Add a "optimal moves" field to every board, that is manually-entered.  It's the number of
         moves in an optimal solution.  Then when we report the final statistics, report
@@ -53,10 +54,13 @@
 
 
 - A* seems to be taking more time-per-move than IDDFS.
-  Is this an apples-to-apples comparison?  Is the metric when running IDDFS accurate?
+  I'm not sure this is a fair comparison, however.  IDDFS visits nodes several times, and there
+  are several caching mechanisms in the algorithm.  These caches will make IDDFS appear to be faster
+  (per-move) than A*, but this is an illusion.
 
-        - if the IDDFS metric is inaccurate, then we haven't been getting proper information about
-          how much of a time-penalty we get from hashing or other "optional" features
+        - If the IDDFS metric is inaccurate, then we haven't been getting proper information about
+          how much of a time-penalty we get from hashing or other "optional" features.
+          TODO: Re-evaluate these on A* instead.
 
 
 - Create a new series of boards for inclusion with the game, called "10 is Routing".
