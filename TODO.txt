@@ -1,3 +1,16 @@
+- This points out that A* can be FAST or ACCURATE but not both.
+        http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
+  Because of my dogged pursuit of speed, it's likely I will end up comprimising accuracy.
+  Therefore, I need metrics that show exactly how much accuracy is comprimised.
+
+  TODO: Add a "optimal moves" field to every board, that is manually-entered.  It's the number of
+        moves in an optimal solution.  Then when we report the final statistics, report
+        how much longer the found-solution is than the optimal field.
+
+- Add an "alpha" parameter as a cmdline parameter, as mentioned here:
+        http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
+        https://en.wikipedia.org/wiki/A*_search_algorithm#Bounded_relaxation
+
 - Come up with some test cases for the solver as a whole.
   While this might seem difficult to verify, I should be able to come up with contrived boards
   that **limit the number of solutions**.  For instance, there's a one-way mechanism, that allows
