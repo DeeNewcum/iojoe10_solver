@@ -74,8 +74,11 @@ END {
 sub _noclipping {
     my (@pieces) = @_;
 
-    if (scalar(grep {$_ != 0 && $_ != 10} @pieces) == 0) {
-        return 0;       # base case
+    # Simplify -- remove pieces that don't change the answer.
+    @pieces = grep {$_ != 0 && $_ != 10 &&  $_ != -10} @pieces;
+
+    if (scalar(@pieces) == 0) {
+        return 0;       # base case -- there are no pieces left, so it's obviously solvable
     }
 
     my $indent;
@@ -85,7 +88,8 @@ sub _noclipping {
     }
 
     if (!$ARGV{'--disable-noclipping-shortcut'}) {
-        return 0 if (!_noclipping_shortcut(@pieces));
+        my $shortcut_ret = _noclipping_shortcut(@pieces);
+        return $shortcut_ret if (defined($shortcut_ret));
     }
 
     # generate all possible pairs in this list
@@ -155,8 +159,21 @@ sub _noclipping {
 #       we process a lot of ultimately unsolvable positions.  If we can't speed those up too, 
 #       then the full tree will have to be explored anyway, which means that, a huge amount of the
 #       time, we're not providing any speedup.
+#
+#
+# Returns:
+#       true        There doesn't exist any combination of pieces that is a solution.
+#       false       There does exist at least one possible combination of pieces that is a solution.
+#       undef       No shortcut is possible in this case.  A full enumeration is needed.
 sub _noclipping_shortcut {
     my (@pieces) = @_;
+
+    # This shortcut can't be used if there are any: 1) invert pieces, 2) multiply pieces, or
+    # 3) negative pieces.
+    #       ASSERTION: the list of pieces passed to us are IN ORDER
+    if (@pieces && ($pieces[-1] > 9 || $pieces[0] < 0)) {
+        return undef;
+    }
 
     my %pieces = _uniq_c(@pieces);
 
@@ -165,46 +182,51 @@ sub _noclipping_shortcut {
     #                   http://homepages.ed.ac.uk/jkellehe/partitions.php
     my @combinations = map { [split ' '] } split /\n/, <<'EOF';
             9 1
-            9 -1 2
             8 2
             7 3
             6 4
             5 5
-            5 3 2
-            4 3 3
 EOF
+
+    my %new_pieces = %pieces;
+    my $shortcut_found = 0;
     OUTER: foreach my $comb (@combinations) {
-        my %new_pieces = %pieces;
         foreach my $c (@$comb) {
             if (!$new_pieces{$c}) {
                 next OUTER;
             }
-            $new_pieces{$c}--;
         }
 
-        #print "trying ", join(" + ", @$comb), "\n";
-
-        # We found a pair that combines to form 10.  Check to see if this solution works.
-        #my @new_pieces = sort(_inverse_uniq_c(\%new_pieces));
-        #print "trying -- ", join(" ", @new_pieces), "\n";
-        my $ret = _noclipping(sort(_inverse_uniq_c(\%new_pieces)));
-
-        #print "Found a match -- ", join(" ", @$comb), "\n";
-        #my $ret = 1;
-        
-        #!$ret and print "found a solution using the shortcut:    ", join(" + ", @$comb), "\n";
-
-        return 0 if (!$ret);        # That works!  We saved some time!
+        # Okay, this combination is a match.  These pieces add up to 10, so remove them.
+        foreach my $c (@$comb) {
+            $new_pieces{$c}--;
+        }
+        $shortcut_found++;
     }
 
-    #print "Couldn't find a shortcut when examining -- ", join(" ", @pieces), "\n";
+    # If we didn't optimize anything, then revert back to the full enumeration.
+    # This is important because it's the recursive base-case, it prevents infinite recursion
+    # from happening.
+    return undef if (!$shortcut_found);
 
-    return 1;       # We didn't find any combination that works.  Fallback to the full enumeration.
+    # Now that we've simplified the problem, continue solving the problem.
+    return _noclipping(sort(_inverse_uniq_c(\%new_pieces)));
 }
 
 ### unit test for _noclipping_shortcut() ####
                 # example call:     perl ./IsUnsolvable.pm  8 2 7 3 5 5
-#print "final answer -- ",_noclipping_shortcut( @ARGV ) ? "no solution\n" : "found a solution\n";
+if (0) {
+    my $ret = _noclipping_shortcut( @ARGV );
+    if (defined($ret)) {
+        print "final answer -- ", $ret ? "no solution\n" : "found a solution\n";
+    } else {
+        print "final answer -- could not take the shortcut\n";
+    }
+}
+
+if (0) {
+    print "final answer -- ",_noclipping( @ARGV ) ? "no solution\n" : "found a solution\n";
+}
 
 
 
@@ -213,8 +235,8 @@ EOF
 
         # make a list of all the numberical pieces that are still free
         my @pieces;
-        for (my $y=0; $y<$board->height; $y++) {
-            for (my $x=0; $x<$board->width; $x++) {
+        for (my $y=0; $y<$board->{height}; $y++) {
+            for (my $x=0; $x<$board->{width}; $x++) {
                 my $cell = $board->{cells}[$y][$x];
                 if (Move::_is_piece_combinable( $cell )) {
                     push @pieces, $cell;

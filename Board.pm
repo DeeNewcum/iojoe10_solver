@@ -194,9 +194,9 @@ our %to_fingerprint = (
 sub fingerprint {
     my $self = shift;
     my $str = '';
-    for (my $y=$self->height-1; $y>=0; $y--) {
-        for (my $x=0; $x<$self->width; $x++) {
-            $str .= $to_fingerprint{ $self->at($y, $x) };
+    for (my $y=$self->{height}-1; $y>=0; $y--) {
+        for (my $x=0; $x<$self->{width}; $x++) {
+            $str .= $to_fingerprint{  $self->{cells}[$y][$x]  };
         }
         $str .= "\n";
     }

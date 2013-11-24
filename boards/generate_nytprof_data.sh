@@ -2,10 +2,8 @@
 
 # Generate NYTProf data, allowing us to compare the performance between two different versions
 
-BOARD=Inverting-6
+BOARD=Blocks-11
 
-rm -rf nytprof.old*
-rm -rf nytprof.new*
 
 
 
@@ -15,7 +13,7 @@ OUTFILE_LOCATION=/tmp/nytprof.out       # Where will the nytprof.out file be loc
 mount | grep /media/nytprof.ramdisk >/dev/null
 if [ $? != 0 ]; then
     [ -d /media/nytprof.ramdisk/ ] || sudo mkdir -p /media/nytprof.ramdisk/
-    sudo mount -t tmpfs -o size=2048M tmpfs /media/nytprof.ramdisk/
+    sudo mount -t tmpfs -o size=3072M tmpfs /media/nytprof.ramdisk/
 fi
 mount | grep /media/nytprof.ramdisk >/dev/null
 if [ $? = 0 ]; then
@@ -26,18 +24,28 @@ fi
 export NYTPROF="file=$OUTFILE_LOCATION"
 
 
+# disable profiling of individual lines -- try to reduce the size of the nytprof.out file
+export NYTPROF="$NYTPROF:stmts=0"
+
+
 
 ######## "new" configuration ########
-perl -d:NYTProf ../iojoe10 $BOARD
-nytprofhtml --file $OUTFILE_LOCATION --out nytprof.new
-rm $OUTFILE_LOCATION          # this thing is ~1GB!
+if true; then
+    rm -rf nytprof.new*
+    perl -d:NYTProf ../iojoe10 $BOARD
+    nytprofhtml --file $OUTFILE_LOCATION --out nytprof.new
+    rm $OUTFILE_LOCATION
+fi
 
 ######## "old" configuration ########
             # --compare-old is a special flag, that I use specifically when doing A/B testing,
             #                   to specify the alternate configuration I want to test with
-perl -d:NYTProf ../iojoe10 $BOARD --compare-old
-nytprofhtml --file $OUTFILE_LOCATION --out nytprof.old
-rm $OUTFILE_LOCATION          # this thing is ~1GB!
+if true; then
+    rm -rf nytprof.old*
+    perl -d:NYTProf ../iojoe10 $BOARD --compare-old
+    nytprofhtml --file $OUTFILE_LOCATION --out nytprof.old
+    rm $OUTFILE_LOCATION
+fi
 
 
 xdg-open nytprof.new/index.html

@@ -149,10 +149,10 @@ sub apply {
 
     print "apply -- making move:  ", $self->toString, "\n"      if apply_DEBUG();
 
-    return 0 if (!_in_bounds($board, $self->y, $self->x));
+    return 0 if (!_in_bounds($board, $self->{y}, $self->{x}));
 
-    my $cell = $board->at( $self->y, $self->x );
-    my @dir = @{ $direction[ $self->dir ] };
+    my $cell = $board->at( $self->{y}, $self->{x} );
+    my @dir = @{ $direction[ $self->{dir} ] };
     
     if (!_is_piece_movable($cell)) {
         return 0;       # This is an illegal move -- this isn't a movable cell.
@@ -164,8 +164,8 @@ sub apply {
         }
     }
 
-    my @just_before_collision = ($self->y, $self->x);
-    my @just_after_collision  = ($self->y, $self->x);
+    my @just_before_collision = ($self->{y}, $self->{x});
+    my @just_after_collision  = ($self->{y}, $self->{x});
 
     while (1) {
         print "apply -- ", _pos(@just_after_collision), "\n"        if apply_DEBUG();
@@ -189,12 +189,12 @@ sub apply {
     if (exists $sliding_blocks{$cell}) {
 
         # This is a sliding block.
-        if ($just_before_collision[0] == $self->y
-         && $just_before_collision[1] == $self->x)
+        if ($just_before_collision[0] == $self->{y}
+         && $just_before_collision[1] == $self->{x})
         {
             return 0;       # The block didn't end up moving.
         } else {
-            $board->{cells}[ $self->y ][ $self->x ] = -11;
+            $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
             $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
             return \@just_before_collision;
         }
@@ -205,11 +205,11 @@ sub apply {
     my $hit_cell = $board->at( @just_after_collision );
     if (!_in_bounds($board, @just_after_collision) || !_is_piece_combinable($hit_cell)) {
         # We hit a numerical block, or the side of the board.
-        if ( $just_before_collision[0] == $self->y && $just_before_collision[1] == $self->x) {
+        if ( $just_before_collision[0] == $self->{y} && $just_before_collision[1] == $self->{x}) {
             return 0;       # The block didn't end up moving.
         }
         $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
-        $board->{cells}[ $self->y ][ $self->x ] = -11;
+        $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
 
         return \@just_before_collision;
     } else {
@@ -222,7 +222,7 @@ sub apply {
         }
 
         $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $combined;
-        $board->{cells}[ $self->y ][ $self->x ] = -11;
+        $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
 
         return \@just_after_collision;
     }
@@ -231,8 +231,8 @@ sub apply {
     # returns true/false, indicating if the point lies inside the board
     sub _in_bounds {
         my ($board, $y, $x) = @_;
-        return ($x >=0 && $x < $board->width
-                && $y >=0 && $y < $board->height);
+        return ($x >=0 && $x < $board->{width}
+                && $y >=0 && $y < $board->{height});
     }
 
     # gives the human-readable string representation of a (X, Y) position
