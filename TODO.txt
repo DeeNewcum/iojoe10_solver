@@ -10,7 +10,7 @@
     >> noclipping_shortcut provides a HUGE speedup for the board "Multiplying-16":
                          from 240 seconds to 6 seconds!!          (which is a 4000% difference)
         
-            - I don't see much of a speedup on other boards though.  What gives?
+        - I don't see much of a speedup on ANY other board though.  What gives?
 
     - spend more time gathering metrics, and trying to optimize this!
 
@@ -18,6 +18,14 @@
 
     - also, confirm that this routine saves time -- it would suck if it's actually consuming more
       time than it saves
+
+    >> Regardless of the above, NYTProf shows that noclipping() consumes >75% of CPU time on
+       high-piececount boards. It seems that *something* needs to be done.
+
+        - Could we store the Memoize data on-disk?  Would that be totally cheating?
+          Or is there a possibility that it would provide *some* speedup when novel boards
+          are encountered?
+
 
 
 - There's a bug when displaying the final solution for Multiplying-16.   There's several 

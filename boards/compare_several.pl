@@ -15,6 +15,7 @@ my @boards = qw_cmnt(<<'EOF');
         Blocks-9
 
         Inverting-6
+        Inverting-3
         Multiplying-16
 EOF
 
