@@ -14,6 +14,7 @@ package IsUnsolvable;
     use Move;
 
     use Memoize;
+    use Time::HiRes qw( time );
 
     use Data::Dumper;
 
@@ -21,6 +22,7 @@ package IsUnsolvable;
 memoize('_noclipping');
 
 
+my $total_time = 0;
 
 
 # "No clipping" refers to the fact that we ignore *where* on the board each piece is, and pretend
@@ -34,9 +36,19 @@ memoize('_noclipping');
 sub noclipping {
     my ($board) = @_;
 
-    return _noclipping( _list_pieces($board) );
+    my $started = time();
+
+    my $ret = _noclipping( _list_pieces($board) );
+
+    my $elapsed = int((time() - $started) * 1000);       # in milliseconds
+    $total_time += $elapsed;
+    #print "IsUnsolvable::noclipping() took $elapsed ms\n"      if $elapsed > 50;       # display time for single calls
+    return $ret;
 }
 
+END {
+    printf "IsUnsolvable::noclipping() took %.2f seconds total\n", $total_time / 1000;
+}
 
 
 # Parameters:
@@ -71,6 +83,8 @@ sub _noclipping {
         my $depth = 10 - scalar(@pieces);
         $indent = "  "x$depth;
     }
+
+    return 0 if (!_noclipping_shortcut(@pieces));
 
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {
@@ -115,6 +129,76 @@ sub _noclipping {
 }
 
 
+# This routine's arguments and return value are exactly the same as _noclipping.
+#
+# _noclipping() considers *every* possible pairing of numbers.  That's O(n^2), so it can take
+# considerable CPU time when n is large.
+#
+# The full enumeration is definitely warranted in some cases, particularly when negative numbers /
+# inverts / multiplies are present.  However, often the full enumeration isn't necessary, often
+# we can spot right away that there's a 6+4 or 9+1 pairing, and remove those right away, thereby
+# making a quick reduction in n.
+#
+# We then check to see if this quick reduction results in a solution.  If it does, then we're
+# golden -- we don't have to check the full enumeration because we know the set isn't unsolvable.
+#
+# If the reduction DOESN'T work, then we just fallback to doing the full enumeration.
+# For example, even if there's a 6+4 combination, sometimes the 4 really needed to combine with the
+# invert block instead.  That's fine if that happens, we can fallback to the full enumeration in
+# that case, but that's rare.  In the most usual case, the shortcut will save us a lot of time.
+sub _noclipping_shortcut {
+    my (@pieces) = @_;
+
+    my %pieces = _uniq_c(@pieces);
+
+    # We could write an algorithm that calculates these.  ... but it's a lot faster to manually 
+    # enter them.   The algorithm is a lot longer than manually entering the list:
+    #                   http://homepages.ed.ac.uk/jkellehe/partitions.php
+    my @combinations = map { [split ' '] } split /\n/, <<'EOF';
+            9 1
+            9 -1 2
+            8 2
+            7 3
+            6 4
+            5 5
+            5 3 2
+            4 3 3
+EOF
+    OUTER: foreach my $comb (@combinations) {
+        my %new_pieces = %pieces;
+        foreach my $c (@$comb) {
+            if (!$new_pieces{$c}) {
+                next OUTER;
+            }
+            $new_pieces{$c}--;
+        }
+
+        #print "trying ", join(" + ", @$comb), "\n";
+
+        # We found a pair that combines to form 10.  Check to see if this solution works.
+        #my @new_pieces = sort(_inverse_uniq_c(\%new_pieces));
+        #print "trying -- ", join(" ", @new_pieces), "\n";
+        my $ret = _noclipping(sort(_inverse_uniq_c(\%new_pieces)));
+
+        #print "Found a match -- ", join(" ", @$comb), "\n";
+        #my $ret = 1;
+        
+        #!$ret and print "found a solution using the shortcut:    ", join(" + ", @$comb), "\n";
+
+        return 0 if (!$ret);        # That works!  We saved some time!
+    }
+
+    #print "Couldn't find a shortcut when examining -- ", join(" ", @pieces), "\n";
+
+    return 1;       # We didn't find any combination that works.  Fallback to the full enumeration.
+}
+
+### unit test for _noclipping_shortcut() ####
+                # example call:     perl ./IsUnsolvable.pm  8 2 7 3 5 5
+#print "final answer -- ",_noclipping_shortcut( @ARGV ) ? "no solution\n" : "found a solution\n";
+
+
+
     sub _list_pieces {
         my ($board) = @_;
 
@@ -134,6 +218,32 @@ sub _noclipping {
         return @pieces;
     }
 
+
+    # Does the same thing as $(uniq -c)
+    # That is, it takes a list in, and returns a hash, where the values of the hash indicate 
+    # the number of times that element is repeated.
+    sub _uniq_c {
+        my (@list) = @_;
+
+        my %hash;
+        foreach my $item (@list) {
+            $hash{$item}++;
+        }
+
+        return %hash;
+    }
+
+    # Does the inverse of _uniq_c() -- it takes a hash in, and returns a list
+    sub _inverse_uniq_c {
+        my ($hash) = @_;
+        my @list;
+        while (my ($var, $val) = each %$hash) {
+            for (my $ctr=0; $ctr<$val; $ctr++) {
+                push @list, $var;
+            }
+        }
+        return @list;
+    }
 
 
 1;
