@@ -14,7 +14,7 @@
                   The HUGE REVELATION here is that noclipping() DOES continue to take up a fair bit
                   of time, but it's almost exclusively on "overhead" things!!
 
-                            - list_pieces()     23% of the time    (FIX THIS!!!)
+                            - list_pieces()     28% of the time (42% inclusive!)    (FIX THIS!!!)
                             - fingerprint()      2% of the time
 
 
