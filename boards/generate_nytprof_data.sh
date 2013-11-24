@@ -4,8 +4,6 @@
 
 BOARD=Blocks-11
 
-rm -rf nytprof.old*
-rm -rf nytprof.new*
 
 
 
@@ -32,16 +30,22 @@ export NYTPROF="$NYTPROF:stmts=0"
 
 
 ######## "new" configuration ########
-perl -d:NYTProf ../iojoe10 $BOARD
-nytprofhtml --file $OUTFILE_LOCATION --out nytprof.new
-rm $OUTFILE_LOCATION          # this thing is ~1GB!
+if true; then
+    rm -rf nytprof.new*
+    perl -d:NYTProf ../iojoe10 $BOARD
+    nytprofhtml --file $OUTFILE_LOCATION --out nytprof.new
+    rm $OUTFILE_LOCATION
+fi
 
 ######## "old" configuration ########
             # --compare-old is a special flag, that I use specifically when doing A/B testing,
             #                   to specify the alternate configuration I want to test with
-perl -d:NYTProf ../iojoe10 $BOARD --compare-old
-nytprofhtml --file $OUTFILE_LOCATION --out nytprof.old
-rm $OUTFILE_LOCATION          # this thing is ~1GB!
+if true; then
+    rm -rf nytprof.old*
+    perl -d:NYTProf ../iojoe10 $BOARD --compare-old
+    nytprofhtml --file $OUTFILE_LOCATION --out nytprof.old
+    rm $OUTFILE_LOCATION
+fi
 
 
 xdg-open nytprof.new/index.html

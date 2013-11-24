@@ -20,6 +20,9 @@ my @boards = qw_cmnt(<<'EOF');
         Multiplying-16
 EOF
 
+# allow the cmdline to override the board list
+@boards = @ARGV     if @ARGV;
+
 foreach my $board (@boards) {
     print "======== $board ========\n";
     system "./compare_one.pl", $board;
