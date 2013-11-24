@@ -1,0 +1,10 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Simple", level 10
+#
+# 4x4 15pcs
+
+ 8  3  6  2
+-2  5  .  0
+ 3  7  2  9
+ 4  3  1 -1

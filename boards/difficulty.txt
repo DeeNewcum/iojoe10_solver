@@ -26,6 +26,7 @@ Inverting-11    [12]
 Difficult-10    [12]
 
         # <60 seconds
+Inverting-3     [16]
 Blocks-12       [13]
 Hard-4          [14]
 
