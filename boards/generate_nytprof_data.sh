@@ -1,17 +1,24 @@
 #!/bin/bash
 
-# Generate NYTProf data, comparing the A* algorithm to IDDFS
+# Generate NYTProf data, allowing us to compare the performance between two different versions
 
-rm -rf nytprof.iddfs*
-rm -rf nytprof.astar*
+BOARD=Inverting-6
 
-perl -d:NYTProf ../iojoe10 easy.09pieces
-mv nytprof.out nytprof.astar.out
-nytprofhtml --file nytprof.astar.out --out nytprof.astar
+rm -rf nytprof.old*
+rm -rf nytprof.new*
 
-perl -d:NYTProf ../iojoe10 easy.09pieces --iddfs
-mv nytprof.out nytprof.iddfs.out
-nytprofhtml --file nytprof.iddfs.out --out nytprof.iddfs
 
-xdg-open nytprof.astar/index.html
-xdg-open nytprof.iddfs/index.html
+######## "new" configuration ########
+perl -d:NYTProf ../iojoe10 $BOARD
+mv nytprof.out nytprof.new.out
+nytprofhtml --file nytprof.new.out --out nytprof.new
+
+######## "old" configuration ########
+            # --compare-old is a special flag, that I use specifically when doing A/B testing,
+            #                   to specify the alternate configuration I want to test with
+perl -d:NYTProf ../iojoe10 $BOARD --compare-old
+mv nytprof.out nytprof.old.out
+nytprofhtml --file nytprof.old.out --out nytprof.old
+
+xdg-open nytprof.new/index.html
+xdg-open nytprof.old/index.html

@@ -58,6 +58,8 @@ sub parse_cmdline {
     sub usage {print <DATA>; exit 1}
     $ARGV{'--help'} || $ARGV{'-h'} and usage();
     $ARGV{'--dump_args'} and die Dumper(\%ARGV);
+
+    $ARGV{'--disable-noclipping-shortcut'} = $ARGV{'--compare-old'};
 }
 
 

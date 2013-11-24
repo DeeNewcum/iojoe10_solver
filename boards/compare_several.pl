@@ -8,17 +8,19 @@ open (STDOUT, "| tee compare_several.log")
 
 
 my @boards = qw_cmnt(<<'EOF');
-        easy.08pieces
-        Tricky-11
         Inverting-4
         Simple-2
-        easy.09pieces
+
         Inverting-5
+        Blocks-9
+
+        Inverting-6
+        Multiplying-16
 EOF
 
 foreach my $board (@boards) {
     print "======== $board ========\n";
-    system "./compare", $board;
+    system "./compare.pl", $board;
 }
 
 

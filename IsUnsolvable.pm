@@ -84,7 +84,9 @@ sub _noclipping {
         $indent = "  "x$depth;
     }
 
-    #return 0 if (!_noclipping_shortcut(@pieces));
+    if (!$ARGV{'--disable-noclipping-shortcut'}) {
+        return 0 if (!_noclipping_shortcut(@pieces));
+    }
 
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {

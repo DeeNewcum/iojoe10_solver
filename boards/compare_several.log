@@ -1,18 +1,30 @@
-======== easy.08pieces ========
-A*                           140 moves,         87 boards,   0.03 seconds,   179 microseconds per move
-IDDFS                      6,765 moves,        874 boards,   0.34 seconds,   49 microseconds per move
-======== Tricky-11 ========
-A*                           624 moves,        129 boards,   0.10 seconds,   162 microseconds per move
-IDDFS                     15,031 moves,      2,719 boards,   0.78 seconds,   51 microseconds per move
 ======== Inverting-4 ========
-A*                           766 moves,        273 boards,   0.16 seconds,   202 microseconds per move
-IDDFS                     18,155 moves,      2,351 boards,   0.94 seconds,   51 microseconds per move
+new                          766 moves,        273 boards,      0.15 seconds,   193 microseconds per move,    solution length: 9 moves
+                     IsUnsolvable::noclipping() took 0.01 seconds total
+old                          766 moves,        273 boards,      0.14 seconds,   184 microseconds per move,    solution length: 9 moves
+                     IsUnsolvable::noclipping() took 0.00 seconds total
 ======== Simple-2 ========
-A*                           201 moves,        172 boards,   0.05 seconds,   227 microseconds per move
-IDDFS                    121,436 moves,      8,020 boards,   6.41 seconds,   52 microseconds per move
-======== easy.09pieces ========
-A*                           394 moves,        190 boards,   0.07 seconds,   168 microseconds per move
-IDDFS                    159,044 moves,     16,803 boards,   7.60 seconds,   47 microseconds per move
+new                          201 moves,        172 boards,      0.05 seconds,   231 microseconds per move,    solution length: 7 moves
+                     IsUnsolvable::noclipping() took 0.01 seconds total
+old                          201 moves,        172 boards,      0.04 seconds,   220 microseconds per move,    solution length: 7 moves
+                     IsUnsolvable::noclipping() took 0.00 seconds total
 ======== Inverting-5 ========
-A*                         8,616 moves,      2,587 boards,   2.85 seconds,   330 microseconds per move
-IDDFS                    650,859 moves,     48,694 boards,   46.00 seconds,   70 microseconds per move
+new                        8,678 moves,      2,614 boards,      2.77 seconds,   319 microseconds per move,    solution length: 10 moves
+                     IsUnsolvable::noclipping() took 0.14 seconds total
+old                        8,678 moves,      2,614 boards,      2.68 seconds,   308 microseconds per move,    solution length: 10 moves
+                     IsUnsolvable::noclipping() took 0.09 seconds total
+======== Blocks-9 ========
+new                        6,909 moves,      2,990 boards,      1.46 seconds,   211 microseconds per move,    solution length: 11 moves
+                     IsUnsolvable::noclipping() took 0.11 seconds total
+old                        6,909 moves,      2,990 boards,      1.59 seconds,   229 microseconds per move,    solution length: 11 moves
+                     IsUnsolvable::noclipping() took 0.29 seconds total
+======== Inverting-6 ========
+new                       17,418 moves,      6,099 boards,     13.90 seconds,   797 microseconds per move,    solution length: 14 moves
+                     IsUnsolvable::noclipping() took 10.79 seconds total
+old                       17,418 moves,      6,099 boards,     15.67 seconds,   899 microseconds per move,    solution length: 14 moves
+                     IsUnsolvable::noclipping() took 11.84 seconds total
+======== Multiplying-16 ========
+new                       11,504 moves,      6,136 boards,      8.05 seconds,   699 microseconds per move,    solution length: 17 moves
+                     IsUnsolvable::noclipping() took 4.74 seconds total
+old                       11,504 moves,      6,136 boards,              5:04,   26502 microseconds per move,    solution length: 17 moves
+                     IsUnsolvable::noclipping() took 301.40 seconds total
