@@ -225,7 +225,12 @@ sub heuristic {
     #return 0;       # revert to Dijkstra's algorithm
 
     my @combinable_pieces = IsUnsolvable::_list_pieces($board);
-    return scalar(@combinable_pieces);      # the number of pieces that are out of place
+
+    my $heuristic = scalar(@combinable_pieces);      # the number of pieces that are out of place
+
+    #$heuristic *= 5;        # bounded relaxation -- weighted A*
+
+    return $heuristic;
 }
 
 
