@@ -1,3 +1,7 @@
+- Slight improvement to noclipping_shortcut() -- when there are no inverts or multiplies, we can
+  go through and remove ALL 9+1, 8+2, 7+3, 6+4, and 5+5, ALL AT ONCE, without having to recurse.
+  This might cut down on the branching a fair bit.
+
 - Wow, IsUnsolvable::noclipping() is consuming a LOT of CPU, especially when piece-count is high
   (because it's O(n^2).
   In some cases, it consumes the vast majority of time it takes to find a solution.
