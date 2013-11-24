@@ -62,6 +62,9 @@ sub IDDFS {
 
 # show the stats so far
 sub print_stats {
+    my ($additional_text) = @_;
+    $additional_text = "" unless defined($additional_text);
+
     my $elapsed = time() - $started;
     my $elapsed_str;
     if ($elapsed < 20) {
@@ -69,11 +72,12 @@ sub print_stats {
     } else {
         $elapsed_str = sprintf "%d:%02d", int($elapsed / 60), int($elapsed) % 60;
     }
-    printf "         %12s moves,   %8s boards,   %15s,   %d microseconds per move\n",
+    printf "         %12s moves,   %8s boards,   %15s,   %d microseconds per move%s\n",
                 commify($num_moves),
                 commify($num_boards),
                 $elapsed_str,
-                1000000 * $elapsed / ($num_moves + 1);
+                1000000 * $elapsed / ($num_moves + 1),
+                $additional_text;
 }
 
 

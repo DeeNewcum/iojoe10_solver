@@ -36,7 +36,7 @@ if ($ARGV{'--iddfs'}) {
 if (defined($move_list)) {
     print "==== SOLUTION ====\n";
     TreeTraversal::display_solution($move_list, $board);
-    TreeTraversal::print_stats();
+    TreeTraversal::print_stats(sprintf(",    solution length: %d moves", scalar(@$move_list)));
 } else {
     print "No solution found.\n";
 }
