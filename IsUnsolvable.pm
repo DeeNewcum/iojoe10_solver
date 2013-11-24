@@ -235,8 +235,8 @@ if (0) {
 
         # make a list of all the numberical pieces that are still free
         my @pieces;
-        for (my $y=0; $y<$board->height; $y++) {
-            for (my $x=0; $x<$board->width; $x++) {
+        for (my $y=0; $y<$board->{height}; $y++) {
+            for (my $x=0; $x<$board->{width}; $x++) {
                 my $cell = $board->{cells}[$y][$x];
                 if (Move::_is_piece_combinable( $cell )) {
                     push @pieces, $cell;
