@@ -3,6 +3,13 @@
   In some cases, it consumes the vast majority of time it takes to find a solution.
   (eg. for Inverting-3, even with _noclipping_shortcut, 90% of the solution time is spent on it)
 
+    - spend more time gathering metrics, and trying to optimize this!
+
+    - also, gather RAM usage data -- if this pukes on a 2GB box, we at least want to know about that
+
+    - also, confirm that this routine saves time -- it would suck if it's actually consuming more
+      time than it saves
+
 
 - There's a bug when displaying the final solution for Multiplying-16.   There's several 
   "use of uninitialized value" errors.
