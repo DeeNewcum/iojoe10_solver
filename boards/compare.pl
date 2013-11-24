@@ -3,28 +3,29 @@
     use strict;
     use warnings;
 
-my $board = shift
-    or die "Specify a board to compare.\n";
-
-my @lines;
-
-@lines = qx[ ./$board ];
-summarize_output('new',  \@lines);
-
-@lines = qx[ ./$board --compare-old ];
-summarize_output('old',  \@lines);
+open (STDOUT, "| tee compare.log")
+    or die;
 
 
-sub summarize_output {
-    my ($title, $lines) = @_;
-    #my $summary = $lines->[-2] . $lines->[-1];
-    $lines->[-2] =~ s/^\s{10}//;
-    #chomp $summary;
-    #$summary =~ s/\n /\n                      /s;
-    printf "%-20s %s",
-        $title,
-        $lines->[-2];
-    printf "%-20s %s",
-        '',
-        $lines->[-1];
+my @boards = qw_cmnt(<<'EOF');
+        Inverting-4
+        Simple-2
+
+        Inverting-5
+        Blocks-9
+
+        Inverting-6
+        Blocks-11
+        Inverting-3
+        Multiplying-16
+EOF
+
+foreach my $board (@boards) {
+    print "======== $board ========\n";
+    system "./compare_one.pl", $board;
 }
+
+
+
+# Like qw[...], but it allows comments (hash symbol).
+sub qw_cmnt {local$_=shift;s/\s+#.*//gm;split}
