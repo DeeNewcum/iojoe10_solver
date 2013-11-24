@@ -148,6 +148,13 @@ sub _noclipping {
 # For example, even if there's a 6+4 combination, sometimes the 4 really needed to combine with the
 # invert block instead.  That's fine if that happens, we can fallback to the full enumeration in
 # that case, but that's rare.  In the most usual case, the shortcut will save us a lot of time.
+#
+#
+#
+# NOTE: It doesn't really help to be able to say "yes, this is solvable" really quickly, because
+#       we process a lot of ultimately unsolvable positions.  If we can't speed those up too, 
+#       then the full tree will have to be explored anyway, which means that, a huge amount of the
+#       time, we're not providing any speedup.
 sub _noclipping_shortcut {
     my (@pieces) = @_;
 
