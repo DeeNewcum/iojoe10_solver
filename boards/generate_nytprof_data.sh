@@ -2,7 +2,7 @@
 
 # Generate NYTProf data, allowing us to compare the performance between two different versions
 
-BOARD=Inverting-6
+BOARD=Blocks-11
 
 rm -rf nytprof.old*
 rm -rf nytprof.new*
@@ -15,7 +15,7 @@ OUTFILE_LOCATION=/tmp/nytprof.out       # Where will the nytprof.out file be loc
 mount | grep /media/nytprof.ramdisk >/dev/null
 if [ $? != 0 ]; then
     [ -d /media/nytprof.ramdisk/ ] || sudo mkdir -p /media/nytprof.ramdisk/
-    sudo mount -t tmpfs -o size=2048M tmpfs /media/nytprof.ramdisk/
+    sudo mount -t tmpfs -o size=3072M tmpfs /media/nytprof.ramdisk/
 fi
 mount | grep /media/nytprof.ramdisk >/dev/null
 if [ $? = 0 ]; then
@@ -24,6 +24,10 @@ else
     echo UNABLE TO STORE nytprof.out ON SSD
 fi
 export NYTPROF="file=$OUTFILE_LOCATION"
+
+
+# disable profiling of individual lines -- try to reduce the size of the nytprof.out file
+export NYTPROF="$NYTPROF:stmts=0"
 
 
 

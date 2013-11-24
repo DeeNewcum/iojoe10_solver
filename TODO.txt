@@ -1,9 +1,21 @@
+- when we're done with the changes on this branch, if we want to merge them back to "master",
+  then here's how to do it:        http://stackoverflow.com/a/4785271/1042525
+
+
     NOTE:  I'm abandoning this branch for now.  I had hoped the _noclipping_shortcut() changes would
            provide a speedup, but it looks like it's a net slowdown.
 
            Multiplying-16 (the lone case where _noclipping_shortcut() has worked well so far)
            is actually a lot slower, and most other cases provide very little speedup.
 
+
+                - ACTUALLY... the NYTProf data indicates that almost **NO TIME** is spent on
+                  _noclipping() or _noclipping_shortcut(), against board Blocks-11!!!
+                  The HUGE REVELATION here is that noclipping() DOES continue to take up a fair bit
+                  of time, but it's almost exclusively on "overhead" things!!
+
+                            - list_pieces()     33% of the time    (FIX THIS!!!)
+                            - fingerprint()     18% of the time
 
 
 
