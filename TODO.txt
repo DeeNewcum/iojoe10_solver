@@ -1,31 +1,21 @@
-- when we're done with the changes on this branch, if we want to merge them back to "master",
-  then here's how to do it:        http://stackoverflow.com/a/4785271/1042525
+- Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
+  incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
+  most promising.
+
+       >> In particular, this means that we don't have to spend the huge amount of CPU that
+          is required to determine that a piece-list is *unsolvable*.  Determining that a piece-list
+          is solvable can take MUCH less CPU, compared to determining that it's unsolvable.  So put
+          a CPU-limit on our evaluator, and if we come up with a few answers that say "yes, it's
+          solvable", then preferentially explore those.
 
 
-    NOTE:  I'm abandoning this branch for now.  I had hoped the _noclipping_shortcut() changes would
-           provide a speedup, but it looks like it's a net slowdown.
-
-           Multiplying-16 (the lone case where _noclipping_shortcut() has worked well so far)
-           is actually a lot slower, and most other cases provide very little speedup.
-
-
-                - ACTUALLY... the NYTProf data indicates that almost **NO TIME** is spent on
-                  _noclipping() or _noclipping_shortcut(), against board Blocks-11!!!
-                  The HUGE REVELATION here is that noclipping() DOES continue to take up a fair bit
-                  of time, but it's almost exclusively on "overhead" things!!
-
-                            - list_pieces()     28% of the time (42% inclusive!)    (FIX THIS!!!)
-                            - fingerprint()      2% of the time
-
+- Alternatively, just avoid calculating IsUnsolvable::no_clipping when n>14.
 
 
 - Add more tests for IsUnsolvable::no_clipping(), and clear the Memoize cache in between tests.
   This routine has recently gotten more complicated, and I'm not 100% confident that the new design
   will always produce correct results.                  (Memorize::flush_cache('IsUnsolvable::_noclipping'))
 
-- Slight improvement to noclipping_shortcut() -- when there are no inverts or multiplies, we can
-  go through and remove ALL 9+1, 8+2, 7+3, 6+4, and 5+5, ALL AT ONCE, without having to recurse.
-  This might cut down on the branching a fair bit.
 
 - Wow, IsUnsolvable::noclipping() is consuming a LOT of CPU, especially when piece-count is high
   (because it's O(n^2).
@@ -51,6 +41,8 @@
           Or is there a possibility that it would provide *some* speedup when novel boards
           are encountered?
 
+                - What about pre-computing them for lower piece-count, and storing a single bit per
+                  combination, indicating if it's solvable or not?
 
 
 - There's a bug when displaying the final solution for Multiplying-16.   There's several 
