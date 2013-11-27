@@ -60,7 +60,7 @@ sub parse_cmdline {
     $ARGV{'--dump_args'} and die Dumper(\%ARGV);
 
     $ARGV{'--noclipping_small_only'} = ! $ARGV{'--compare-old'};
-
+    $ARGV{'--relax'} = 5    unless $ARGV{'--compare-old'};
 }
 
 
