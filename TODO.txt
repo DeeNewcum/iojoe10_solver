@@ -1,6 +1,7 @@
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
   most promising.
+                  (I think this is called an "anytime algorithm"?)
 
        >> In particular, this means that we don't have to spend the huge amount of CPU that
           is required to determine that a piece-list is *unsolvable*.  Determining that a piece-list
