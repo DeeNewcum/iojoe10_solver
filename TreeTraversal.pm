@@ -228,7 +228,7 @@ sub heuristic {
 
     my $heuristic = scalar(@combinable_pieces);      # the number of pieces that are out of place
 
-    #$heuristic *= 5;        # bounded relaxation -- weighted A*
+    $heuristic *= ($ARGV{'--relax'} || 1);        # bounded relaxation -- weighted A*
 
     return $heuristic;
 }
