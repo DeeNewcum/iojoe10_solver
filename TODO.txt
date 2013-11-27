@@ -9,9 +9,6 @@
           solvable", then preferentially explore those.
 
 
-- Alternatively, just avoid calculating IsUnsolvable::no_clipping when n>14.
-
-
 - Add more tests for IsUnsolvable::no_clipping(), and clear the Memoize cache in between tests.
   This routine has recently gotten more complicated, and I'm not 100% confident that the new design
   will always produce correct results.                  (Memorize::flush_cache('IsUnsolvable::_noclipping'))
