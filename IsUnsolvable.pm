@@ -38,7 +38,12 @@ sub noclipping {
 
     my $started = time();
 
-    my $ret = _noclipping( _list_pieces($board) );
+    my @pieces = _list_pieces($board);
+    
+    if ($ARGV{'--noclipping_small_only'}) {           # don't spend time calculating noclipping() if n >= 15
+        return 0 if (@pieces < 15);
+    }
+    my $ret = _noclipping( @pieces );
 
     my $elapsed = int((time() - $started) * 1000);       # in milliseconds
     $total_time += $elapsed;
