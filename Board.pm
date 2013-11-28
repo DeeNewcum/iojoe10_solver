@@ -27,7 +27,7 @@ has 'cells', is => 'rw';
     #       600         up/down moveable wall
     #       700         any direction moveable wall
     #
-    #       800         invert      "+-"
+    #       49          invert      "+-"
     #
     #       52 to 59    x2, x3, x4, ... x9
 
@@ -72,7 +72,7 @@ sub new_from_file {
 my %from_string = (
     'xx'        =>  10,         # wall
     'x'         =>  10,         # wall
-    '+-'        => 800,         # invert
+    '+-'        =>  49,         # invert
     '.'         => -11,         # space / empty cell
     '^^'        => 100,         # slider -- up
     '>>'        => 200,         # slider -- right
@@ -178,7 +178,7 @@ our %to_fingerprint = (
     600 => '|',     # up/down
     700 => '+',     # all four directions
 
-    800 => '/',     # invert
+    49 => '/',     # invert
 
     52 => 'u',
     53 => 'w',
@@ -283,7 +283,7 @@ sub display {
                 print "\e[37m";         # white foreground
                 _bg_color( 240 );        # medium gray
                 print $arrows[$cell / 100];
-            } elsif ($cell == 800) {                                            # invert
+            } elsif ($cell == 49) {                                            # invert
                 _fg_color( 240 );       # medium gray
                 _bg_color( 15 );       # white
                 print "+-";

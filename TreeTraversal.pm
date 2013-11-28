@@ -279,7 +279,7 @@ sub get_combined_groups {
         next if ($last_board->at($y1, $x1) % 100 == 0);     # movable blocks don't combine
         my $combined_with = $last_board->at($y2, $x2);  # what piece was at this location, just before the move?
         # combine the two groups
-        if (($combined_with >= 52 && $combined_with <= 59) || $combined_with == 800) {
+        if ($combined_with >= 49 && $combined_with <= 59) {
             # Whenever we multiply something, we have to wrap it in parentheses, because we're using
             # infix notation.
             unshift @{ $grid_groups[$y2][$x2] }, 
@@ -381,9 +381,7 @@ sub display_solution {
                 print "( "      ;#if (@$piece > 1);
                 _display_group($piece);
                 print " )"      ;#if (@$piece > 1);
-            } elsif ($piece == 800) {
-                print " * -1";
-            } elsif ($piece >= 52 && $piece <= 59) {
+            } elsif ($piece >= 49 && $piece <= 59) {
                 print " * ", $piece - 50;
             } else {
                 print " + "     if (!$first);

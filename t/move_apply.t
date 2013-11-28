@@ -71,7 +71,7 @@ ok(ok_move($board, 'c2^',      [ -11, -11, -11, 700 ] ));
 
 
 $board = Board::new_from_string(<<'EOF');
-     800   .   2
+      49   .   2
        7   .   .
        .   .   .
 EOF

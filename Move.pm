@@ -76,8 +76,7 @@ sub toString {
     sub _is_piece_combinable {
         my ($cell) = @_;
         return 1 if (abs($cell) <= 9);                  # numerical blocks
-        return 1 if ($cell == 800);                     # invert
-        return 1 if ($cell >= 52 && $cell <= 59);       # multiplication
+        return 1 if ($cell >= 49 && $cell <= 59);       # multiplication
         return 0;
     }
 
@@ -86,8 +85,7 @@ sub toString {
     # See the document "corner_cases.txt".
     sub _can_win_without_combining {
         my ($cell) = @_;
-        return 1 if ($cell == 800);                     # invert
-        return 1 if ($cell >= 52 && $cell <= 59);       # multiplication
+        return ($cell >= 49 && $cell <= 59);       # multiplication (or invert, which is the same thing)
     }
 
     # Returns undef if this was an illegal move.
@@ -110,12 +108,8 @@ sub toString {
             $cell1 = $temp;
         }
 
-        if ($cell1 == 800) {        # invert
-            return -1 * $cell2;
-        }
-
         my $combined;
-        if ($cell1 >= 52 && $cell1 <= 59) {     # multiply
+        if ($cell1 >= 49 && $cell1 <= 59) {     # multiply
             $combined = ($cell1 - 50) * $cell2;
         } else {
             $combined = $cell1 + $cell2;
