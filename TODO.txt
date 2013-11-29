@@ -17,10 +17,20 @@
                 - verify that the calculated set of moves actually work  (there should be NO moves
                           that return an "illegal move" status
                 - verify that the final state, after going through all the moves, is actually a winning state
-        - for things that the solver-automated-testing routines rely on being correct:
-                                    - use some kind of code-coverage-verification tool
-                - Move::apply
-                - has_won()
+                - whenever possible, use boards that have only one possible solution for the
+                        combined-groups, and specify what the combined-groups should be
+        - for things that the solver-automated-testing routines RELY ON to be absolutely correct,
+          use Devel::Cover to make sure that our test cases cover these completely,
+          and then add lots more tests for these.  These will be called the "test-core":
+                Move::apply()
+                    _in_bounds()
+                    _is_piece_movable()
+                    _is_piece_combinable()
+                    _combine_pieces()
+                        _is_piece_movable()
+                has_won()
+          See http://stackoverflow.com/a/14165562/1042525
+              http://grokbase.com/t/perl/qa/0479qpj4mc/phalanx-what-if-full-coverage-isnt-possible#200407096hrhmn7s72rqelvhpjywxnhb5e
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
