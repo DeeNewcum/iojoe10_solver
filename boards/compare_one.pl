@@ -11,8 +11,8 @@ my @lines;
 @lines = qx[ ./$board ];
 summarize_output('new',  \@lines);
 
-@lines = qx[ ./$board --compare-old ];
-summarize_output('old',  \@lines);
+#@lines = qx[ ./$board --compare-old ];
+#summarize_output('old',  \@lines);
 
 
 sub summarize_output {

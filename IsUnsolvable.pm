@@ -38,7 +38,11 @@ sub noclipping {
 
     my $started = time();
 
-    my $ret = _noclipping( _list_pieces($board) );
+    my @pieces = _list_pieces($board);
+
+    return 1 if (!eqzero(\@pieces));
+
+    my $ret = _noclipping(@pieces);
 
     my $elapsed = int((time() - $started) * 1000);       # in milliseconds
     $total_time += $elapsed;
@@ -87,8 +91,6 @@ sub _noclipping {
         $indent = "  "x$depth;
     }
 
-    return 1 if (!eqzero(\@pieces));
-
     my $shortcut_ret = _noclipping_shortcut(@pieces);
     return $shortcut_ret if (defined($shortcut_ret));
 
@@ -110,6 +112,10 @@ sub _noclipping {
             splice @new_pieces, $pair1, 1,  ();
             @new_pieces = sort {$a <=> $b} (@new_pieces, $sum)
                     unless ($sum == 10 || $sum == 0);
+
+            if ( abs($pieces[$pair1]) > 10 || abs($pieces[$pair2]) > 10) {
+                next if (!eqzero(\@new_pieces));     # we just multiplied a piece;  see if things are okay by eqzero()
+            }
 
             my $ret = _noclipping( @new_pieces );
 
