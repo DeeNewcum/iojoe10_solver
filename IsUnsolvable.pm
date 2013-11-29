@@ -243,7 +243,7 @@ if (0) {
                 }
             }
         }
-        @pieces = sort @pieces;
+        @pieces = sort { $a <=> $b }@pieces;
         #die Dumper \@pieces;
 
         return @pieces;
