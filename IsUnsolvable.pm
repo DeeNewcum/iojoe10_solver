@@ -87,6 +87,8 @@ sub _noclipping {
         $indent = "  "x$depth;
     }
 
+    return 1 if (!eqzero(\@pieces));
+
     if (!$ARGV{'--disable-noclipping-shortcut'}) {
         my $shortcut_ret = _noclipping_shortcut(@pieces);
         return $shortcut_ret if (defined($shortcut_ret));
@@ -276,5 +278,28 @@ if (0) {
         return @list;
     }
 
+
+# Does this list of pieces total zero (modulo 10)?
+# If not, then we combined the wrong piece with a multiply or invert piece.
+#
+# Returns:
+#       true        it *does* total up to zero, modulo 10
+#       false       it doesn't total up to zero, modulo 10
+sub eqzero {
+    my ($pieces) = @_;
+
+    if (grep {$_ >= 49 && $_ <= 59} @$pieces) {
+        # For now, we don't handle cases where there are multiply or invert pieces that are still on the board.
+        return 1;
+    }
+
+    my $sum = 0;
+    foreach my $piece (@$pieces) {
+        next if ($piece >= 49 && $piece <= 59);
+        $sum += $piece;
+    }
+
+    return ($sum % 10) == 0;
+}
 
 1;
