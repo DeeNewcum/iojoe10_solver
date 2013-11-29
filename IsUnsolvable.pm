@@ -89,10 +89,8 @@ sub _noclipping {
 
     return 1 if (!eqzero(\@pieces));
 
-    if (!$ARGV{'--disable-noclipping-shortcut'}) {
-        my $shortcut_ret = _noclipping_shortcut(@pieces);
-        return $shortcut_ret if (defined($shortcut_ret));
-    }
+    my $shortcut_ret = _noclipping_shortcut(@pieces);
+    return $shortcut_ret if (defined($shortcut_ret));
 
     # generate all possible pairs in this list
     for (my $pair1=0; $pair1<@pieces; $pair1++) {

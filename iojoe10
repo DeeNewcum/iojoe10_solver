@@ -59,12 +59,16 @@ sub parse_cmdline {
     $ARGV{'--help'} || $ARGV{'-h'} and usage();
     $ARGV{'--dump_args'} and die Dumper(\%ARGV);
 
+    $ARGV{'--disable-noclipping-shortcut'} = 1;             # TODO: this feature seems to be buggy...   fix it, or remove it for good
     $ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
 
     no warnings 'redefine';
 
     if ($ARGV{'--disable-eqzero'}) {
         *IsUnsolvable::eqzero = sub { 1 };
+    }
+    if ($ARGV{'--disable-noclipping-shortcut'}) {
+        *IsUnsolvable::_noclipping_shortcut = sub { undef };
     }
 
     use warnings;
