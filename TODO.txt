@@ -1,3 +1,14 @@
+- Add MANY more tests:
+        - for the solver as a whole
+                - verify the optimal path length     (make the heuristic always return 0, to ensure that we do DFS)
+                - verify that the calculated set of moves actually work  (there should be NO moves
+                          that return an "illegal move" status
+                - verify that the final state, after going through all the moves, is actually a winning state
+        - for things that the solver-automated-testing routines rely on being correct:
+                                    - use some kind of code-coverage-verification tool
+                - Move::apply
+                - has_won()
+
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
   most promising.
