@@ -1,3 +1,10 @@
+# Devel::NYTProf
 nytprof*
-;           # typos from vim
+
+# Devel::Cover
+cover_db/
+.uncoverable
+
+# typos in Vim
+;
 ;w

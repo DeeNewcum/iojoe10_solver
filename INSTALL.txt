@@ -1,3 +1,7 @@
 To install:
 
     sudo cpan Moo List::PriorityQueue Getopt::Casual
+
+Optional, but may be useful:
+    
+    sudo cpan Devel::Cover

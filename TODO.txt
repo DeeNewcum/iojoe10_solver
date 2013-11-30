@@ -1,3 +1,6 @@
+- move all the .txt files into docs/
+
+
 - noclipping_shortcut() seems cause the solver to take a long time for the combination of:
         noclipping_shortcut() + eqzero() + Blocks-11
   Investigate and fix.
@@ -29,8 +32,7 @@
                     _combine_pieces()
                         _is_piece_movable()
                 has_won()
-          See http://stackoverflow.com/a/14165562/1042525
-              http://grokbase.com/t/perl/qa/0479qpj4mc/phalanx-what-if-full-coverage-isnt-possible#200407096hrhmn7s72rqelvhpjywxnhb5e
+
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem

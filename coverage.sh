@@ -1,0 +1,74 @@
+#!/bin/sh
+
+# Run the code-coverage report.
+
+cover --delete
+HARNESS_PERL_SWITCHES=-MDevel::Cover prove
+# For this particular report, I want to focus on the Test-Core functions.
+#       (the minimal set of functions that are required to be able to verify the results of
+#        solver*.t;  these functions must be as bulletproof as possible)
+perl -x "$0"        # generate the .uncoverable file
+cover                  \
+    -select Move.pm    \
+    -select Board.pm
+xdg-open cover_db/coverage.html
+
+exit
+
+
+
+
+############################# generate the .uncoverable file #############################
+#!perl
+
+    use strict;
+    use warnings;
+
+    use lib '.';
+
+    use Board;
+    use Move;
+
+    use Digest::MD5;
+    use Data::Dumper;
+
+open my $fout, '>', '.uncoverable'          or die $!;
+
+my %subs_to_include = (
+    'Board.pm' => [qw[
+        has_won
+    ]],
+    'Move.pm' => [qw[
+        apply
+        _in_bounds
+        _is_piece_movable
+        _is_piece_combinable
+        _combine_pieces
+    ]],
+);
+
+foreach my $file (keys %subs_to_include) {
+    (my $package = $file) =~ s/\.pm$//;
+    #(my $md5 = qx[md5sum $file])    =~ s/ .*//s;
+
+    my %include = map {$_ => 1} $subs_to_include{$file};
+
+    foreach my $sub (list_subs_in_package($package)) {
+        next if $include{$sub};
+        my $line = qx[grep -h '^ *sub $sub' $file];
+        if (!$line) {
+            #warn "uhoh -- $file -- $sub\n";
+            #print Dumper $line;
+        } else {
+            my $md5 = Digest::MD5::md5_hex($line);
+            print $fout "$file subroutine $md5 0 0 Don't want to include in this report\n";
+        }
+    }
+}
+
+
+sub list_subs_in_package {
+    my $module = shift;
+    no strict 'refs';
+    return grep { defined &{"$module\::$_"} } keys %{"$module\::"}
+}
