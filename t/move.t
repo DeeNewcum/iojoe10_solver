@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# very basic Move.pm tests
+#
 # tests for:
 #   - Move::new()
 #   - Move::toString()

@@ -1,3 +1,8 @@
+- In move_apply.t, change ok_move() to feed its data through Board::new_from_string().
+  This allows us to avoid this whole crap about separate variables for pieces, and generally makes
+  it much more readable.
+
+
 - move all the .txt files into docs/
 
 

@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::Simple tests => 15;
+    use Test::Simple tests => 18;
 
     use Board;
     use Move;
@@ -17,21 +17,29 @@
     use Data::Dumper;
 
 
-my $board = new Board( width=>3, height=>3 );
+# don't hardcode piece values
+my   $rt = Board::_piece_from_string(  '>>'  );
+my $lfrt = Board::_piece_from_string(  '<>'  );     # left/right slider
+my   $up = Board::_piece_from_string(  '^^'  );
+my $updn = Board::_piece_from_string(  '^v'  );
+my $rook = Board::_piece_from_string(  'RK'  );
 
-$board->cells->[2] = [qw[   5 -11   3 ]];
-$board->cells->[1] = [qw[ 500 -11   7 ]];
-$board->cells->[0] = [qw[ -11 -11 -11 ]];
+
+my $board = Board::new_from_string(<<'EOF');
+    5  .  3
+   <>  .  7
+    .  .  .
+EOF
 
     #select STDERR;
     $board->display()   if -t STDOUT;
     #select STDOUT;
 
-ok(ok_move($board, 'c3<',      [  8, -11, -11] ));
-ok(ok_move($board, 'c3v',      [-11,  10, -11] ));
-ok(ok_move($board, 'c2v',      [  7, -11,   3] ));
-ok(ok_move($board, 'c2<',      [500,   7, -11] ));
-ok(ok_move($board, 'a2>',      [-11, 500,   7] ));
+ok(ok_move($board, 'c3<',      [    8,   -11,   -11] ));
+ok(ok_move($board, 'c3v',      [  -11,    10,   -11] ));
+ok(ok_move($board, 'c2v',      [    7,   -11,     3] ));
+ok(ok_move($board, 'c2<',      [$lfrt,     7,   -11] ));
+ok(ok_move($board, 'a2>',      [  -11, $lfrt,     7] ));
 ok(ok_move($board, 'a2v',      undef ));
 
 
@@ -42,26 +50,32 @@ ok(ok_move($board, 'a2v',      undef ));
 #####################################################
 
 $board = Board::new_from_string(<<'EOF');
-       .   .   .   .
-     100 600   .   .
-       .   . 700   .
-       .   .   .   .
+       .   .   .  >>
+      ^^  ^v   .   .
+       .   .  RK   .
+       .   .   .  XX
 EOF
 
     #select STDERR;
     $board->display()   if -t STDOUT;
     #select STDOUT;
 
-ok(ok_move($board, 'a3^',      [ -11, -11, -11, 100 ] ));
+ok(ok_move($board, 'a3^',      [  -11, -11, -11, $up ] ));
 ok(ok_move($board, 'a3v',      undef ));
 
-ok(ok_move($board, 'b3^',      [ -11, -11, -11, 600 ] ));
-ok(ok_move($board, 'b3v',      [ 600, -11, -11, -11 ] ));
-ok(ok_move($board, 'b3>',      undef ));
+ok(ok_move($board, 'b3^',      [ -11, -11, -11, $updn ] ),      "up/down slider moves up");
+ok(ok_move($board, 'b3v',    [ $updn, -11, -11, -11 ] ),        "up/down slider moves down");
+ok(ok_move($board, 'b3>',      undef ),                         "up/down slider can't move right");
 
-ok(ok_move($board, 'c2>',      [ -11, -11, -11, 700 ] ));
-ok(ok_move($board, 'c2<',      [ 700, -11, -11, -11 ] ));
-ok(ok_move($board, 'c2^',      [ -11, -11, -11, 700 ] ));
+ok(ok_move($board, 'c2>',      [ -11, -11, -11, $rook ] ));
+ok(ok_move($board, 'c2<',    [ $rook, -11, -11, -11 ] ));
+ok(ok_move($board, 'c2^',      [ -11, -11, -11, $rook ] ));
+
+ok(ok_move($board, 'd4>',      undef ),                         "slider can't go into wall");
+
+ok(ok_move($board, 'd1^',      undef ),                         "can't move an unmovable piece");
+
+ok(ok_move($board, 'g8^',      undef ));                # out of bounds
 
 
 

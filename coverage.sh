@@ -3,7 +3,11 @@
 # Run the code-coverage report.
 
 cover --delete
-HARNESS_PERL_SWITCHES=-MDevel::Cover prove
+HARNESS_PERL_SWITCHES=-MDevel::Cover prove \
+            t/move.t            \
+            t/move_apply.t      \
+            t/test_core.t       \
+                    || exit
 # For this particular report, I want to focus on the Test-Core functions.
 #       (the minimal set of functions that are required to be able to verify the results of
 #        solver*.t;  these functions must be as bulletproof as possible)

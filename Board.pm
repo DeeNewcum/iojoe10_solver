@@ -82,6 +82,19 @@ my %from_string = (
     '^v'        => 600,         # slider -- up/down
     'rk'        => 700,         # slider -- all around      (RK = rook)
 );
+
+sub _piece_from_string {
+    my $piece = shift;
+    if (exists $from_string{lc($piece)}) {
+        return $from_string{lc($piece)};
+    } elsif ($piece =~ /^x([2-9])$/i) {         # multiplication
+        return 50 + $1;
+    } elsif ($piece =~ /^-?[0-9]+$/) {          # numerical block
+        return int $piece;
+    } else {
+        die "Unreconized token:   $piece\n";
+    }
+}
 sub new_from_string {
     my ($string) = @_;
 
@@ -98,15 +111,7 @@ sub new_from_string {
     for (my $y=0; $y<$height; $y++) {
         my @cells = split ' ', $lines[$height - 1 - $y];
         for (my $x=0; $x<@cells; $x++) {
-            if (exists $from_string{lc($cells[$x])}) {
-                $cells[$x] = $from_string{lc($cells[$x])};
-            } elsif ($cells[$x] =~ /^x([2-9])$/i) {         # multiplication
-                $cells[$x] = 50 + $1;
-            } elsif ($cells[$x] =~ /^-?[0-9]+$/) {          # numerical block
-                $cells[$x] = int $cells[$x];
-            } else {
-                die "Unreconized token:   $cells[$x]\n";
-            }
+            $cells[$x] = _piece_from_string($cells[$x]);
         }
         scalar(@cells) == $width
             or die "ERROR on row " . ($y + 1) . " -- Every row must have the same width\n";

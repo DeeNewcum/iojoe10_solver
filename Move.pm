@@ -92,6 +92,13 @@ sub toString {
     # Otherwise returns the combined value.
     sub _combine_pieces {
         my ($cell1, $cell2) = @_;
+
+        # This should be an assert() that only gets called during development, since we should
+        # never get called with pieces that aren't combinable.
+        # However, this is in Test-Core, so I want to make 110% sure that it behaves correctly.
+        if (!_is_piece_combinable($cell1) || !_is_piece_combinable($cell2)) {
+            return undef;
+        }
         
         if (!_is_piece_movable($cell2)) {
             if (!_is_piece_movable($cell1)) {
