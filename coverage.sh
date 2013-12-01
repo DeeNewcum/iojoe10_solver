@@ -25,6 +25,11 @@ exit
 ############################# generate the .uncoverable file #############################
 #!perl
 
+    # Unfortunately, I haven't been able to figure out how to make this work yet.
+    # Devel::Cover's documentation regarding "uncoverable" is lacking.
+    # So, for now, I just ignore the part of the report that is undesirable, when I'm manually
+    # reviewing the report.
+
     use strict;
     use warnings;
 

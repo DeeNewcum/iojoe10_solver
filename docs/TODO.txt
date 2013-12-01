@@ -3,9 +3,6 @@
   it much more readable.
 
 
-- move all the .txt files into docs/
-
-
 - noclipping_shortcut() seems cause the solver to take a long time for the combination of:
         noclipping_shortcut() + eqzero() + Blocks-11
   Investigate and fix.
@@ -29,14 +26,7 @@
                         combined-groups, and specify what the combined-groups should be
         - for things that the solver-automated-testing routines RELY ON to be absolutely correct,
           use Devel::Cover to make sure that our test cases cover these completely,
-          and then add lots more tests for these.  These will be called the "test-core":
-                Move::apply()
-                    _in_bounds()
-                    _is_piece_movable()
-                    _is_piece_combinable()
-                    _combine_pieces()
-                        _is_piece_movable()
-                has_won()
+          and then add lots more tests for these.  See the list of functions in TestCore.txt
 
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically

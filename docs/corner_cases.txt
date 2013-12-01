@@ -30,7 +30,6 @@ To confirm, go to Inverting-7, and do these moves:
 
 
 
-
 What happens if you leave a multiply-block, but deal with all other blocks?
 ===========================================================================
 In v1.1.2, you win the game.

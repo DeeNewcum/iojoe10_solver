@@ -1,0 +1,55 @@
+"Test Core" is the minimal set of functions that are required to verify the results of t/solver*.t.
+Because these functions are so critical to being able to test all other functions, it's important
+that the Test Core functions are *very* thoroughly tested.
+
+"Test Core" derives from the ideas behind the NP class (of P/NP fame).  NP problems are those that
+are expensive to solve but easy to verify.  Similarly here, it takes a lot of CPU to quickly FIND A
+SOLUTION (and therefore, there's increased code complexity because of the need for caching and other
+speed optimization strategies), while the code that's needed to VERIFY a solution is relatively
+simple.
+
+So, to test that our complex code is functioning correctly, we use our simpler verifier code to
+verify that the solution is good.
+
+
+
+
+
+
+The routines needed to verify a solution are:
+
+    Move::apply()
+        Move::_in_bounds()
+        Move::_is_piece_movable()
+        Move::_is_piece_combinable()
+        Move::_combine_pieces()
+            Move::_is_piece_movable()
+
+    Board::has_won()
+
+
+
+
+
+How a solution is verified
+--------------------------
+For most boards, there are many different ways to solve the board.  For example, even a simple board:
+        7 .
+        . 3
+has eight possible solutions:
+            a2> b2v     a2> b1^
+            a2v a1>     a2v b1<
+            b1< a1^     b1< a2v
+            b1^ b2<     b1^ a2>
+However, each board has a minimum solution length.  When doing automated-testing, we can bias the
+A* heuristic towards minimizing the solution length:
+        http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
+
+Steps to verify a solution:
+    1. verify that the solution-length (the number of moves in the solution) equals the
+       manually-entered shortest-solution field
+    2. go through each move in the solution, and confirm the each move actually changes something
+    3. after step #2 is done, confirm that the final board position is a winning state
+    4. for a few boards, it may be possible to confirm that specific pieces got combined together,
+       because *every* known solution requires those pieces to be combined
+                    (internally, we call these "combined groups")
