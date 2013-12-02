@@ -23,6 +23,7 @@ my $filename;
 parse_cmdline();
 
 my $board = Board::new_from_file($filename);
+        #die Dumper $board;
 
 $board->display;
 
@@ -36,7 +37,10 @@ if ($ARGV{'--iddfs'}) {
 if (defined($move_list)) {
     print "==== SOLUTION ====\n";
     TreeTraversal::display_solution($move_list, $board);
-    TreeTraversal::print_stats(sprintf(",    solution length: %d moves", scalar(@$move_list)));
+    my $soln_len = sprintf(",    solution length: %d moves", scalar(@$move_list));
+    $soln_len .= "    (of minimum $board->{file_fields}{shortest_solution})"
+                if $board->{file_fields}{shortest_solution};
+    TreeTraversal::print_stats($soln_len);
 } else {
     print "No solution found.\n";
 }
@@ -67,6 +71,9 @@ sub parse_cmdline {
 
     no warnings 'redefine';
 
+    if ($ARGV{'--dijkstra'}) {
+        *TreeTraversal::heuristic = sub { 0 };
+    }
     if ($ARGV{'--disable-eqzero'}) {
         *IsUnsolvable::eqzero = sub { 1 };
     }
@@ -114,4 +121,6 @@ Pieces are represented by:
 --iddfs
         Use the IDDFS search algorithm.  (default is A*)
 
+--dijkstra
+        Use Dijkstra's algorithm.  (instead of A*)
 

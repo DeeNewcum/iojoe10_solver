@@ -31,6 +31,7 @@ has 'cells', is => 'rw';
     #
     #       52 to 59    x2, x3, x4, ... x9
 
+has 'file_fields', is => 'ro';       # fields that are specified in the board file
 
 # Variables needed for_the A* search algorithm
 has 'f', is => 'rw';        # g + h -- our estimate of the total distance from the start node to the end node, travelling through this node
@@ -102,11 +103,14 @@ sub new_from_string {
     @lines = map { s/#.*//; chomp; $_ } @lines;     # remove comments (and newlines)
     @lines = grep { /\S/ } @lines;                  # remove blank lines
 
+    my $fields;
+    ($fields, @lines) = _parse_fields(\@lines);
+
     my ($height, $width);
     $height = scalar(@lines);
     $width = scalar(split ' ', $lines[0]);
 
-    my $board = new Board(width => $width, height => $height);
+    my $board = new Board(width => $width, height => $height, file_fields => $fields);
 
     for (my $y=0; $y<$height; $y++) {
         my @cells = split ' ', $lines[$height - 1 - $y];
@@ -121,6 +125,20 @@ sub new_from_string {
     return $board;
 }
 
+    # parse SMTP-style header fields
+    sub _parse_fields {
+        my ($lines) = @_;
+        my $re = '^([a-zA-Z_][a-zA-Z0-9_]*): +(.*)';
+        my @fields = grep /$re/o, @$lines;
+        $lines = [ grep { ! /$re/o } @$lines ];
+        my %fields;
+        foreach my $f (@fields) {
+            $f =~ /$re/o;
+            $fields{$1} = $2;
+        }
+        return \%fields, @$lines;
+    }
+
 
 sub clone {
     my $self = shift;
@@ -128,6 +146,7 @@ sub clone {
         width  => $self->{width},
         height => $self->{height},
         cells  => Storable::dclone( $self->cells ),
+        file_fields => $self->{file_fields},
     );
 }
 
