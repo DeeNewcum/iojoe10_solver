@@ -1,3 +1,9 @@
+- TEST CORE
+    - implement the automated testing routine
+                        - add the shortest-solution: field to boards
+    - improve coverage of the Core routines
+
+
 - In move_apply.t, change ok_move() to feed its data through Board::new_from_string().
   This allows us to avoid this whole crap about separate variables for pieces, and generally makes
   it much more readable.
@@ -14,19 +20,6 @@
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
   up the algorithm or not
-
-
-- Add MANY more tests:
-        - for the solver as a whole
-                - verify the optimal path length     (make the heuristic always return 0, to ensure that we do DFS)
-                - verify that the calculated set of moves actually work  (there should be NO moves
-                          that return an "illegal move" status
-                - verify that the final state, after going through all the moves, is actually a winning state
-                - whenever possible, use boards that have only one possible solution for the
-                        combined-groups, and specify what the combined-groups should be
-        - for things that the solver-automated-testing routines RELY ON to be absolutely correct,
-          use Devel::Cover to make sure that our test cases cover these completely,
-          and then add lots more tests for these.  See the list of functions in TestCore.txt
 
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically

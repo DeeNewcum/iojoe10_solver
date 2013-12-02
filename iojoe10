@@ -59,6 +59,9 @@ sub parse_cmdline {
     $ARGV{'--help'} || $ARGV{'-h'} and usage();
     $ARGV{'--dump_args'} and die Dumper(\%ARGV);
 
+
+    #### be able to toggle certain things on/off, to make it easy to run the compare.pl reports ####
+
     $ARGV{'--disable-noclipping-shortcut'} = 1;             # TODO: this feature seems to be buggy...   fix it, or remove it for good
     $ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
 
@@ -103,9 +106,7 @@ Pieces are represented by:
 
     Invert block                +-
 
-Things that aren't added yet:
-
-    Multiply blocks
+    Multiply blocks             x2, x3, ... x9
 
 
 ######## options ########

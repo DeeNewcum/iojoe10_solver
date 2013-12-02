@@ -1,6 +1,6 @@
 "Test Core" is the minimal set of functions that are required to verify the results of t/solver*.t.
 Because these functions are so critical to being able to test all other functions, it's important
-that the Test Core functions are *very* thoroughly tested.
+that the Test Core functions be *very* thoroughly tested.
 
 "Test Core" derives from the ideas behind the NP class (of P/NP fame).  NP problems are those that
 are expensive to solve but easy to verify.  Similarly here, it takes a lot of CPU to quickly FIND A
