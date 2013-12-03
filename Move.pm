@@ -55,6 +55,14 @@ around BUILDARGS => sub {
     }
 };
 
+
+sub movelist_from_string {
+    my ($string) = @_;
+    my @move_list = split ' ', $string;
+    return map { new Move($_) } @move_list;
+}
+
+
 sub toString {
     my $self = shift;
 

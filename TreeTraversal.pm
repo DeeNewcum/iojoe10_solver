@@ -392,6 +392,42 @@ sub display_solution {
     }
 
 
+# This subroutine is very important.  See docs/TestCore.txt.
+# After the solver finds a solution, this is used to verify that a valid solution was found.
+# This is used during testing, to confirm that the rest of the program is functioning correctly.
+#
+# Returns true if the solution was verified, false if it couldn't be verified.
+sub verify_solution {
+    my ($board, $move_list) = @_;
+
+    my $original_board = $board->clone;
+
+    # go through the list of moves, and confirm each is a legal move
+    foreach my $move (@$move_list) {
+        my $ret = $move->apply($board);
+        if (!$ret) {
+            warn "SERIOUS ERROR -- move within solution is an illegal move\n\t"
+                    unless $INC{'Test/Builder/Module.pm'};      # don't display when running under 'prove' or Test::Simple or Test::More
+            return 0;
+        }
+    }
+
+    # confirm that after applying all moves, that the final board position is a winning position
+    if (!$board->has_won) {
+        warn "SERIOUS ERROR -- after applying all moves, the final board position is not a winning position\n\t"
+                    unless $INC{'Test/Builder/Module.pm'};
+        return 0;
+    }
+
+    # confirm that the solution is an optimal length   (if the shortest_solution: field is present)
+    if (exists $board->{file_fields}{shortest_solution}) {
+        if (scalar(@$move_list) > $board->{file_fields}{shortest_solution}) {
+            return 0;
+        }
+    }
+}
+
+
 
 # add commas to a number
 sub commify {(my$text=reverse$_[0])=~s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;scalar reverse$text}

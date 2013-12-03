@@ -2,12 +2,15 @@
 
 # The "Test Core" are the minimal set of functions that are required to be able to verify the
 # results of solver*.t.  We want these functions to be *thoroughly* tested.
+#
+# (see docs/TestCore.txt)
 
 
 # tests for:
 #   - Move::_combine_pieces()
 #   - Move::_is_piece_movable
 #   - Board::has_won()
+#   - TreeTraversal::verify_solution()
 
 
     use strict;
@@ -15,10 +18,11 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::More tests => 16;
+    use Test::More tests => 20;
 
     use Board;
     use Move;
+    use TreeTraversal;
 
     use Data::Dumper;
 
@@ -67,5 +71,31 @@ ok( Board::new_from_string(<<'EOF')->has_won,           "has won, only invert re
                 . .
                 . +-
 EOF
+
+
+
+################################################################################
+################################################################################
+
+my $board = Board::new_from_string(<<'EOF');
+        6 7 4
+        . . .
+        . 3 .
+
+        shortest_solution: 2
+EOF
+
+
+ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v' ) ]),
+            "solution doesn't finish on a winning board");
+
+ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'a3>' ) ]),
+            "solution has an illegal move");
+
+ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b1> b3v b1> c3<' ) ]),
+            "solution is too long");
+
+ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v c3<' ) ]),
+            "verify_solution() works");
 
 1;

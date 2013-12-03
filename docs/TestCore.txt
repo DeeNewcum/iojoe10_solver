@@ -18,14 +18,16 @@ verify that the solution is good.
 
 The routines needed to verify a solution are:
 
-    Move::apply()
-        Move::_in_bounds()
-        Move::_is_piece_movable()
-        Move::_is_piece_combinable()
-        Move::_combine_pieces()
-            Move::_is_piece_movable()
+    TreeTraversal::verify_solution()
 
-    Board::has_won()
+        Move::apply()
+            Move::_in_bounds()
+            Move::_is_piece_movable()
+            Move::_is_piece_combinable()
+            Move::_combine_pieces()
+                Move::_is_piece_movable()
+
+        Board::has_won()
 
 
 

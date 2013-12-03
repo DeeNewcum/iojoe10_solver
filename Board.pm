@@ -128,7 +128,7 @@ sub new_from_string {
     # parse SMTP-style header fields
     sub _parse_fields {
         my ($lines) = @_;
-        my $re = '^([a-zA-Z_][a-zA-Z0-9_]*): +(.*)';
+        my $re = '^\s*([a-zA-Z_][a-zA-Z0-9_]*): +(.*)';
         my @fields = grep /$re/o, @$lines;
         $lines = [ grep { ! /$re/o } @$lines ];
         my %fields;
