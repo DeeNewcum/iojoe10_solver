@@ -1,0 +1,11 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Hard", level 5
+# 
+# 5x5 17pcs
+
+-1  3 vv  5  5
+XX XX >>  3  1
+ 4  2  2  1  5
+ 5  3 ^^ << XX
+ 4  3 XX  4  1

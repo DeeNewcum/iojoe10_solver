@@ -1,0 +1,12 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Hard", level 6
+# 
+# 5x5 17pcs
+
+ 8 -2  3  5  3
+ 5 RK RK RK  3
+ 6 XX  9 XX  6
+ 1 RK RK RK  3
+ 2  3  2 -1  4
+

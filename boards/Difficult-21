@@ -1,0 +1,11 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Difficult", level 21
+#
+# 5x5 17pcs
+
+ 6  1  6 XX  3
+-2  5 RK XX  2
+ 2 XX  6 XX  7
+ 4 XX  3  2  6
+ 8 XX RK  7  4

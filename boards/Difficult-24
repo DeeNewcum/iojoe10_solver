@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Difficult", level 24
+#
+# 7x7 13pcs
+
+ .  .  .  .  .  .  .
+ . XX XX XX XX XX  .
+ . XX  7  8  9 XX  .
+ . XX  6  5  4 XX  .
+ . XX  1  2  3 XX  .
+ . XX XX ^^ XX XX  .
+XX  2  0  1  2 XX XX

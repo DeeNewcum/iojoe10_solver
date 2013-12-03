@@ -1,11 +1,17 @@
 - Implement IsUnsolvable::geographically_isolated().
                 http://en.wikipedia.org/wiki/Flood_fill
                 "Most practical implementations use a loop for the west and east directions"
+  But TAKE CARE of the sliders too.  For example, see:
+            Difficult-24
+            Difficult-15
+            Hard-5
   Test it on:
         Inverting-11
+        Difficult-7
         Blocks-12
         Blocks-14
         Blocks-4
+        Inverting-15
 
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
