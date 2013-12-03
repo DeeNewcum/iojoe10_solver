@@ -66,7 +66,11 @@ sub new_from_file {
     my @lines = <$fh>;
     close $fh;
 
-    return new_from_string(  join("", @lines) );
+    my $obj = new_from_string(  join("", @lines) );
+
+    $obj->{file_fields}{filename} = $filename;
+
+    return $obj;
 }
 
 

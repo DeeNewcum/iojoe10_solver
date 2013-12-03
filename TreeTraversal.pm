@@ -357,12 +357,18 @@ sub display_solution {
         $board->display;
         print "\n";
     }
+
+    if ($orig_board->{file_fields}{filename}) {
+        (my $f = $orig_board->{file_fields}{filename})      =~ s#^.*/##;
+        print "========[ $f solution ]=======\n\n";
+    }
+    $orig_board->display;
     print "\t\t\t", join(' ', map {$_->toString} @$move_list), "\n";
 
     my @groups = get_combined_groups($move_list, $orig_board);
     
     ## display the groups
-    print "\n";
+    print "\nCombined groups:\n";
     foreach my $group (@groups) {
         print "\t";
         _display_group($group);
