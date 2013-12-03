@@ -317,8 +317,9 @@ sub get_combined_groups {
         # Within groups that are equally long, sort by the maximum NUMERICAL block in the group.
         sub _group_subsort {
             my ($group) = @_;
-            return List::Util::max
-                        grep {$_ <= 10 && $_ >=-10} @$group;
+            return (List::Util::max
+                        grep {$_ <= 10 && $_ >=-10} @$group)
+                   || 0;
         }
             # same as List::MoreUtils::first_index()
             sub _first_index(&@) {

@@ -77,10 +77,6 @@
                   combination, indicating if it's solvable or not?
 
 
-- There's a bug when displaying the final solution for Multiplying-16.   There's several 
-  "use of uninitialized value" errors.
-
-
 - This points out that A* can be FAST or ACCURATE but not both.
         http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#speed-or-accuracy
   Because of my dogged pursuit of speed, it's likely I will end up compromising accuracy.
