@@ -95,7 +95,7 @@ ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'a3>' 
 ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b1> b3v b1> c3<' ) ]),
             "solution is too long");
 
-ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v c3<' ) ]),
+ok( TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v c3<' ) ]),
             "verify_solution() works");
 
 1;

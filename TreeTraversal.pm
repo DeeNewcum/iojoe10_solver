@@ -400,14 +400,17 @@ sub display_solution {
 sub verify_solution {
     my ($board, $move_list) = @_;
 
-    my $original_board = $board->clone;
+    my $original_board = $board;
+    $board = $board->clone;         # don't modify our inputs
 
     # go through the list of moves, and confirm each is a legal move
     foreach my $move (@$move_list) {
         my $ret = $move->apply($board);
         if (!$ret) {
-            warn "SERIOUS ERROR -- move within solution is an illegal move\n\t"
-                    unless $INC{'Test/Builder/Module.pm'};      # don't display when running under 'prove' or Test::Simple or Test::More
+            my $mv = $move->toString;
+            warn "SERIOUS ERROR -- move  '$mv'  within solution is an illegal move\n\t"
+                    unless $ENV{HARNESS_ACTIVE};
+                    #unless $INC{'Test/Builder/Module.pm'};      # don't display when running under 'prove' or Test::Simple or Test::More
             return 0;
         }
     }
@@ -415,7 +418,8 @@ sub verify_solution {
     # confirm that after applying all moves, that the final board position is a winning position
     if (!$board->has_won) {
         warn "SERIOUS ERROR -- after applying all moves, the final board position is not a winning position\n\t"
-                    unless $INC{'Test/Builder/Module.pm'};
+                    unless $ENV{HARNESS_ACTIVE};
+                    #unless $INC{'Test/Builder/Module.pm'};
         return 0;
     }
 
@@ -425,6 +429,8 @@ sub verify_solution {
             return 0;
         }
     }
+
+    return 1;
 }
 
 
