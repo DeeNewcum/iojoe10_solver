@@ -143,15 +143,9 @@
   from.
 
 
-- attach a screenshot of the program working
-
-    - use Github Pages to host the screenshot:   http://oli.jp/2011/github-pages-workflow/
-
-    - Maybe I want to find some way to compress the solution listing though....
-        make it wider.     Use Term::Readkey?   http://stackoverflow.com/a/1782149/1042525
-        Or just assume it's 80 cols wide, in which case we can fit 5 boards wide...
-
-
+- Compress the solution listing...  make it wider.
+  Use Term::Readkey?   http://stackoverflow.com/a/1782149/1042525
+  Or just assume it's 80 cols wide, in which case we can fit 5 boards wide...
 
 
 - The "number of moves" metric is incorrect at the very beginning of a large board.  A* actually
