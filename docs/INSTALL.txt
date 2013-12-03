@@ -5,3 +5,7 @@ To install:
 Optional, but may be useful:
     
     sudo cpan Devel::Cover
+
+
+This requires a terminal that's capable of Unicode and 256 colors.  Putty and Gnome-Terminal both
+work splendidly.
