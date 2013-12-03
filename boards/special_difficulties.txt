@@ -1,0 +1,7 @@
+Boards that have specific kinds of difficulties:
+
+
+==== spends atypical amounts of time in IsUnsolvable::noclipping ====
+
+- Multiplying-18
+- Tricky-3

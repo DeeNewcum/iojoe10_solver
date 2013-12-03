@@ -1,3 +1,13 @@
+- Implement IsUnsolvable::geographically_isolated().
+                http://en.wikipedia.org/wiki/Flood_fill
+                "Most practical implementations use a loop for the west and east directions"
+  Test it on:
+        Inverting-11
+        Blocks-12
+        Blocks-14
+        Blocks-4
+
+
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
   up the algorithm or not
 
@@ -6,8 +16,6 @@
       and 2) when a multiply just happened
 
             (do this via memoization?)
-
-
 
 
 - [TEST-CORE] improve coverage of the Core routines
@@ -85,10 +93,6 @@
         https://en.wikipedia.org/wiki/A*_search_algorithm#Bounded_relaxation
 
 
-- Implement IsUnsolvable::geographically_isolated().
-  Test it on:
-        Inverting-11
-        Blocks-12
 
 - Are there any ways to improve the heuristic?  That seems like one of the best ways to speed up A*.
 
