@@ -1,3 +1,15 @@
+- have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
+  up the algorithm or not
+
+
+    - don't run eqzero() on EVERY call to _noclipping(), rather, only run it 1) on the first call,
+      and 2) when a multiply just happened
+
+            (do this via memoization?)
+
+
+
+
 - [TEST-CORE] improve coverage of the Core routines
 
     - In move_apply.t, change ok_move() to feed its data through Board::new_from_string().  This
@@ -15,14 +27,6 @@
 - noclipping_shortcut() seems cause the solver to take a long time for the combination of:
         noclipping_shortcut() + eqzero() + Blocks-11
   Investigate and fix.
-
-
-- don't run eqzero() on EVERY call to _noclipping(), rather, only run it 1) on the first call, and
-  2) when a multiply just happened
-
-
-- have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
-  up the algorithm or not
 
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
