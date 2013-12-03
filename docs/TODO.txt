@@ -8,6 +8,7 @@
   Test it on:
         Inverting-11
         Difficult-7
+        Simple-14
         Blocks-12
         Blocks-14
         Blocks-4

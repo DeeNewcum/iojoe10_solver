@@ -369,7 +369,7 @@ sub display_solution {
     my @groups = get_combined_groups($move_list, $orig_board);
     
     ## display the groups
-    print "\nCombined groups:\n";
+    print "\nPieces that combined:\n";
     foreach my $group (@groups) {
         print "\t";
         _display_group($group);
