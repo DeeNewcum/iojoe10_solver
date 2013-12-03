@@ -165,7 +165,8 @@ sub A_star {
 
         $current->display       if ASTAR_DEBUG;
         my $t = time();
-        if ($t - $display_every_n_secs > 3) {
+        if ($t - $display_every_n_secs > 3
+                    && ! $INC{'Test/Builder/Module.pm'}) {     # don't display when running under 'prove' or Test::Simple or Test::More
             $display_every_n_secs = $t;
             $current->display;
                 my $duration = int(time - $started);

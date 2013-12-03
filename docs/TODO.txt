@@ -1,11 +1,15 @@
-- TEST CORE
-    - implement the automated testing routine
-    - improve coverage of the Core routines
+- [TEST-CORE] improve coverage of the Core routines
 
+    - In move_apply.t, change ok_move() to feed its data through Board::new_from_string().  This
+      allows us to avoid this whole crap about separate variables for pieces, and generally makes it
+      much more readable.
 
-- In move_apply.t, change ok_move() to feed its data through Board::new_from_string().
-  This allows us to avoid this whole crap about separate variables for pieces, and generally makes
-  it much more readable.
+- [TEST-CORE] add the ability to test for specific combined-groups
+
+- [TEST-CORE] add more boards to t/boards_auto/
+        
+        - perhaps disable these during the default 'prove' run, but run them for a more "complete"
+          run?          http://stackoverflow.com/a/13845104/1042525
 
 
 - noclipping_shortcut() seems cause the solver to take a long time for the combination of:
