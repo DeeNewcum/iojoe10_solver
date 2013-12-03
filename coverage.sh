@@ -12,9 +12,10 @@ HARNESS_PERL_SWITCHES=-MDevel::Cover prove \
 #       (the minimal set of functions that are required to be able to verify the results of
 #        solver*.t;  these functions must be as bulletproof as possible)
 perl -x "$0"        # generate the .uncoverable file
-cover                  \
-    -select Move.pm    \
-    -select Board.pm
+cover                           \
+    -select Move.pm             \
+    -select Board.pm            \
+    -select TreeTraversal.pm
 xdg-open cover_db/coverage.html
 
 exit
@@ -53,6 +54,9 @@ my %subs_to_include = (
         _is_piece_movable
         _is_piece_combinable
         _combine_pieces
+    ]],
+    'TreeTraversal.pm' => [qw[
+        verify_solution
     ]],
 );
 

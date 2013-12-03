@@ -18,7 +18,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::More tests => 20;
+    use Test::More tests => 21;
 
     use Board;
     use Move;
@@ -92,10 +92,15 @@ ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v' 
 ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'a3>' ) ]),
             "solution has an illegal move");
 
+ok( TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v c3<' ) ]),
+            "verify_solution() works");
+
 ok( !TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b1> b3v b1> c3<' ) ]),
             "solution is too long");
 
-ok( TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b3v c3<' ) ]),
-            "verify_solution() works");
+delete $board->{file_fields}{shortest_solution};
+
+ok( TreeTraversal::verify_solution($board, [ Move::movelist_from_string( 'b1> b3v b1> c3<' ) ]),
+            "long solution is fine, since shortest_solution: wasn't specified");
 
 1;
