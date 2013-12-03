@@ -186,7 +186,6 @@ sub _noclipping_shortcut {
             8 2
             7 3
             6 4
-            5 5
 EOF
 
     my %new_pieces = %pieces;

@@ -24,11 +24,6 @@
           run?          http://stackoverflow.com/a/13845104/1042525
 
 
-- noclipping_shortcut() seems cause the solver to take a long time for the combination of:
-        noclipping_shortcut() + eqzero() + Blocks-11
-  Investigate and fix.
-
-
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
   most promising.
