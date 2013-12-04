@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # tests for:
-#   - IsUnsolvable::*
+#   - IsUnsolvable::noclipping()
 
 
     use strict;
