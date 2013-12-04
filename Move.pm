@@ -151,7 +151,7 @@ sub toString {
 # False means either an illegal move, or a legal move that resulted in no change.
 #
 # When a change was made, the return value is a listref of the coordinates that the piece stopped
-# at.
+# at:       [$y, $x]
 sub apply {
     my $self = shift;
     my ($board) = @_;

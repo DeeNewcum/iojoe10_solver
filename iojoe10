@@ -66,7 +66,8 @@ sub parse_cmdline {
 
     #### be able to toggle certain things on/off, to make it easy to run the compare.pl reports ####
 
-    $ARGV{'--disable-noclipping-shortcut'} = $ARGV{'--compare-old'};
+    $ARGV{'--disable-islands'} = $ARGV{'--compare-old'};
+    #$ARGV{'--disable-noclipping-shortcut'} = $ARGV{'--compare-old'};
     #$ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
     $ARGV{'--disable-noclipping-shortcut'} = 1 if $ARGV{'--dijkstra'};      # when we use --dijkstra, often we're looking for a rigorously-correct minimal solution
 
@@ -80,6 +81,9 @@ sub parse_cmdline {
     }
     if ($ARGV{'--disable-noclipping-shortcut'}) {
         *IsUnsolvable::_noclipping_shortcut = sub { undef };
+    }
+    if ($ARGV{'--disable-islands'}) {
+        *IsUnsolvable::islands = sub { 0 };
     }
 
     use warnings;

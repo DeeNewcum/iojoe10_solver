@@ -128,9 +128,15 @@ sub _IDDFS {
         my @neighbors;
         for my $move (@{ list_available_moves($board) }) {
             my $new_board = $board->clone;
-            $move->apply($new_board)
+            my $apply_loc = $move->apply($new_board)
                 or next;
             $num_moves++;
+            my $piece = $new_board->at(@$apply_loc);       # the piece when we finished moving
+            if ($piece == 10 || ($piece % 100 == 0 && $piece >= 100 && $piece <= 700)) {
+                # We've created a new wall, or moved a slider. Therefore it's possible we've created
+                # a new island.  Check that each island is still solvable even though they're isolated.
+                next if IsUnsolvable::islands($new_board);
+            }
             $new_board->{came_from} = $board;
             $new_board->{came_from_move} = $move;
             push @neighbors, $new_board;
