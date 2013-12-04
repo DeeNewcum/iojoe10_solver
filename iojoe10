@@ -66,9 +66,11 @@ sub parse_cmdline {
 
     #### be able to toggle certain things on/off, to make it easy to run the compare.pl reports ####
 
-    $ARGV{'--disable-islands'} = $ARGV{'--compare-old'};
+    $ARGV{'--relax'} = 5 if !$ARGV{'--compare-old'};
+    #$ARGV{'--disable-islands'} = $ARGV{'--compare-old'};
     #$ARGV{'--disable-noclipping-shortcut'} = $ARGV{'--compare-old'};
     #$ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
+
     $ARGV{'--disable-noclipping-shortcut'} = 1 if $ARGV{'--dijkstra'};      # when we use --dijkstra, often we're looking for a rigorously-correct minimal solution
 
     no warnings 'redefine';
@@ -129,3 +131,7 @@ Pieces are represented by:
 --dijkstra
         Use Dijkstra's algorithm.  (instead of A*)
 
+--relax=n
+        Do "bounded relaxation".  Using an n>1 will tend to increase performance of A*, but 
+        make it more and more likely that a sub-optimal solution is found.  The solution that's
+        found will be at most n times longer than the optimal solution.
