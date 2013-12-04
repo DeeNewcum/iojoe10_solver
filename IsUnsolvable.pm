@@ -300,4 +300,29 @@ sub eqzero {
     return ($sum % 10) == 0;
 }
 
+
+# If a wall has split the numerical pieces into two or more totally separate groups, then find those
+# groups, and call noclipping() on each separate group.
+sub islands {
+    my ($board) = @_;
+    
+    my $immobile_grid = _islands_calculate_immobile($board);
+
+    # TODO: implement flood-fill
+}
+
+
+# Walls are obviously immobile.  But what about sliders?  Sometimes a slider has gotten wedged in a
+# place that ensures it will never move again.  There are even ripple effects:
+#           XX <<  .  5
+#           XX ^^  .  .
+#            .  . XX XX
+#            5  .  .  .
+# Although the up-slider isn't pinned directly against a wall, it IS pinned against another slider
+# that itself is permanently-pinned.
+sub _islands_calculate_immobile {
+    my ($board) = @_;
+}
+
+
 1;
