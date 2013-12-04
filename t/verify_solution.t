@@ -24,6 +24,8 @@ if ($ENV{HARNESS_ACTIVE}) {
     $board_dir = "t/$board_dir";
 }
 
+$ARGV{'--relax'} = 1;
+
 my @files = glob("$board_dir/*");
 foreach my $file (@files) {
     (my $display_file = $file) =~ s#^.*/##;
