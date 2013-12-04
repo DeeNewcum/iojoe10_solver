@@ -5,12 +5,15 @@ Boards that have specific kinds of difficulties:
 
 - Multiplying-18
 - Tricky-3
+- Hard-2
+- Hard-24
 - Inverting-14      (3 minutes for the very first call!!!)
 
 
 ==== IsUnsolvable::islands() fails at its job ====
 
 - Difficult-15      (top-left corner)
+- Hard-1
 
 
 ==== boards that take a long time, for an undertimined reason ====
