@@ -327,7 +327,23 @@ sub islands {
 
     # gather up the pieces for each island, and check them separately
     foreach my $color (2 .. $num_islands+1) {
+        my @pieces;
+        for (my $y=0; $y<$board->{height}; $y++) {
+            for (my $x=0; $x<$board->{width}; $x++) {
+                my $cell = $board->at($y, $x);
+                if ($immobile_grid->[$y][$x] == $color
+                   && Move::_is_piece_combinable($cell))
+                {
+                    push @pieces, $cell;
+                }
+            }
+        }
+        #print "island $color:     ", join(" ", @pieces), "\n";
+        if (_noclipping(@pieces)) {
+            return 1;
+        }
     }
+    return 0;
 }
 
 

@@ -9,7 +9,7 @@
 
     BEGIN {-t and eval "use lib '..'"}
 
-    use Test::More tests => 2;
+    use Test::More tests => 4;
 
     use IsUnsolvable;
     use Board;
@@ -19,17 +19,17 @@
 
 
 my $board_2islands = Board::new_from_string(<<'EOF');
-           XX <<  .  5
+           XX <<  2  1
            XX ^^  .  .
             .  . XX XX
-            5  .  .  .
+            3  4  .  .
 EOF
 
 my $board_1island = Board::new_from_string(<<'EOF');
-           XX  .  .  5
+           XX  .  2  1
            XX ^^  .  .
             .  . XX XX
-            5  .  .  .
+            3  4  .  .
 EOF
 
 
@@ -50,7 +50,8 @@ is(IsUnsolvable::_immobile_grid_toString(
 EOF
 
 
-#IsUnsolvable::islands($board_2islands);
+ok(IsUnsolvable::islands($board_2islands),      "2islands is unsolvable");
+ok(!IsUnsolvable::islands($board_1island),      "1island is solvable");
 
 
 
