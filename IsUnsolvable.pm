@@ -313,15 +313,91 @@ sub islands {
 
 
 # Walls are obviously immobile.  But what about sliders?  Sometimes a slider has gotten wedged in a
-# place that ensures it will never move again.  There are even ripple effects:
+# place that ensures it's permanently immobile.  But there are ripple effects:
 #           XX <<  .  5
 #           XX ^^  .  .
 #            .  . XX XX
 #            5  .  .  .
 # Although the up-slider isn't pinned directly against a wall, it IS pinned against another slider
-# that itself is permanently-pinned.
+# that itself is immobile.
 sub _islands_calculate_immobile {
     my ($board) = @_;
+
+    # initialize the grid
+    my @immobile_grid;              # true = immobile, false = mobile
+    for (my $y=0; $y<$board->{height}; $y++) {
+        for (my $x=0; $x<$board->{width}; $x++) {
+            $immobile_grid[$y][$x] = ($board->at($y, $x) == 10);
+        }
+    }
+
+    while (1) {
+        # This is a suboptimal algorithm for now...   we can speed it up later if needed
+        #       (eg. using a queue to maintain a list of cells that need to be checked again)
+        my $anything_changed = 0;
+        for (my $y=0; $y<$board->{height}; $y++) {
+            for (my $x=0; $x<$board->{width}; $x++) {
+                my $slider = $board->at( $y, $x );
+                if (!$immobile_grid[$y][$x] && exists $Move::sliding_blocks{$slider}) {
+                    if (_islands_is_slider_immobile($y, $x, $board, \@immobile_grid)) {
+                        $anything_changed++;
+                        $immobile_grid[$y][$x] = 1;
+                        #print "Immobile at ($x, $y)\n";
+                    } else {
+                        #print "Still mobile at ($x, $y)\n";
+                    }
+                }
+            }
+        }
+        last unless $anything_changed;
+    }
+
+    return \@immobile_grid;
+}
+
+
+# returns true=immobile, false=mobile
+sub _islands_is_slider_immobile {
+    my ($y, $x, $board, $grid) = @_;
+
+    my $slider_piece = $board->at($y, $x);
+
+    # Look through all the directions this slider could possibly go.  Is there a direction that this
+    # piece can move?
+    #print "Checking slider ";
+    #Board::display_one_piece($slider_piece);
+    #print "\n";
+    foreach my $dir (@{$Move::sliding_blocks{$slider_piece}}) {
+        # Are we able to move one block in this direction?
+        my $y2 = $y + $Move::direction[$dir][0];
+        my $x2 = $x + $Move::direction[$dir][1];
+        #print "  dir $dir lands at ($x2, $y2)\n";
+        next if (!Move::_in_bounds($board, $y2, $x2));
+        next if ($grid->[$y2][$x2]);
+        # We found a way that this slider could move!  So....  it's not immobile.
+        if (1) {
+            my $m = new Move(x => $x, y => $y, dir => $dir);
+            #print "  this piece can move ", $m->toString(), ", so it isn't immobile\n";
+        }
+        return 0;
+    }
+    #print "  couldn't find a way for this piece to move\n";
+
+    return 1;       # We couldn't find any direction that we could move.
+}
+
+
+# just for debugging pruposes
+sub _immobile_grid_toString {
+    my ($grid) = @_;
+    my $str = '';
+    foreach my $row (reverse @$grid) {
+        foreach my $col (@$row) {
+            $str .= $col ? "X" : ".";
+        }
+        $str .= "\n";
+    }
+    return $str;
 }
 
 

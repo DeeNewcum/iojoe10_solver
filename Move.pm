@@ -21,15 +21,15 @@ my %dir_chars = qw(
         3  v
         4  <
 );
-my %dir_chars_inverse = reverse %dir_chars;
-my @direction = (
+our %dir_chars_inverse = reverse %dir_chars;
+our @direction = (
     [0,0],
     [1,0],      # 1 = up
     [0,1],      # 2 = right
     [-1,0],     # 3 = down
     [0,-1],     # 4 = left
 );
-my %sliding_blocks = (      # which direction can sliding blocks go?
+our %sliding_blocks = (      # which direction can sliding blocks go?
     100 => [1],         # up only
     200 => [2],         # right only
     300 => [3],         # down only
