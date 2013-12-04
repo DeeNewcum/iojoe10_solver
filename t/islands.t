@@ -50,6 +50,8 @@ is(IsUnsolvable::_immobile_grid_toString(
 EOF
 
 
+#IsUnsolvable::islands($board_2islands);
+
 
 
 sub trim { (my $a=shift) =~ s/^\s+|\s+$//mg; "$a\n" }

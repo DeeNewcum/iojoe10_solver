@@ -303,12 +303,54 @@ sub eqzero {
 
 # If a wall has split the numerical pieces into two or more totally separate groups, then find those
 # groups, and call noclipping() on each separate group.
+#
+# Returns true if it's unsolvable, false if it's solvable.
 sub islands {
     my ($board) = @_;
     
     my $immobile_grid = _islands_calculate_immobile($board);
 
-    # TODO: implement flood-fill
+    # do a flood-fill everywhere that there's a combinable piece
+    my $num_islands = 0;
+    for (my $y=0; $y<$board->{height}; $y++) {
+        for (my $x=0; $x<$board->{width}; $x++) {
+            next unless (Move::_is_piece_combinable( $board->at($y, $x) ));
+            if ($immobile_grid->[$y][$x] == 0) {
+                $num_islands++;
+                _islands_flood_fill($immobile_grid, $y, $x, $num_islands + 1);
+            }
+        }
+    }
+    #print _immobile_grid_toString($immobile_grid); exit;
+
+    return 0    if ($num_islands <= 1);             # there's zero or one islands...  nothing special to check
+
+    # gather up the pieces for each island, and check them separately
+    foreach my $color (2 .. $num_islands+1) {
+    }
+}
+
+
+sub _islands_flood_fill {
+    my ($grid, $start_y, $start_x, $color) = @_;            # 0 = mobile, 1 = immobile, 2/3/4/...  "colors" for each unique region
+
+    my $width = scalar(@{$grid->[0]});
+    my $height = scalar(@$grid);
+
+    my @queue;
+    push @queue, [$start_y, $start_x];
+    while (@queue) {
+        my ($y, $x) = @{shift @queue};
+        next if ($grid->[$y][$x] != 0);
+        $grid->[$y][$x] = $color;
+        foreach my $dir (1..4) {
+            my $y2 = $y + $Move::direction[$dir][0];
+            my $x2 = $x + $Move::direction[$dir][1];
+            if ($x2>=0 && $x2<$width && $y2>=0 && $y2<$height) {
+                push @queue, [$y2, $x2];
+            }
+        }
+    }
 }
 
 
@@ -324,10 +366,10 @@ sub _islands_calculate_immobile {
     my ($board) = @_;
 
     # initialize the grid
-    my @immobile_grid;              # true = immobile, false = mobile
+    my @immobile_grid;              # 1 = immobile, 0 = mobile
     for (my $y=0; $y<$board->{height}; $y++) {
         for (my $x=0; $x<$board->{width}; $x++) {
-            $immobile_grid[$y][$x] = ($board->at($y, $x) == 10);
+            $immobile_grid[$y][$x] = ($board->at($y, $x) == 10) ? 1 : 0;
         }
     }
 
@@ -338,14 +380,11 @@ sub _islands_calculate_immobile {
         for (my $y=0; $y<$board->{height}; $y++) {
             for (my $x=0; $x<$board->{width}; $x++) {
                 my $slider = $board->at( $y, $x );
-                if (!$immobile_grid[$y][$x] && exists $Move::sliding_blocks{$slider}) {
-                    if (_islands_is_slider_immobile($y, $x, $board, \@immobile_grid)) {
-                        $anything_changed++;
-                        $immobile_grid[$y][$x] = 1;
-                        #print "Immobile at ($x, $y)\n";
-                    } else {
-                        #print "Still mobile at ($x, $y)\n";
-                    }
+                if (!$immobile_grid[$y][$x] && exists $Move::sliding_blocks{$slider}
+                     && _islands_is_slider_immobile($y, $x, $board, \@immobile_grid))
+                {
+                    $anything_changed++;
+                    $immobile_grid[$y][$x] = 1;
                 }
             }
         }
@@ -393,7 +432,8 @@ sub _immobile_grid_toString {
     my $str = '';
     foreach my $row (reverse @$grid) {
         foreach my $col (@$row) {
-            $str .= $col ? "X" : ".";
+            $str .= ($col == 0 ? "." :
+                    ($col == 1 ? "X" : $col));
         }
         $str .= "\n";
     }
