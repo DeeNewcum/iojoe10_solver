@@ -1,19 +1,24 @@
+- [TEST-CORE] add more boards to t/boards_auto/
+        
+        - perhaps disable these during the default 'prove' run, but run them for a more "complete"
+          run?          http://stackoverflow.com/a/13845104/1042525
+
+
+- have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
+  up the algorithm or not
+
+    - don't run eqzero() on EVERY call to _noclipping(), rather, only run it 1) on the first call,
+      and 2) when a multiply just happened
+
+            (do this via memoization?)
+
+
 - add more test cases for IsUnsolvable::islands()
             Development was done EXTREMELY quickly, and it's possible (likely?) that there are one
             or two bugs that were never properly examined.
 
 
 - add LOTS more boards
-
-
-- have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
-  up the algorithm or not
-
-
-    - don't run eqzero() on EVERY call to _noclipping(), rather, only run it 1) on the first call,
-      and 2) when a multiply just happened
-
-            (do this via memoization?)
 
 
 - [TEST-CORE] improve coverage of the Core routines
@@ -23,12 +28,6 @@
       much more readable.
 
 - [TEST-CORE] add the ability to test for specific combined-groups
-
-- [TEST-CORE] add more boards to t/boards_auto/
-        
-        - perhaps disable these during the default 'prove' run, but run them for a more "complete"
-          run?          http://stackoverflow.com/a/13845104/1042525
-
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
