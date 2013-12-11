@@ -74,8 +74,11 @@ sub parse_cmdline {
     #$ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
 
     ## synthesize and defaults ##
-    $ARGV{'--disable-noclipping-shortcut'} = 1 if $ARGV{'--dijkstra'};      # when we use --dijkstra, often we're looking for a rigorously-correct minimal solution
     $ARGV{'--relax'} = 5 unless exists $ARGV{'--relax'};
+    # when we use --dijkstra or --iddfs, often we're looking for a rigorously-correct minimal solution
+    if ($ARGV{'--dijkstra'} || $ARGV{'--iddfs'} || $ARGV{'--relax'} < 0.98) {
+        $ARGV{'--disable-noclipping-shortcut'} = 1;
+    }
 
     #### where things actually get disabled ####
     no warnings 'redefine';

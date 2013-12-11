@@ -8,3 +8,6 @@
  3  .  .  5
  5  .  .  4
  3 x5 +-  5
+
+shortest_solution: 10
+            # d1< c1> d2v d1< b1^ a2> a1^ d2^ a3^ c4>
