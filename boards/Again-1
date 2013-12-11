@@ -1,0 +1,14 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Again", level 1
+#
+# 5x5 11pcs
+
+ .  X  X  X  X
+ 5  .  1  5  2
+ 7  .  8  .  6
+ 5  .  4 -2  9
+ X  X  X  X  X
+
+
+shortest_solution: 13

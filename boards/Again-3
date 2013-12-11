@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Again", level 3
+#
+# 7x7 13
+
+X . . . . . X
+. . X 3 X . .
+. X 4 9 5 X .
+. 2 7 8 2 1 .
+. X 1 6 9 X .
+. . X 3 X . .
+X . . . . . X

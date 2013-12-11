@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Letters", level 3
+#
+# 7x7 36pcs
+
+ 3  6  5 -2  5  4  3
+ 7 RK  2  1  6 RK  5
+ 4 XX  5  2  4 XX  9
+ 5 XX  4 XX  3 XX  2
+ 1 XX XX  2 XX XX  4
+ 8 RK  5  7  3 RK  8
+ 4  3  2  5  6  5  4
