@@ -308,6 +308,10 @@ sub get_combined_groups {
         }
     }
 
+    # For pieces that went totally uncombined (because they weren't *required* to be combined 
+    # before the board could be won), don't display those pieces.       (they appear here as one-length groups)
+    @group_list = grep { !( scalar(@$_) == 1 && ref($_->[0]) eq '') } @group_list;
+
     # The order of the groups is arbitrary, but it can be nice to sort them.
     @group_list = sort {_group_sort($a) <=> _group_sort($b)
                             || _group_subsort($b) <=> _group_subsort($a)
