@@ -74,7 +74,7 @@ sub parse_cmdline {
     #$ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
 
     ## synthesize and defaults ##
-    $ARGV{'--relax'} = 5 unless exists $ARGV{'--relax'};
+    $ARGV{'--relax'} = 10 unless exists $ARGV{'--relax'};
     # when we use --dijkstra or --iddfs, often we're looking for a rigorously-correct minimal solution
     if ($ARGV{'--dijkstra'} || $ARGV{'--iddfs'} || $ARGV{'--relax'} < 0.98) {
         $ARGV{'--disable-noclipping-shortcut'} = 1;
@@ -143,3 +143,6 @@ Pieces are represented by:
         Do "bounded relaxation".  Using an n>1 will tend to increase performance of A*, but 
         make it more and more likely that a sub-optimal solution is found.  The solution that's
         found will be at most n times longer than the optimal solution.
+
+        By default, this is 10, because finding *any* solution is usually more important than
+        finding an optimal solution.  Set it to 1 to always generate optimal solutions.
