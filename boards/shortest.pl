@@ -26,7 +26,7 @@ while (<$pin>) {
     my $has_shortest_field = ($contents =~ /shortest_solution:\s*(\S+)/);
     my $num_moves = $has_shortest_field ? "$1 moves" : "";
 
-    if ($contents =~ /approx_solution:\s*(\S+)/) {
+    if (!$has_shortest_field && $contents =~ /approx_solution:\s*(\S+)/) {
         $num_moves = "$1 moves";
     }
 
