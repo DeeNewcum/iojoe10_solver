@@ -11,3 +11,5 @@ X 3 1 2 4 X
 2 1 4 1 2 5
 5 X X X 6 3
 
+
+approx_solution: 34               # --relax=4

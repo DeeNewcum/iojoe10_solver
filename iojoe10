@@ -75,8 +75,10 @@ sub parse_cmdline {
 
     ## synthesize and defaults ##
     $ARGV{'--relax'} = 10 unless exists $ARGV{'--relax'};
-    # when we use --dijkstra or --iddfs, often we're looking for a rigorously-correct minimal solution
-    if ($ARGV{'--dijkstra'} || $ARGV{'--iddfs'} || $ARGV{'--relax'} < 0.98) {
+    # When we use --dijkstra or --iddfs or --relax=1, often we're looking for a rigorously-correct
+    # minimal solution (for the shortest_solution: field), so add any extra options necessary to
+    # be rigorously correct.
+    if ($ARGV{'--dijkstra'} || $ARGV{'--iddfs'} || $ARGV{'--relax'} <= 1.01) {
         $ARGV{'--disable-noclipping-shortcut'} = 1;
     }
 
@@ -140,9 +142,12 @@ Pieces are represented by:
         Use Dijkstra's algorithm.  (instead of A*)
 
 --relax=n
-        Do "bounded relaxation".  Using an n>1 will tend to increase performance of A*, but 
-        make it more and more likely that a sub-optimal solution is found.  The solution that's
-        found will be at most n times longer than the optimal solution.
+        Do "bounded relaxation".  The larger 'n' is, the faster a solution will be found, but the
+        solution will tend to be less and less optimal.
 
-        By default, this is 10, because finding *any* solution is usually more important than
-        finding an optimal solution.  Set it to 1 to always generate optimal solutions.
+        The solution that's found will be at most n times longer than the optimal solution.
+        (but its growth tends to be *far* less than that)
+
+        By default, this is 10, because for this specific problem, finding *any* solution is usually
+        more important than finding an optimal solution.  Set it to 1 to always generate optimal
+        solutions.

@@ -8,3 +8,6 @@
  -2 XX  8  6
   4  2  2  7
   3  3 XX -1
+
+
+approx_solution: 14              # --relax=3

@@ -11,3 +11,6 @@
  . XX  1  2  3 XX  .
  . XX XX ^^ XX XX  .
 XX  2  0  1  2 XX XX
+
+
+approx_solution: 17               # --relax=3

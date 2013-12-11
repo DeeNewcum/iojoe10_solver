@@ -9,3 +9,6 @@
  1 XX  .  .  .
  5  9 XX  . XX
  6  8  2 ^^  .
+
+
+approx_solution: 25       # --relax=5

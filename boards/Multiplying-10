@@ -8,3 +8,7 @@
  8  2 x2  8
  2 x2  1  1
 XX  7  4  5
+
+
+shortest_solution: 10
+        # a2^ c2^ c3> d1^ b3v b2> c4< b4v c1^ a4>
