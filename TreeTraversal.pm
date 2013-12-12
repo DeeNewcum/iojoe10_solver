@@ -233,8 +233,9 @@ sub heuristic {
 
     my @combinable_pieces = IsUnsolvable::_list_pieces($board);
 
-    # the number of pieces that are out of place, divided by two
+    # The number of pieces that are out of place, divided by two.
     # (because each move could at most result in two out-of-place pieces being combined into walls)
+    # A concrete example:   Simple-8 has 14 pieces out of place, but requires only 8 moves to solve.
     my $heuristic = scalar(@combinable_pieces) / 2;      
 
     $heuristic *= ($ARGV{'--relax'} || 1);        # bounded relaxation -- weighted A*
