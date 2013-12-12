@@ -1,14 +1,3 @@
-- [TEST-CORE] add more boards to t/boards_auto/
-        
-        - perhaps disable these during the default 'prove' run, but run them for a more "complete"
-          run?  
-                http://perldoc.perl.org/prove.html#Arguments-to-Tests
-                http://www.modernperlbooks.com/mt/2013/05/running-named-perl-tests-from-prove.html
-                http://stackoverflow.com/questions/13632377/prove-command-not-passing-arguments-after-arisdottle-to
-                http://stackoverflow.com/a/13845104/1042525
-
-
-
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
   up the algorithm or not
 
