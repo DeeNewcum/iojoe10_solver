@@ -75,11 +75,16 @@ sub parse_cmdline {
 
     ## synthesize and defaults ##
     $ARGV{'--relax'} = 10 unless exists $ARGV{'--relax'};
-    # When we use --dijkstra or --iddfs or --relax=1, often we're looking for a rigorously-correct
-    # minimal solution (for the shortest_solution: field), so add any extra options necessary to
-    # be rigorously correct.
-    if ($ARGV{'--dijkstra'} || $ARGV{'--iddfs'} || $ARGV{'--relax'} <= 1.01) {
+    if ($ARGV{'--shortest'}) {
+        # The goal is to verify that A* and IsUnsolvable::noclipping() are working properly.
+        # So use a different search algorithm, and avoid using IsUnsolvable::noclipping().
+        $ARGV{'--iddfs'} = 1;
+        $ARGV{'--disable-noclipping'} = 1;
+
+        # These things aren't needed if --iddfs and --disable-noclipping are used, but in case
+        # we switch back to A*...
         $ARGV{'--disable-noclipping-shortcut'} = 1;
+        $ARGV{'--relax'} = 1;
     }
 
     #### where things actually get disabled ####
@@ -93,6 +98,9 @@ sub parse_cmdline {
     }
     if ($ARGV{'--disable-noclipping-shortcut'}) {
         *IsUnsolvable::_noclipping_shortcut = sub { undef };
+    }
+    if ($ARGV{'--disable-noclipping'}) {
+        *IsUnsolvable::noclipping = sub { 0 };
     }
     if ($ARGV{'--disable-islands'}) {
         *IsUnsolvable::islands = sub { 0 };
@@ -151,3 +159,7 @@ Pieces are represented by:
         By default, this is 10, because for this specific problem, finding *any* solution is usually
         more important than finding an optimal solution.  Set it to 1 to always generate optimal
         solutions.
+
+--shortest
+        Generate the data that's used for the shortest_solution: field.  When this flag is
+        specified, the program will try to do everything to generate a correct and optimal solution.
