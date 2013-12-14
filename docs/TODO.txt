@@ -5,19 +5,6 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
-        - bug: IDDFS sometimes generates less optimal solutions than A*'s --relax=1 does.  Boards
-          where this bug appears:
-
-                Multiplying-11      b1> c1^ c2> d2^ d4v a1>
-                                    a1^ b1^ c1^ d1< b2> a1> c2> d2^ d1^ a4>
-
-                Inverting-4         b1> a2> b2v c2< c1^ a2v b1> c3v a1>
-                                    b1> a2> a1^ b2v b1< a2> c2< c1^ c3v c1< a1^
-
-                Inverting-5         b3^ e3< a4> b4v e4v e2^ e4> f4v f3< b2^
-                                    e3v e2^ b3> a3> e3^ a4> b4v b2^ b4v b1> e1^ e4>
-                                                                ^^^^^^^  WTF?
-
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
   up the algorithm or not

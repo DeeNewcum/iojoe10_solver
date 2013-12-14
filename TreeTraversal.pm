@@ -82,6 +82,10 @@ sub print_stats {
 
 
 # Returns a list-ref of moves, if a solution was found.
+my $iddfs_wasted = 0;
+END {
+    print "iddfs_wasted = $iddfs_wasted\n"  if $iddfs_wasted;
+}
 sub _IDDFS {
     my ($board, $depth_remaining, $seen, $dbg_move_list) = @_;
 
@@ -103,7 +107,19 @@ sub _IDDFS {
         }
 
         next if ($depth_remaining <= 0);
-        next if $seen->{ $new_board->fingerprint }++;
+
+        # %$seen remembers the depth that we encountered each board at.  If we encounter the same
+        # board, but at a shallower depth, then keep going anyway, since that will result in a
+        # shorter solution.
+        my $fgpt = $new_board->fingerprint;
+        $iddfs_wasted++ if (exists $seen->{$fgpt} && -$depth_remaining < $seen->{$fgpt});
+            # This paragraph is kind of wasteful, because even if we continue from an earlier node,
+            # we still recompute the entire path over again!  Implementing BFS whould resolve these
+            # problems.         ($iddfs_wasted is up to 100% of the solution moves)
+            #           (eg. Inverting-5 takes for-fuckin-ever)
+        next if (-$depth_remaining >= ($seen->{$fgpt} || 0));
+        $seen->{$fgpt} ||= -$depth_remaining;     
+    
         $num_boards++;
         next if IsUnsolvable::noclipping($new_board);
 
