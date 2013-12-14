@@ -49,7 +49,7 @@ sub IDDFS {
         print "==== trying to depth $depth ====\n";
 
         my %seen;
-        my $ret = _IDDFS($board, $depth, \%seen);
+        my $ret = _IDDFS($board, $depth, \%seen, []);
         return $ret if defined($ret);
 
         print_stats();
@@ -83,7 +83,9 @@ sub print_stats {
 
 # Returns a list-ref of moves, if a solution was found.
 sub _IDDFS {
-    my ($board, $depth_remaining, $seen) = @_;
+    my ($board, $depth_remaining, $seen, $dbg_move_list) = @_;
+
+    #print move_list_toString($dbg_move_list), "\n";
 
     my @moves = @{ list_available_moves($board) };
     #die move_list_toString(\@moves) . "\n";
@@ -111,7 +113,7 @@ sub _IDDFS {
             print_stats();
         }
 
-        my $ret = _IDDFS( $new_board, $depth_remaining - 1, $seen);
+        my $ret = _IDDFS( $new_board, $depth_remaining - 1, $seen, [@$dbg_move_list, $move]);
         if (defined($ret)) {
             unshift @$ret, $move;
             return $ret;
