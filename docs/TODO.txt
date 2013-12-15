@@ -5,7 +5,7 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
-     >> so far, we've verified up to:  Intro-7
+     >> so far, we've verified up to:  Multiplying-12
 
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds

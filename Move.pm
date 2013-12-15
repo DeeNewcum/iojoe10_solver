@@ -205,6 +205,7 @@ sub apply {
         } else {
             $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
             $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
+            $board->{g}++;
             return \@just_before_collision;
         }
     }
@@ -219,6 +220,7 @@ sub apply {
         }
         $board->{cells}[ $just_before_collision[0] ][ $just_before_collision[1] ] = $cell;
         $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
+        $board->{g}++;
 
         return \@just_before_collision;
     } else {
@@ -232,6 +234,7 @@ sub apply {
 
         $board->{cells}[ $just_after_collision[0] ][ $just_after_collision[1] ] = $combined;
         $board->{cells}[ $self->{y} ][ $self->{x} ] = -11;
+        $board->{g}++;
 
         return \@just_after_collision;
     }

@@ -17,6 +17,8 @@ my $num_boards = 0;     # the number of unique board configurations we've evalua
 my $started;
 my $display_every_n = 0;
 my $display_every_n_secs = 0;
+my $avgdepth_ctr = 0;
+my $avgdepth_sum = 0;
 
 
 sub list_available_moves {
@@ -58,7 +60,7 @@ sub BFS {
                     && ! $INC{'Test/Builder/Module.pm'}) {     # don't display when running under 'prove' or Test::Simple or Test::More
             $display_every_n_secs = $t;
             $board->display;
-            print_stats();
+            print_stats("", $starting_board);
         }
 
         my @neighbors = _get_neighbors($board);
@@ -69,6 +71,10 @@ sub BFS {
             }
             my $f = $new_board->fingerprint;
             next if $seen{$f}++;
+
+            $avgdepth_ctr++;
+            $avgdepth_sum += $new_board->{g};
+
             $num_boards++;
             unshift @queue, $new_board;
         }
@@ -110,7 +116,7 @@ sub IDDFS {
 
 # show the stats so far
 sub print_stats {
-    my ($additional_text) = @_;
+    my ($additional_text, $starting_board) = @_;
     $additional_text = "" unless defined($additional_text);
 
     my $elapsed = time() - $started;
@@ -120,6 +126,16 @@ sub print_stats {
     } else {
         $elapsed_str = sprintf "%d:%02d", int($elapsed / 60), int($elapsed) % 60;
     }
+
+    if ($avgdepth_ctr > 0) {
+        my $avgdepth_str = sprintf ",   depth %.1f", $avgdepth_sum / $avgdepth_ctr;
+        $avgdepth_str =~ s/\.0$//;
+        $avgdepth_str .= " of $starting_board->{file_fields}{shortest_solution}"
+                if ($starting_board && $starting_board->{file_fields}{shortest_solution});
+        $additional_text = $avgdepth_str . $additional_text
+    }
+    $avgdepth_sum = $avgdepth_ctr = 0;
+
     printf "         %12s moves,   %8s boards,   %15s,   %d microseconds per move%s\n",
                 commify($num_moves),
                 commify($num_boards),

@@ -151,6 +151,7 @@ sub clone {
         height => $self->{height},
         cells  => Storable::dclone( $self->cells ),
         file_fields => $self->{file_fields},
+        g => $self->{g},
     );
 }
 
