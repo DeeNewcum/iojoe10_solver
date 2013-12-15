@@ -5,7 +5,14 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
-     >> so far, we've verified up to:  Multiplying-12
+     >> so far, we've verified up to:  Again-1
+
+     >> Uh, yeah...  BFS consumes quite a bit of RAM.
+        I'm not sure this will be sustainable for much longer?
+
+            - We don't HAVE to have an alternate algorithm to compare to, do we?
+              It may be sufficient to just compare to historical versions of A*.  Disabling all
+              of the IsUnsolvable routines helps a lot too.
 
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
@@ -32,6 +39,10 @@
       much more readable.
 
 - [TEST-CORE] add the ability to test for specific combined-groups
+
+    - add new functionality to --shortest:
+            - have it find *all* possible solutions that have the same (optimal) depth
+            - compare all of those solutions, find all common combined-groups, and report those
 
 - Use a stochastic rather than deterministic algorithm for IsUnsolvable::no_clipping.  Basically
   incorporate it into the heuristic function, so that we prioritize searching the nodes that seem
