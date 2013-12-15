@@ -38,6 +38,54 @@ sub list_available_moves {
 }
 
 
+# breadth-first search
+sub BFS {
+    my ($starting_board) = @_;
+
+    $num_moves = 0;
+    $started = time();
+    my $display_every_n_secs = time();
+
+    my @queue = ($starting_board);
+    my %seen;
+
+    my $winner;
+    OUTER: while (@queue) {
+        my $board = pop @queue;
+
+        my $t = time();
+        if ($t - $display_every_n_secs > 3
+                    && ! $INC{'Test/Builder/Module.pm'}) {     # don't display when running under 'prove' or Test::Simple or Test::More
+            $display_every_n_secs = $t;
+            $board->display;
+            print_stats();
+        }
+
+        my @neighbors = _get_neighbors($board);
+        foreach my $new_board (@neighbors) {
+            if ($new_board->has_won) {
+                $winner = $new_board;
+                last OUTER;
+            }
+            my $f = $new_board->fingerprint;
+            next if $seen{$f}++;
+            $num_boards++;
+            unshift @queue, $new_board;
+        }
+    }
+
+    return undef unless $winner;        # no solution could be found
+
+    my @move_list;
+    while (defined($winner)) {
+        unshift(@move_list, $winner->came_from_move)
+                if defined($winner->came_from_move);
+        $winner = $winner->came_from;
+    }
+    return \@move_list;
+}
+
+
 # iterative deepening depth-first search
 sub IDDFS {
     my ($board) = @_;

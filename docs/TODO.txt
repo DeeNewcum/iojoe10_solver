@@ -5,22 +5,7 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
-     >> so far, we've verified up to:  Inverting-4
-
-
-      - Why do some boards take SOOOOO long to verify?  For example, Again-2, with a
-        solution-length of 11, takes FOURTY-FIVE MINUTES to find a solution when --shortest
-        is used.
-
-        Find out if this is inherent to IDDFS, or if there's a problem that's causing unusual
-        slowness.
-
-        If it's inherent, then consider implementing Dijkstra's algorithm or BFS.
-
-        Alternately, consider: 1) pay for some EC2 time, 2) modify the program to record (in
-        a computer-readable format) the final result, 3) let the solver run overnight or for days,
-        and 4) write a program that generates a summary report of the computer-readable data
-        that's generated.
+     >> so far, we've verified up to:  Intro-7
 
 
 - have eqzero() deal with situations were multiply blocks are still around, and see if this speeds

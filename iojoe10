@@ -28,7 +28,9 @@ my $board = Board::new_from_file($filename);
 $board->display;
 
 my $move_list;
-if ($ARGV{'--iddfs'}) {
+if ($ARGV{'--bfs'}) {
+    $move_list = TreeTraversal::BFS($board);
+} elsif ($ARGV{'--iddfs'}) {
     $move_list = TreeTraversal::IDDFS($board);
 } else {
     $move_list = TreeTraversal::A_star($board);
@@ -78,7 +80,8 @@ sub parse_cmdline {
     if ($ARGV{'--shortest'}) {
         # The goal is to verify that A* and IsUnsolvable::noclipping() are working properly.
         # So use a different search algorithm, and avoid using IsUnsolvable::noclipping().
-        $ARGV{'--iddfs'} = 1;
+        #$ARGV{'--iddfs'} = 1;
+        $ARGV{'--bfs'} = 1;
         $ARGV{'--disable-noclipping'} = 1;
         $ARGV{'--disable-islands'} = 1;
 
@@ -102,6 +105,7 @@ sub parse_cmdline {
     }
     if ($ARGV{'--disable-noclipping'}) {
         *IsUnsolvable::noclipping = sub { 0 };
+        *IsUnsolvable::_noclipping = sub { 0 };
     }
     if ($ARGV{'--disable-islands'}) {
         *IsUnsolvable::islands = sub { 0 };
@@ -143,6 +147,9 @@ Pieces are represented by:
 
 
 ######## options ########
+
+--bfs
+        Use the BFS search algorithm.  (default is A*)
 
 --iddfs
         Use the IDDFS search algorithm.  (default is A*)
