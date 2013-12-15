@@ -10,7 +10,11 @@
      >> Uh, yeah...  BFS consumes quite a bit of RAM.
         I'm not sure this will be sustainable for much longer?
 
-            - We don't HAVE to have an alternate algorithm to compare to, do we?
+            - Don't store $board->{came_from}.  This forces the GC to retain a long string of
+              objects in RAM.  Instead, just store the LIST of moves made to get from the start
+              position to the current board.
+
+           >> We don't HAVE to have an alternate algorithm to compare to, do we?
               It may be sufficient to just compare to historical versions of A*.  Disabling all
               of the IsUnsolvable routines helps a lot too.
 
