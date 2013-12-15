@@ -5,6 +5,8 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
+     >> so far, we've verified up to:  Inverting-4
+
 
       - Why do some boards take SOOOOO long to verify?  For example, Again-2, with a
         solution-length of 11, takes FOURTY-FIVE MINUTES to find a solution when --shortest
