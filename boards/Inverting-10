@@ -13,4 +13,4 @@ XX x2  1  .  .  .
  .  .  . XX XX XX
 
 
-shortest_solution: 8
+# shortest_solution: 8      # not yet verified with --shortest

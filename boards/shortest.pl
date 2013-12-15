@@ -23,10 +23,10 @@ while (<$pin>) {
 
     my $contents = slurp($filename);        # the file's contents
 
-    my $has_shortest_field = ($contents =~ /shortest_solution:\s*(\S+)/);
+    my $has_shortest_field = ($contents =~ /^shortest_solution:\s*(\S+)/m);
     my $num_moves = $has_shortest_field ? "$1 moves" : "";
 
-    if (!$has_shortest_field && $contents =~ /approx_solution:\s*(\S+)/) {
+    if (!$has_shortest_field && $contents =~ /^approx_solution:\s*(\S+)/m) {
         $num_moves = "$1 moves";
     }
 
