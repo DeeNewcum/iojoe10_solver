@@ -82,13 +82,7 @@ sub BFS {
 
     return undef unless $winner;        # no solution could be found
 
-    my @move_list;
-    while (defined($winner)) {
-        unshift(@move_list, $winner->came_from_move)
-                if defined($winner->came_from_move);
-        $winner = $winner->came_from;
-    }
-    return \@move_list;
+    return $winner->{came_from_moves};
 }
 
 
@@ -219,8 +213,7 @@ sub _IDDFS {
                 # a new island.  Check that each island is still solvable even though they're isolated.
                 next if IsUnsolvable::islands($new_board);
             }
-            $new_board->{came_from} = $board;
-            $new_board->{came_from_move} = $move;
+            $new_board->{came_from_moves} = [ @{$board->{came_from_moves} || []}, $move ];
             push @neighbors, $new_board;
         }
         return @neighbors;
@@ -294,13 +287,7 @@ sub A_star {
         $closed_set{ $current->fingerprint } = 1;
     }
     if (defined($we_reached_the_end)) {
-        my @move_list;
-        while (defined($we_reached_the_end)) {
-            unshift(@move_list, $we_reached_the_end->came_from_move)
-                    if defined($we_reached_the_end->came_from_move);
-            $we_reached_the_end = $we_reached_the_end->came_from;
-        }
-        return \@move_list;
+        return $we_reached_the_end->{came_from_moves};
     } else {
         return undef;
     }

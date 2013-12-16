@@ -5,14 +5,10 @@
   To fix this -- regenerate all of the shortest_solution: data using IDDFS, so that at least
   Test-Core compares two different algorithms.
 
-     >> so far, we've verified up to:  Again-1
+     >> so far, we've verified up to:  Simple-1
 
      >> Uh, yeah...  BFS consumes quite a bit of RAM.
         I'm not sure this will be sustainable for much longer?
-
-            - Don't store $board->{came_from}.  This forces the GC to retain a long string of
-              objects in RAM.  Instead, just store the LIST of moves made to get from the start
-              position to the current board.
 
            >> We don't HAVE to have an alternate algorithm to compare to, do we?
               It may be sufficient to just compare to historical versions of A*.  Disabling all

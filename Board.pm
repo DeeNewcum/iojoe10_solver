@@ -37,8 +37,7 @@ has 'file_fields', is => 'ro';       # fields that are specified in the board fi
 has 'f', is => 'rw';        # g + h -- our estimate of the total distance from the start node to the end node, travelling through this node
 has 'g', is => 'rw';        # distance from start node to this node
 has 'h', is => 'rw';        # our guess of how far we are from the end node
-has 'came_from', is => 'rw';   # Breadcrumbs that allow us to trace our way to the beginning, once we found the end.
-has 'came_from_move', is => 'rw';       # What move was made to get us from the predecessor?
+has 'came_from_moves', is => 'rw';       # What move was made to get us from the predecessor?
 
 
 sub BUILD {
