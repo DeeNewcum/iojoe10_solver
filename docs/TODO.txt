@@ -23,7 +23,7 @@
 
 - [TEST-CORE] add the ability to test for specific combined-groups
 
-    - add new functionality to --shortest:
+    - add new functionality to --yardstick:
             - have it find *all* possible solutions that have the same (optimal) depth
             - compare all of those solutions, find all common combined-groups, and report those
 

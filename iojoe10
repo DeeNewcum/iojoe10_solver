@@ -42,6 +42,9 @@ if (defined($move_list)) {
     my $soln_len = sprintf(",    solution length: %d moves", scalar(@$move_list));
     $soln_len .= "    (of minimum $board->{file_fields}{shortest_solution})"
                 if $board->{file_fields}{shortest_solution};
+    # Because the command-line uses Getopt::Casual semantics, the user isn't always 100% confident
+    # whether the Yardstick data was being generated.  Make it explicitely clear.
+    print "\t\t\t\t\t\t >>>> YARDSTICK <<<<\n\n"      if $ARGV{'--yardstick'};
     TreeTraversal::print_stats($soln_len);
 } else {
     print "No solution found.\n";
@@ -77,7 +80,7 @@ sub parse_cmdline {
 
     ## synthesize and defaults ##
     $ARGV{'--relax'} = 10 unless exists $ARGV{'--relax'};
-    if ($ARGV{'--shortest'}) {
+    if ($ARGV{'--yardstick'}) {
         # The goal is to verify that A* and IsUnsolvable::noclipping() are working properly.
         # So use a different search algorithm, and avoid using IsUnsolvable::noclipping().
         #$ARGV{'--iddfs'} = 1;
@@ -168,6 +171,10 @@ Pieces are represented by:
         more important than finding an optimal solution.  Set it to 1 to always generate optimal
         solutions.
 
---shortest
-        Generate the data that's used for the shortest_solution: field.  When this flag is
-        specified, the program will try to do everything to generate a correct and optimal solution.
+--yardstick
+        Generate the data that is needed by Test Core:
+                - the shortest_solution: field
+                - (more may be needed in the future)
+        When this flag is specified, the program will try to do everything to generate a correct and
+        optimal solution, because Yardstick Core is more important than Test Core.
+        (see docs/TestCore.txt)

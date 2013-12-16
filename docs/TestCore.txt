@@ -1,3 +1,5 @@
+########################################[ TEST CORE ]###############################################
+
 "Test Core" is the minimal set of functions that are required to verify the results of t/solver*.t.
 Because these functions are so critical to being able to test all other functions, it's important
 that the Test Core functions be *very* thoroughly tested.
@@ -5,18 +7,25 @@ that the Test Core functions be *very* thoroughly tested.
 "Test Core" derives from the ideas behind the NP class (of P/NP fame).  NP problems are those that
 are expensive to solve but easy to verify.  Similarly here, it takes a lot of CPU to quickly FIND A
 SOLUTION (and therefore, there's increased code complexity because of the need for caching and other
-speed optimization strategies), while the code that's needed to VERIFY a solution is relatively
+speed optimization strategies), while the code that's needed to VERIFY A SOLUTION is relatively
 simple.
 
-So, to test that our complex code is functioning correctly, we use our simpler verifier code to
+So, to test that our complex code is functioning correctly, we use our simpler code to
 verify that the solution is good.
 
 
+#####################################[ YARDSTICK CORE ]#############################################
+
+There are a few pieces of pre-calculated data that "Test Core" requires to be able to do its job.
+(eg. the length of an optimal solution)  "Yardstick Core" is the code that pre-calculates this data.
+If this precalculated data is wrong, then Test Core is going to produce incorrect results.
+
+So it's very important too.
 
 
+####################################[ TEST CORE DETAILS ]###########################################
 
-
-The routines needed to verify a solution are:
+The routines that make up Test Core:
 
     TreeTraversal::verify_solution()
 
@@ -28,8 +37,6 @@ The routines needed to verify a solution are:
                 Move::_is_piece_movable()
 
         Board::has_won()
-
-
 
 
 
@@ -55,3 +62,30 @@ Steps to verify a solution:
     4. for a few boards, it may be possible to confirm that specific pieces got combined together,
        because *every* known solution requires those pieces to be combined
                     (internally, we call these "combined groups")
+
+
+#################################[ YARDSTICK CORE DETAILS ]#########################################
+
+To calculate the Yardstick Core data, run the solver with the --yardstick flag.
+
+Currently this runs a BFS search, which is a fairly simple algorithm.  It also disables most
+optimizations (except for keeping a list of positions-already-visited), to further reduce
+complexity.
+
+
+However, in the future, we might need to use something other than BFS.  BFS is quite
+memory-intensive -- some boards currently consume 5gb under --yardstick.
+
+I had originally tried to use A* with all optimizations disabled.  Using A* for Yardstick Core
+doesn't seem like the best idea, because we're essentially using our A* routine to verify that our
+A* routine is correct.  If you're going to verify an algorithm against something, you should at
+least compare it against a *different* algorithm, right?
+
+Well, maybe.  There aren't too many alternatives:
+    - IDDFS uses too much CPU           https://github.com/DeeNewcum/iojoe10_solver/blob/664828dc05c/TreeTraversal.pm#L174-177
+    - BFS uses too much RAM
+If we use A*, but disable all optimizations, that's SOMETHING at least.
+
+Also, because the Yardstick Core only needs to be run at a few points in time, and then its data is
+useful forever, it might be fine to use A* for --yardstick, since that allows us to catch
+regressions at the very least.
