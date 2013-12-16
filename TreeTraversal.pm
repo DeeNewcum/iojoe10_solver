@@ -122,7 +122,7 @@ sub print_stats {
     }
 
     if ($avgdepth_ctr > 0) {
-        my $avgdepth_str = sprintf ",   depth %.1f", $avgdepth_sum / $avgdepth_ctr;
+        my $avgdepth_str = ",   depth " . int($avgdepth_sum / $avgdepth_ctr + 0.5);
         $avgdepth_str =~ s/\.0$//;
         $avgdepth_str .= " of $starting_board->{file_fields}{shortest_solution}"
                 if ($starting_board && $starting_board->{file_fields}{shortest_solution});
