@@ -84,7 +84,8 @@ sub parse_cmdline {
         # The goal is to verify that A* and IsUnsolvable::noclipping() are working properly.
         # So use a different search algorithm, and avoid using IsUnsolvable::noclipping().
         #$ARGV{'--iddfs'} = 1;
-        $ARGV{'--bfs'} = 1;
+        $ARGV{'--bfs'} = 1
+                unless ($ARGV{'--iddfs'} || $ARGV{'--astar'});
         $ARGV{'--disable-noclipping'} = 1;
         $ARGV{'--disable-islands'} = 1;
 
