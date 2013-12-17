@@ -12,7 +12,6 @@
             or two bugs that were never properly examined.
 
 
-- add LOTS more boards
 
 
 - [TEST-CORE] improve coverage of the Core routines
@@ -102,6 +101,9 @@
           3) if it DOES get us closer to the destination, then we go back and double-check that
           the mental leap taken in Step #1 is actually possible?
                   http://harablog.wordpress.com/2011/09/07/jump-point-search/
+
+
+- add more boards
 
 
 - possible constant-time optimizations:

@@ -1,0 +1,11 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Simple", level 9
+#
+# 5x5 13pcs
+
+2 . 5 . 6
+4 . . . 5
+6 . 7 . 2
+3 . . . 5
+6 . 5 . 4
