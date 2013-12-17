@@ -122,8 +122,8 @@ sub print_stats {
     }
 
     if ($avgdepth_ctr > 0) {
-        my $avgdepth_str = ",   depth " . int($avgdepth_sum / $avgdepth_ctr + 0.5);
-        $avgdepth_str =~ s/\.0$//;
+        my $avgdepth_str = sprintf ",   avg depth %.1f", $avgdepth_sum / $avgdepth_ctr;
+        $avgdepth_str =~ s/\.\d$//      if ($ARGV{'--bfs'});
         $avgdepth_str .= " of $starting_board->{file_fields}{shortest_solution}"
                 if ($starting_board && $starting_board->{file_fields}{shortest_solution});
         $additional_text = $avgdepth_str . $additional_text
@@ -253,7 +253,7 @@ sub A_star {
                 my $duration = int(time - $started);
             print "\t\tf = $current->{f}\t\tg = $current->{g}\t\th = $current->{h}\n";
                     #sprintf "%d:%02d\n", int($duration / 60), $duration % 60;
-            print_stats();
+            print_stats("", $board);
         }
 
         for my $neighbor (_get_neighbors($current)) {
@@ -271,6 +271,9 @@ sub A_star {
             print "\t\tf = $neighbor->{f}\n",
                   "\t\tg = $neighbor->{g}\n",
                   "\t\th = $neighbor->{h}\n"        if ASTAR_DEBUG;
+
+            $avgdepth_ctr++;
+            $avgdepth_sum += $neighbor->{g};
 
             my $fingerprint = $neighbor->fingerprint;
             if (exists $seen{$fingerprint}) {
