@@ -121,7 +121,7 @@ sub print_stats {
         $elapsed_str = sprintf "%d:%02d", int($elapsed / 60), int($elapsed) % 60;
     }
 
-    if ($avgdepth_ctr > 0) {
+    if ($avgdepth_ctr > 0 && !$additional_text) {
         my $avgdepth_str = sprintf ",   avg depth %.1f", $avgdepth_sum / $avgdepth_ctr;
         $avgdepth_str =~ s/\.\d$//      if ($ARGV{'--bfs'});
         $avgdepth_str .= " of $starting_board->{file_fields}{shortest_solution}"

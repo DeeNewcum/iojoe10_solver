@@ -20,6 +20,7 @@ package IsUnsolvable;
 
 
 memoize('_noclipping');
+memoize('_eqzero_mults');
 
 
 my $total_time = 0;
@@ -281,24 +282,51 @@ if (0) {
 # If not, then we combined the wrong piece with a multiply or invert piece.
 #
 # Returns:
-#       true        it *does* total up to zero, modulo 10
-#       false       it doesn't total up to zero, modulo 10
+#       true        it *does* total up to zero (modulo 10)
+#       false       it doesn't total up to zero (modulo 10) 
+our %_eqzero_mult_seen;
 sub eqzero {
     my ($pieces) = @_;
 
-    if (grep {$_ >= 49 && $_ <= 59} @$pieces) {
-        # For now, we don't handle cases where there are multiply or invert pieces that are still on the board.
-        return 1;
-    }
+    my @mults     = grep {$_ >= 49 && $_ <= 59} @$pieces;           # multiplies / inverts
+    my @non_mults = grep {!($_ >= 49 && $_ <= 59)} @$pieces;        # numerical pieces
+
+    # For now, we don't handle cases where there are multiply or invert pieces that are still on the board.
+    return 1 if (@mults);
 
     my $sum = 0;
-    foreach my $piece (@$pieces) {
-        next if ($piece >= 49 && $piece <= 59);
-        $sum += $piece;
-    }
+    map { $sum += $_ } @non_mults;
 
-    return ($sum % 10) == 0;
+    return _eqzero_mults( $sum % 10, @mults );
 }
+
+
+sub _eqzero_mults {
+
+    my ($sum, @mults) = @_;
+
+    if (@mults == 0) {
+        return ($sum % 10) == 0;
+    }
+    return 1 if !$ARGV{'--compare-old'};
+
+    my $multiply = pop(@mults) - 50;
+    if (@mults == 0) {
+        for (my $factor=-9; $factor<=9; $factor++) {
+            if (($sum + $factor * $multiply) % 10 == 0) {
+                return 1;
+            }
+        }
+    } else {
+        for (my $factor=-9; $factor<=9; $factor++) {
+            if (_eqzero_mults( $sum + $multiply * $factor, @mults )) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 
 
 # If a wall has split the numerical pieces into two or more totally separate groups, then find those

@@ -1,12 +1,3 @@
-- have eqzero() deal with situations were multiply blocks are still around, and see if this speeds
-  up the algorithm or not
-
-    - don't run eqzero() on EVERY call to _noclipping(), rather, only run it 1) on the first call,
-      and 2) when a multiply just happened
-
-            (do this via memoization?)
-
-
 - add more test cases for IsUnsolvable::islands()
             Development was done EXTREMELY quickly, and it's possible (likely?) that there are one
             or two bugs that were never properly examined.

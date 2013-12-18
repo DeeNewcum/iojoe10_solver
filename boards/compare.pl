@@ -8,6 +8,15 @@ open (STDOUT, "| tee compare.log")
 
 
 my @boards = qw_cmnt(<<'EOF');
+        #Multiplying-4
+        #Multiplying-11
+        #Multiplying-2
+        #Multiplying-5
+        #Multiplying-8
+
+        Multiplying-12
+        Inverting-12
+
         Inverting-4
         Simple-2
 
@@ -18,6 +27,11 @@ my @boards = qw_cmnt(<<'EOF');
         Blocks-11
         Inverting-3
         Multiplying-16
+
+        Multiplying-14
+        Multiplying-7
+        Multiplying-13
+        Multiplying-6
 EOF
 
 # allow the cmdline to override the board list

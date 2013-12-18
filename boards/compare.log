@@ -1,40 +1,70 @@
+======== Multiplying-12 ========
+new                          409 moves,         96 boards,      0.18 seconds,   436 microseconds per move,    solution length: 15 moves    (of minimum 12)
+                     IsUnsolvable::noclipping() took 0.11 seconds total
+old                          409 moves,         96 boards,      0.18 seconds,   429 microseconds per move,    solution length: 15 moves    (of minimum 12)
+                     IsUnsolvable::noclipping() took 0.10 seconds total
+======== Inverting-12 ========
+new                          424 moves,        210 boards,      0.24 seconds,   559 microseconds per move,    solution length: 13 moves    (of minimum 10)
+                     IsUnsolvable::noclipping() took 0.15 seconds total
+old                          424 moves,        210 boards,      0.23 seconds,   544 microseconds per move,    solution length: 13 moves    (of minimum 10)
+                     IsUnsolvable::noclipping() took 0.14 seconds total
 ======== Inverting-4 ========
-new                          111 moves,         55 boards,      0.03 seconds,   225 microseconds per move,    solution length: 10 moves    (of minimum 9)
+new                          111 moves,         55 boards,      0.03 seconds,   233 microseconds per move,    solution length: 10 moves    (of minimum 9)
                      IsUnsolvable::noclipping() took 0.00 seconds total
-old                          111 moves,         55 boards,      0.03 seconds,   227 microseconds per move,    solution length: 10 moves    (of minimum 9)
+old                          111 moves,         55 boards,      0.03 seconds,   244 microseconds per move,    solution length: 10 moves    (of minimum 9)
                      IsUnsolvable::noclipping() took 0.00 seconds total
 ======== Simple-2 ========
-new                          123 moves,         82 boards,      0.02 seconds,   186 microseconds per move,    solution length: 8 moves    (of minimum 7)
+new                          123 moves,         82 boards,      0.02 seconds,   191 microseconds per move,    solution length: 8 moves    (of minimum 7)
                      IsUnsolvable::noclipping() took 0.00 seconds total
-old                          123 moves,         82 boards,      0.02 seconds,   183 microseconds per move,    solution length: 8 moves    (of minimum 7)
+old                          123 moves,         82 boards,      0.02 seconds,   189 microseconds per move,    solution length: 8 moves    (of minimum 7)
                      IsUnsolvable::noclipping() took 0.00 seconds total
 ======== Inverting-5 ========
 new                          283 moves,        109 boards,      0.08 seconds,   291 microseconds per move,    solution length: 14 moves    (of minimum 10)
                      IsUnsolvable::noclipping() took 0.00 seconds total
-old                          283 moves,        109 boards,      0.08 seconds,   291 microseconds per move,    solution length: 14 moves    (of minimum 10)
+old                          283 moves,        109 boards,      0.08 seconds,   287 microseconds per move,    solution length: 14 moves    (of minimum 10)
                      IsUnsolvable::noclipping() took 0.00 seconds total
 ======== Blocks-9 ========
-new                          567 moves,        209 boards,      0.29 seconds,   510 microseconds per move,    solution length: 14 moves    (of minimum 11)
-                     IsUnsolvable::noclipping() took 0.20 seconds total
-old                       98,440 moves,     12,676 boards,     14.99 seconds,   152 microseconds per move,    solution length: 14 moves    (of minimum 11)
+new                          567 moves,        209 boards,      0.30 seconds,   534 microseconds per move,    solution length: 14 moves
+                     IsUnsolvable::noclipping() took 0.21 seconds total
+old                          567 moves,        209 boards,      0.30 seconds,   521 microseconds per move,    solution length: 14 moves
                      IsUnsolvable::noclipping() took 0.20 seconds total
 ======== Inverting-6 ========
-new                        1,233 moves,        390 boards,      1.19 seconds,   963 microseconds per move,    solution length: 20 moves
-                     IsUnsolvable::noclipping() took 0.98 seconds total
-old                        1,240 moves,        395 boards,      1.20 seconds,   967 microseconds per move,    solution length: 20 moves
-                     IsUnsolvable::noclipping() took 0.98 seconds total
+new                        1,233 moves,        390 boards,      1.23 seconds,   997 microseconds per move,    solution length: 20 moves
+                     IsUnsolvable::noclipping() took 1.01 seconds total
+old                        1,233 moves,        390 boards,      1.21 seconds,   979 microseconds per move,    solution length: 20 moves
+                     IsUnsolvable::noclipping() took 0.99 seconds total
 ======== Blocks-11 ========
-new                          660 moves,        474 boards,      0.20 seconds,   300 microseconds per move,    solution length: 19 moves
+new                          660 moves,        474 boards,      0.18 seconds,   274 microseconds per move,    solution length: 19 moves
                      IsUnsolvable::noclipping() took 0.03 seconds total
-old                          660 moves,        474 boards,      0.18 seconds,   271 microseconds per move,    solution length: 19 moves
+old                          660 moves,        474 boards,      0.18 seconds,   274 microseconds per move,    solution length: 19 moves
                      IsUnsolvable::noclipping() took 0.03 seconds total
 ======== Inverting-3 ========
-new                          316 moves,        254 boards,      0.13 seconds,   402 microseconds per move,    solution length: 17 moves
+new                          316 moves,        254 boards,      0.13 seconds,   410 microseconds per move,    solution length: 17 moves
                      IsUnsolvable::noclipping() took 0.05 seconds total
-old                          316 moves,        254 boards,      0.13 seconds,   395 microseconds per move,    solution length: 17 moves
+old                          316 moves,        254 boards,      0.13 seconds,   401 microseconds per move,    solution length: 17 moves
                      IsUnsolvable::noclipping() took 0.05 seconds total
 ======== Multiplying-16 ========
-new                          570 moves,        394 boards,              1:05,   114662 microseconds per move,    solution length: 21 moves
-                     IsUnsolvable::noclipping() took 65.31 seconds total
-old                          592 moves,        401 boards,              1:05,   109961 microseconds per move,    solution length: 21 moves
-                     IsUnsolvable::noclipping() took 65.04 seconds total
+new                          570 moves,        394 boards,              1:07,   117603 microseconds per move,    solution length: 21 moves
+                     IsUnsolvable::noclipping() took 66.99 seconds total
+old                          570 moves,        394 boards,              1:06,   115757 microseconds per move,    solution length: 21 moves
+                     IsUnsolvable::noclipping() took 65.93 seconds total
+======== Multiplying-14 ========
+new                          611 moves,        202 boards,     12.19 seconds,   19911 microseconds per move,    solution length: 21 moves
+                     IsUnsolvable::noclipping() took 12.08 seconds total
+old                          611 moves,        202 boards,     11.94 seconds,   19502 microseconds per move,    solution length: 21 moves
+                     IsUnsolvable::noclipping() took 11.83 seconds total
+======== Multiplying-7 ========
+new                        2,611 moves,        544 boards,      3.66 seconds,   1401 microseconds per move,    solution length: 17 moves
+                     IsUnsolvable::noclipping() took 3.18 seconds total
+old                        2,611 moves,        544 boards,      3.40 seconds,   1302 microseconds per move,    solution length: 17 moves
+                     IsUnsolvable::noclipping() took 2.94 seconds total
+======== Multiplying-13 ========
+new                          558 moves,        321 boards,      0.17 seconds,   295 microseconds per move,    solution length: 15 moves
+                     IsUnsolvable::noclipping() took 0.06 seconds total
+old                          558 moves,        321 boards,      0.15 seconds,   263 microseconds per move,    solution length: 15 moves
+                     IsUnsolvable::noclipping() took 0.05 seconds total
+======== Multiplying-6 ========
+new                          542 moves,        295 boards,      0.47 seconds,   856 microseconds per move,    solution length: 22 moves
+                     IsUnsolvable::noclipping() took 0.36 seconds total
+old                          542 moves,        295 boards,      0.45 seconds,   822 microseconds per move,    solution length: 22 moves
+                     IsUnsolvable::noclipping() took 0.35 seconds total

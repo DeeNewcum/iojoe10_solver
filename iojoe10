@@ -74,7 +74,7 @@ sub parse_cmdline {
 
     ## --compare-old ##
     #$ARGV{'--relax'} = 5 if !$ARGV{'--compare-old'};
-    $ARGV{'--disable-islands'} = $ARGV{'--compare-old'};
+    #$ARGV{'--disable-islands'} = $ARGV{'--compare-old'};
     #$ARGV{'--disable-noclipping-shortcut'} = $ARGV{'--compare-old'};
     #$ARGV{'--disable-eqzero'} = $ARGV{'--compare-old'};
 
@@ -97,6 +97,10 @@ sub parse_cmdline {
 
     #### where things actually get disabled ####
     no warnings 'redefine';
+
+    if ($ARGV{'--compare-old'}) {
+        *IsUnsolvable::_eqzero_mults = sub { (shift) % 10 == 0 };
+    }
 
     if ($ARGV{'--dijkstra'}) {
         *TreeTraversal::heuristic = sub { 0 };

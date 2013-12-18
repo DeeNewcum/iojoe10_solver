@@ -24,7 +24,7 @@ sub summarize_output {
     printf "%-20s %s",
         $title,
         $lines->[-2];
-    printf "%-20s %s",
+    1 && printf "%-20s %s",
         '',
         $lines->[-1];
 }
