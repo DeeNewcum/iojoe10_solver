@@ -23,6 +23,8 @@ memoize('_noclipping');
 memoize('_eqzero_mults');
 
 
+my $noclipping_calls = 0;
+my $noclipping_subcalls = 0;
 my $total_time = 0;
 
 
@@ -39,11 +41,20 @@ sub noclipping {
 
     my $started = time();
 
+    $noclipping_subcalls = 0;
     my $ret = _noclipping( _list_pieces($board) );
 
     my $elapsed = int((time() - $started) * 1000);       # in milliseconds
     $total_time += $elapsed;
-    #print "IsUnsolvable::noclipping() took $elapsed ms\n"      if $elapsed > 50;       # display time for single calls
+    $noclipping_calls++ if $noclipping_subcalls;
+    #if ($elapsed > 10) {            # display time for single calls
+    if ($noclipping_subcalls && $ARGV{'--noclipping-verbose'}) {
+        printf "call #%d to IsUnsolvable::noclipping() took %-20s  %20s and returned '%s'\n",
+            $noclipping_calls,
+            TreeTraversal::commify($elapsed) . " ms",
+            "and " . TreeTraversal::commify($noclipping_subcalls) . " subcalls",
+            ($ret ? "unsolvable" : "solvable");
+    }
     return $ret;
 }
 
@@ -88,6 +99,8 @@ sub _noclipping {
         my $depth = 10 - scalar(@pieces);
         $indent = "  "x$depth;
     }
+
+    $noclipping_subcalls++;
 
     return 1 if (!eqzero(\@pieces));
 
