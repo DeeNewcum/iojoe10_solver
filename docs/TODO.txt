@@ -1,8 +1,43 @@
+- TODO: study this:
+        https://en.wikipedia.org/wiki/Optimal_substructure
+          https://en.wikipedia.org/wiki/Dynamic_programming
+
+
+- IsUnsolvabe::noclipping() is consuming a large percentage of the CPU time.  For instance:
+  Letters-4-inverse takes 0.05sec TOTAL in noclipping(), while 
+  Letters-4 takes MUCH MUCH longer  (use  --noclipping-verbose on it)
+
+            call #1 to IsUnsolvable::noclipping() took 23,965 ms              and 33,007 subcalls and returned 'solvable'
+            call #2 to IsUnsolvable::noclipping() took 6,803 ms                and 6,082 subcalls and returned 'solvable'
+            call #3 to IsUnsolvable::noclipping() took 0 ms                       and 12 subcalls and returned 'solvable'
+            call #4 to IsUnsolvable::noclipping() took 1,728,828 ms          and 788,446 subcalls and returned 'unsolvable'
+            call #5 to IsUnsolvable::noclipping() took 865,275 ms            and 328,716 subcalls and returned 'unsolvable'
+            call #6 to IsUnsolvable::noclipping() took 1 ms                       and 10 subcalls and returned 'solvable'
+            call #7 to IsUnsolvable::noclipping() took 88,864 ms              and 24,905 subcalls and returned 'unsolvable'
+            call #8 to IsUnsolvable::noclipping() took 129,191 ms             and 47,673 subcalls and returned 'unsolvable'
+            call #9 to IsUnsolvable::noclipping() took 72,380 ms              and 22,476 subcalls and returned 'unsolvable'
+
+  Some possible solutions to try to reduce this:
+
+        - Do a deep-dive on this.  And chat with the Math Office Hours folks, ask them for help.
+
+        - Try storing the memoize cache on disk, see if that helps.
+
+        - [unfocused]  When I solve games, as a human, I put off doing noclipping() calculations until near the
+          end of the board.  Is it possible to implement something like that here?
+          However, humans are able to identify specific pieces as "probably valuable", and when
+          doing the search, focus on resolving that piece before moving on to other pieces.
+          I don't really understand this process though.
+
+        - [unfocused]  It looks like it's the 'unsolvable' calls that are taking the longest.
+          Is there any way to combine the two graph-search problems into one, so after so much time
+          spent examining things in one direction, we decide it's a better use of our time to
+          examine in another direction?
+
+
 - add more test cases for IsUnsolvable::islands()
             Development was done EXTREMELY quickly, and it's possible (likely?) that there are one
             or two bugs that were never properly examined.
-
-
 
 
 - [TEST-CORE] improve coverage of the Core routines
@@ -32,34 +67,6 @@
 - Add more tests for IsUnsolvable::no_clipping(), and clear the Memoize cache in between tests.
   This routine has recently gotten more complicated, and I'm not 100% confident that the new design
   will always produce correct results.                  (Memorize::flush_cache('IsUnsolvable::_noclipping'))
-
-
-- Wow, IsUnsolvable::noclipping() is consuming a LOT of CPU, especially when piece-count is high
-  (because it's O(n^2).
-  In some cases, it consumes the vast majority of time it takes to find a solution.
-  (eg. for Inverting-3, even with _noclipping_shortcut, 90% of the solution time is spent on it)
-
-    >> noclipping_shortcut provides a HUGE speedup for the board "Multiplying-16":
-                         from 240 seconds to 6 seconds!!          (which is a 4000% difference)
-        
-        - I don't see much of a speedup on ANY other board though.  What gives?
-
-    - spend more time gathering metrics, and trying to optimize this!
-
-    - also, gather RAM usage data -- if this pukes on a 2GB box, we at least want to know about that
-
-    - also, confirm that this routine saves time -- it would suck if it's actually consuming more
-      time than it saves
-
-    >> Regardless of the above, NYTProf shows that noclipping() consumes >75% of CPU time on
-       high-piececount boards. It seems that *something* needs to be done.
-
-        - Could we store the Memoize data on-disk?  Would that be totally cheating?
-          Or is there a possibility that it would provide *some* speedup when novel boards
-          are encountered?
-
-                - What about pre-computing them for lower piece-count, and storing a single bit per
-                  combination, indicating if it's solvable or not?
 
 
 - This points out that A* can be FAST or ACCURATE but not both.

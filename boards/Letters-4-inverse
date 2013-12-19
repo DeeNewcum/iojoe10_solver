@@ -1,0 +1,15 @@
+#!/usr/bin/env ../iojoe10
+
+# This is the same board as Letters-4, but with positive pieces instead of negative.
+# This shows the discrepancy in how much slower the IsUnsolvable::noclipping() is with negative
+# numbers.
+#
+# 7x7 36pcs
+
+5 2 8 5 2 4 4
+6 . 3 2 9 . 4
+7 . . 1 . . 2
+3 . 1 . 5 . 8
+8 . 5 9 3 . 7
+2 . 6 3 2 . 6
+4 2 2 4 7 2 7
