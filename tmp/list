@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+
+# List the pieces on a specific board.
+# Used to allow a human to play the game that IsUnsolvable::noclipping() does.
+
+    use strict;
+    use warnings;
+
+    use Cwd 'abs_path';                                                                              
+    use File::Basename;                                                                              
+    use lib dirname( abs_path $0 ) . "/../";
+
+    use TreeTraversal;                                                                               
+    use Board;                                                                                       
+    use Move;   
+
+my ($filename) = @ARGV;
+
+my $board = Board::new_from_file($filename);
+        #die Dumper $board;
+
+my @pieces = IsUnsolvable::_list_pieces($board);
+
+
+#print join(" ", @pieces), "\n";
+
+if (0) {
+    my $last_piece = $pieces[0];
+    foreach my $piece (@pieces) {
+        print "  " unless ($last_piece eq $piece);
+        print "$piece ";
+        $last_piece = $piece;
+    }
+    print "\n";
+}
+
+for my $p (uniq(@pieces)) {
+    my $count = grep {$_ eq $p} @pieces;
+    if ($p == 49) {
+        $p = "+-";
+    } elsif ($p > 49) {
+        $p = "x" . ($p - 50);
+    }
+    print "$p <$count>   ";
+}
+print "\n";
+
+
+
+# Removes duplicate elements from a list
+sub uniq {my %seen; grep {!$seen{$_}++} @_}

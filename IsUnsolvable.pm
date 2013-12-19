@@ -60,7 +60,7 @@ sub noclipping {
 
 END {
     printf "IsUnsolvable::noclipping() took %.2f seconds total\n", $total_time / 1000
-                    unless $INC{'Test/Builder/Module.pm'};      # don't display when running under 'prove' or Test::Simple or Test::More
+                    if (!$INC{'Test/Builder/Module.pm'} && $noclipping_calls);      # don't display when running under 'prove' or Test::Simple or Test::More
 }
 
 

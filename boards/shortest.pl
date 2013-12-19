@@ -6,6 +6,11 @@
     use strict;
     use warnings;
 
+    use lib '..';
+
+    use Board;
+    use IsUnsolvable;
+
     use Data::Dumper;
     #use Devel::Comments;           # uncomment this during development to enable the ### debugging statements
 
@@ -21,18 +26,23 @@ while (<$pin>) {
     my $line = $_;
     my $filename = (split ' ')[0];
 
-    my $contents = slurp($filename);        # the file's contents
+    my $board = Board::new_from_file($filename);
 
-    my $has_shortest_field = ($contents =~ /^shortest_solution:\s*(\S+)/m);
-    my $num_moves = $has_shortest_field ? "$1 moves" : "";
+    my @pcs = IsUnsolvable::_list_pieces($board);
+    my @pcs_mults = grep {$_ >= 49} @pcs;
 
-    if (!$has_shortest_field && $contents =~ /^approx_solution:\s*(\S+)/m) {
-        $num_moves = "$1 moves";
+    my $has_shortest_field = exists $board->{file_fields}{shortest_solution};
+    my $num_moves = $has_shortest_field ? "$board->{file_fields}{shortest_solution} moves" : "";
+
+    if (!$has_shortest_field && exists $board->{file_fields}{approx_solution}) {
+        $board->{file_fields}{approx_solution} =~ s/\s+$//s;
+        $num_moves = "$board->{file_fields}{approx_solution} moves";
     }
 
-    printf "%s  %-30s  %10s\n",
+    printf "%s  %-32s%4s    %10s\n",
             ($has_shortest_field ? "**" : "  "),
             $line,
+            (@pcs_mults ? "[" . scalar(@pcs_mults) . "]" : ""),
             $num_moves;
 }
 
