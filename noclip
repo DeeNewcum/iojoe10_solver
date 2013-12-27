@@ -1,0 +1,123 @@
+#!/usr/bin/perl
+
+# Creates print-outs that can be used to play IsUnsolvable::noclipping() via pen-n-paper
+
+    use strict;
+    use warnings;
+
+    # FindBin replacement
+    use Cwd 'abs_path';
+    use File::Basename;
+    use lib dirname( abs_path $0 );
+
+    use IsUnsolvable;
+    use TreeTraversal;
+    use Board;
+    use Move;
+
+    use Data::Dumper;
+
+my $num_problems = 3;
+
+### generate the problems
+my @problems;       # a list of Problem_Answers
+for (my $ctr=0; $ctr<$num_problems; $ctr++) {
+    push @problems, generate_problem();
+}
+
+
+### generate the print-out
+# print the problems first
+for (my $ctr=0; $ctr<$num_problems; $ctr++) {
+    warn "TODO";
+}
+# at the bottom of the page, print the answers
+for (my $ctr=0; $ctr<$num_problems; $ctr++) {
+    warn "TODO";
+}
+
+
+
+
+# "Problem" has type:               list-of-pieces          (which is the input to InUnsolvable::noclipping())
+# "Answer_Bool" has type:           boolean
+# "Answer" has type:                list-of-numbers
+# "Problem_Answer" has type:        [Problem, Answer]
+#
+# returns:   a Problem_Answer
+sub generate_problem {
+    #my $num_nonmults = shift;       # how many pieces should we include, that are non-multiplies / non-inverts
+    #my $num_mults = shift;          # how many pieces should we include, that are multiplies / inverts
+
+    # We want the solvable/unsolvable likelihood to be even.  However, the generator-algorithm
+    # probably will be skewed in one direction or another.  So, we'll decide up-front whether we're
+    # looking for a solvable (true) or unsolvable (false) problem.
+    my $answer_boolean = (rand(1.0) > 0.5);
+
+    return [
+        ($answer_boolean ? _generate_problem__solvable(@_) : _generate_problem__unsolvable(@_)),
+        _generate_answer($answer_boolean)
+    ];
+}
+
+
+# returns:  a Problem
+sub _generate_problem__solvable {
+    # For now, puzzles will have:
+    #       5 positive numbers
+    #       2 negative numbers
+    #       1 multiplier / inverter
+    my @pieces;
+    
+    while (1) {
+        # positive pieces
+        #push @pieces, 
+        warn "TODO";
+    }
+}
+
+
+# returns:  a Problem
+sub _generate_problem__unsolvable {
+    # First generate a solvable problem.
+    my $problem = _generate_problem__solvable(@_);
+
+    # Then tweak it slightly until it's unsovable.
+    # We do this because there are MANY more unsolvable problems than solvable ones, but we don't
+    # want the unsolvable problems to be easily distinguishable from solvable ones based on
+    # superficially obvious differences.  We want them to superficially appear to be similar.
+    warn "TODO";
+}
+
+
+# Takes in an Answer_Bool and returs an Answer.
+#
+# Type "Answer_Bool" is: (true = solvable, false = unsolvable)
+# Type "Answer" is a short list of numbers. 
+#
+# The list of numbers is constructed such that it's fairly easy for a human to work backwards and
+# find whether it's true or false.  BUT it's not too easy.
+#
+# If we merely listed    1] Y  2] N  3] N   4] Y  5] N    at the bottom of the problem sheet,
+# then the human might accidentally look at the answers, and probably even remember them,
+# without even intending to.
+#
+# To avoid that issue, we have a list of numbers that looks something like:
+#
+#       3  5  1  2  1  2  4  4  2
+#       A        B     C     D
+#
+# You start at the leftmost number, and jump to the right that many positions. 
+#       A. jump to the right three positions
+#       B. jump to the right two positions
+#       C. jump to the right two positions
+#       D. jump to the right four positions
+#               ...  but that isn't possible, so the final number is "4".
+#
+# If the final number is EVEN, that means the problem is SOLVALBLE.
+# If it's ODD, that means the problem is UNSOLVABLE.
+sub _generate_answer {
+    my ($is_solvable) = @_;
+
+    warn "TODO";
+}
