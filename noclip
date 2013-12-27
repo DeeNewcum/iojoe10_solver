@@ -17,7 +17,7 @@
 
     use Data::Dumper;
 
-my $num_problems = 3;
+my $num_problems = 4;
 
 ### generate the problems
 my @problems;       # a list of Problem_Answers
@@ -28,12 +28,14 @@ for (my $ctr=0; $ctr<$num_problems; $ctr++) {
 
 ### generate the print-out
 # print the problems first
+print "================[ problems ]================\n";
 for (my $ctr=0; $ctr<$num_problems; $ctr++) {
-    warn "TODO";
+    print chr(ord("A") + $ctr), "]    ", join(" ", @{$problems[$ctr][0]}), "\n";
 }
 # at the bottom of the page, print the answers
+print "================[ answers ]================\n";
 for (my $ctr=0; $ctr<$num_problems; $ctr++) {
-    warn "TODO";
+    print chr(ord("A") + $ctr), "]    ", join(" ", @{$problems[$ctr][1]}), "\n";
 }
 
 
@@ -54,6 +56,9 @@ sub generate_problem {
     # looking for a solvable (true) or unsolvable (false) problem.
     my $answer_boolean = (rand(1.0) > 0.5);
 
+    # development ONLY -- only generate solvable problems for now
+    $answer_boolean = 1;
+
     return [
         ($answer_boolean ? _generate_problem__solvable(@_) : _generate_problem__unsolvable(@_)),
         _generate_answer($answer_boolean)
@@ -67,12 +72,24 @@ sub _generate_problem__solvable {
     #       5 positive numbers
     #       2 negative numbers
     #       1 multiplier / inverter
-    my @pieces;
     
     while (1) {
-        # positive pieces
-        #push @pieces, 
-        warn "TODO";
+        ## generate a random problem
+
+        my @pieces;
+        # 5 positive numbers
+        push @pieces, int(rand(9) + 1)      for (1..5);
+        # 2 negative numbers
+        push @pieces, - int(rand(9) + 1)    for (1..2);
+        # 1 multiplier / innverter
+        for (1..1) {
+            push @pieces, int(rand(8)) + 51;                      # generate a nunber from 51 to 59
+            $pieces[-1] = 49   if $pieces[-1] == 51;        # if 51 was generated, change that to 49 (invert)
+        }
+
+        next if (IsUnsolvable::_noclipping(@pieces));
+
+        return [ sort {$a <=> $b} @pieces ];
     }
 }
 
@@ -118,6 +135,9 @@ sub _generate_problem__unsolvable {
 # If it's ODD, that means the problem is UNSOLVABLE.
 sub _generate_answer {
     my ($is_solvable) = @_;
+
+    # debug ONLY -- return the answer in cleartext, rather than obscured
+    return $is_solvable ? ["sol", "va", "ble"] : ["un", "sol", "va", "ble"];
 
     warn "TODO";
 }
