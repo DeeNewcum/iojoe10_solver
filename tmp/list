@@ -36,12 +36,7 @@ if (0) {
 
 for my $p (uniq(@pieces)) {
     my $count = grep {$_ eq $p} @pieces;
-    if ($p == 49) {
-        $p = "+-";
-    } elsif ($p > 49) {
-        $p = "x" . ($p - 50);
-    }
-    print "$p <$count>   ";
+    print(Board::piece_toString($p), " <$count>   ");
 }
 print "\n";
 

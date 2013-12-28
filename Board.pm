@@ -86,6 +86,7 @@ my %from_string = (
     '^v'        => 600,         # slider -- up/down
     'rk'        => 700,         # slider -- all around      (RK = rook)
 );
+my %from_string_inverse = reverse %from_string;
 
 sub _piece_from_string {
     my $piece = shift;
@@ -346,6 +347,28 @@ sub display_one_piece {
     my $board = new Board(width => 1, height => 1);
     $board->{cells}[0][0] = $piece;
     $board->display();
+}
+
+
+# Just like display_one_piece(), with two minor differences:
+#       1) it returns the string, instead of printing it, and
+#       2) it doesn't include any ANSI escape codes, it's black-n-white
+sub piece_toString {
+    my ($piece) = @_;
+    if ($piece == 10 || $piece == -10) {        # wall
+        return "XX";
+    } elsif ($piece == -11) {                   # empty space
+        return ".";
+    } elsif ($piece > -10 && $piece < 10) {     # numerical slider
+        return $piece;
+    } elsif (exists $from_string_inverse{$piece}) {        # non-numerical slider
+        return $from_string_inverse{$piece};
+    } elsif ($piece == 49) {                    # invert
+        return "+-";
+    } elsif ($piece >= 52 && $piece <= 59) {    # multiply
+        return "x" . int($piece - 50);
+    }
+    die "OOPS";
 }
 
     sub _fg_color {

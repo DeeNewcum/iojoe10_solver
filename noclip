@@ -30,7 +30,8 @@ for (my $ctr=0; $ctr<$num_problems; $ctr++) {
 # print the problems first
 print "================[ problems ]================\n";
 for (my $ctr=0; $ctr<$num_problems; $ctr++) {
-    print chr(ord("A") + $ctr), "]    ", join(" ", @{$problems[$ctr][0]}), "\n";
+    my @pieces = map {Board::piece_toString($_)} @{$problems[$ctr][0]};
+    print chr(ord("A") + $ctr), "]    ", join(" ", @pieces), "\n";
 }
 # at the bottom of the page, print the answers
 print "================[ answers ]================\n";
