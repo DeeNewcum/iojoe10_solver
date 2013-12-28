@@ -17,7 +17,7 @@
 
     use Data::Dumper;
 
-my $num_problems = 20;
+my $num_problems = 30;
 
 ### generate the problems
 my @problems;       # a list of Problem_Answers
@@ -27,18 +27,29 @@ for (my $ctr=0; $ctr<$num_problems; $ctr++) {
 
 
 ### generate the print-out
-# print the problems first
-print "================[ problems ]================\n";
-for (my $ctr=0; $ctr<$num_problems; $ctr++) {
-    my @pieces = map {Board::piece_toString($_)} @{$problems[$ctr][0]};
-    print chr(ord("A") + $ctr), "]    ", join(" ", @pieces), "\n";
-}
-# at the bottom of the page, print the answers
-print "================[ answers ]================\n";
-for (my $ctr=0; $ctr<$num_problems; $ctr++) {
-    print chr(ord("A") + $ctr), "]    ", join(" ", @{$problems[$ctr][1]}), "\n";
-}
+if (0) {
+    # print the problems first
+    print "================[ problems ]================\n";
+    for (my $ctr=0; $ctr<$num_problems; $ctr++) {
+        my @pieces = map {Board::piece_toString($_)} @{$problems[$ctr][0]};
+        print chr(ord("A") + $ctr), "]    ", join(" ", @pieces), "\n";
+    }
+    # at the bottom of the page, print the answers
+    print "================[ answers ]================\n";
+    for (my $ctr=0; $ctr<$num_problems; $ctr++) {
+        print chr(ord("A") + $ctr), "]    ", join(" ", @{$problems[$ctr][1]}), "\n";
+    }
+} else {
+    # print the problems and answers on the same line
+    foreach my $prob (@problems) {
+        my @pieces = map {Board::piece_toString($_)} @{$prob->[0]};
+        my $problem = join(" ", @pieces);
 
+        my $answer = join(" ", @{$prob->[1]});
+
+        printf "%-30s  %s\n",  $problem, $answer;
+    }
+}
 
 
 
