@@ -17,7 +17,7 @@
 
     use Data::Dumper;
 
-my $num_problems = 4;
+my $num_problems = 10;
 
 ### generate the problems
 my @problems;       # a list of Problem_Answers
@@ -138,9 +138,9 @@ sub _generate_problem__unsolvable {
 # Type "Answer" is a short list of numbers. 
 #
 # The list of numbers is constructed such that it's fairly easy for a human to work backwards and
-# find whether it's true or false.  BUT it's not too easy.
+# find whether it's true or false.  BUT it's not too easy.  It's just obscured slightly.
 #
-# If we merely listed    1] Y  2] N  3] N   4] Y  5] N    at the bottom of the problem sheet,
+# If we only listed    1] Y  2] N  3] N   4] Y  5] N    at the bottom of the problem sheet,
 # then the human might accidentally look at the answers, and probably even remember them,
 # without even intending to.
 #
@@ -164,7 +164,44 @@ sub _generate_answer {
     my ($is_solvable) = @_;
 
     # debug ONLY -- return the answer in cleartext, rather than obscured
-    return $is_solvable ? ["sol", "va", "ble"] : ["un", "sol", "va", "ble"];
+    #return $is_solvable ? ["sol", "va", "ble"] : ["un", "sol", "va", "ble"];
 
-    warn "TODO";
+    # generate a list of random numbers
+    my @numbers = map { __generate_answer__() } 1..6;
+    #my @numbers = (qw( 1 1 4 3 1 4 1 1 ));
+    #my @numbers = (qw( 2 2 3 3 2 1 1 4  ));
+
+    # find the position of the Last Number
+    my $last_num_pos = 0;
+    my @dbg_positions = (0);
+    while (1) {
+        my $next_pos = $last_num_pos + $numbers[$last_num_pos];
+        push @dbg_positions, $next_pos;
+        last if ($next_pos >= @numbers);        # we went off the end...  I guess that was the Last Number
+        $last_num_pos = $next_pos;
+    }
+
+    my $ctr;
+    for ($ctr=0; $ctr<10; $ctr++) {
+        last if (($numbers[$last_num_pos] % 2 == 0) == !!$is_solvable       # make sure the Last Number matches $is_solvable
+            && ($last_num_pos + $numbers[$last_num_pos] >= @numbers));       # and we haven't added another Last Number after this
+        # It didn't match?  Try another random number.
+        $numbers[$last_num_pos] = __generate_answer__();
+    }
+    # If the loop has gotten stuck...  it wasn't able to find a suitable number....  so generate a
+    # whole new list of random numbers.
+    if ($ctr >= 10) {
+        return _generate_answer(@_);        # no TOC :(
+    }
+
+    #push @numbers, $is_solvable ? "                solvable  " : "                unsolvable";
+    #push @numbers, "         " . join(" ", @dbg_positions);
+
+    #warn "TODO";
+    return \@numbers;
 }
+
+# generate just one element of the answer
+sub __generate_answer__           { int(rand(3) + 1)  }
+
+
