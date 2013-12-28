@@ -93,8 +93,8 @@ sub _generate_problem__solvable {
         push @pieces, int(rand(9) + 1)      for (1..5);
         # 2 negative numbers
         push @pieces, - int(rand(4) + 1)    for (1..2);
-        # 1 multiplier / innverter
-        for (1..1) {
+        # 2 multipliers / innverters
+        for (1..2) {
             push @pieces, int(rand(4)) + 51;                      # generate a nunber from 51 to 59
             $pieces[-1] = 49   if $pieces[-1] == 51;        # if 51 was generated, change that to 49 (invert)
         }
