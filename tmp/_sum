@@ -2,5 +2,5 @@
 
 # just sums up a bunch of numbers...   useful for finding the sum of the pieces, when a human is playing
 
-perl -MList::Util=sum -le 'print sum(@ARGV)' "$@"
+perl -MList::Util=sum -le 'print sum(@ARGV)' -- "$@"
 
