@@ -57,7 +57,7 @@ sub generate_problem {
     my $answer_boolean = (rand(1.0) > 0.5);
 
     # development ONLY -- only generate solvable problems for now
-    $answer_boolean = 1;
+    #$answer_boolean = 1;
 
     return [
         ($answer_boolean ? _generate_problem__solvable(@_) : _generate_problem__unsolvable(@_)),
@@ -97,13 +97,37 @@ sub _generate_problem__solvable {
 # returns:  a Problem
 sub _generate_problem__unsolvable {
     # First generate a solvable problem.
-    my $problem = _generate_problem__solvable(@_);
+    my $original_problem = _generate_problem__solvable(@_);
 
     # Then tweak it slightly until it's unsovable.
     # We do this because there are MANY more unsolvable problems than solvable ones, but we don't
     # want the unsolvable problems to be easily distinguishable from solvable ones based on
     # superficially obvious differences.  We want them to superficially appear to be similar.
-    warn "TODO";
+    for (my $ctr=0; $ctr<99; $ctr++) {
+        my @problem = @$original_problem;
+        my $pos = int(rand(@problem));
+        my $here = $problem[$pos];
+        next if ($here > 9);            # don't change any multiply / inverts ...
+        my $down_or_up = (rand(1) > 0.5);
+        if ($down_or_up) {
+            # down
+            next if ($here == 1 || $here == -9);        # can't go one lower than this
+            $problem[$pos]--;
+            return \@problem if (IsUnsolvable::_noclipping(@problem));      # yay, we found a way to make it unsolvable
+        } else {
+            # up
+            next if ($here == 9 || $here == -1);        # can't go one higher than this
+            $problem[$pos]++;
+            return \@problem if (IsUnsolvable::_noclipping(@problem));      # yay, we found a way to make it unsolvable
+        }
+        # No?  It was still solvable?  Well, undo that change, and pick some other position and try again.
+    }
+
+    # Once in a while, we hit a problem that is hard to tweak to make it unsolvable.
+    # In that case, throw the problem out, and try a totally new one.
+
+    #print STDERR "chucked it!\n       ", join(" ", @$original_problem), "\n";
+    return _generate_problem__unsolvable(@_);       # no TCO :(
 }
 
 
@@ -133,6 +157,8 @@ sub _generate_problem__unsolvable {
 #
 # If the final number is EVEN, that means the problem is SOLVALBLE.
 # If it's ODD, that means the problem is UNSOLVABLE.
+#
+# In this way, it takes more than a mere glance to figure out what a problem's answer is.
 sub _generate_answer {
     my ($is_solvable) = @_;
 
