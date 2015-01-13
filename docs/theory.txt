@@ -1,0 +1,9 @@
+IsUnsolvable::noclipping() turned out to be very CPU-intensive when a board has a large number of
+peices.  It seemed to take exponential time, depending on the number of pieces.
+
+So I went searching the literature to see if anyone had come up with a better search algorithm.
+
+    https://en.wikipedia.org/wiki/Subset_sum_problem
+    https://en.wikipedia.org/wiki/Merkle%E2%80%93Hellman_knapsack_cryptosystem
+        It does state that in many cases, this is an exponential-time problem.
+
