@@ -174,10 +174,10 @@ sub has_won {
 
 
 our %to_fingerprint = (
-    -11 => ' ',
+    -11 => ' ',         # space / empty cell
 
-      0 => '0',
-      1 => '1',
+      0 => '0',         # movable blocks with positive values
+      1 => '1',         #       (is it possible to have a movable block with value "0"??)
       2 => '2',
       3 => '3',
       4 => '4',
@@ -187,7 +187,7 @@ our %to_fingerprint = (
       8 => '8',
       9 => '9',
 
-     -1 => 'A',
+     -1 => 'A',         # movable blocks with negative values
      -2 => 'B',
      -3 => 'C',
      -4 => 'D',
@@ -197,21 +197,21 @@ our %to_fingerprint = (
      -8 => 'H',
      -9 => 'I',
 
-     10 => 'X',
+     10 => 'X',         # wall
 
-    100 => '^',
+    100 => '^',         # sliders
     200 => '>',
     300 => 'v',
     400 => '<',
-    500 => '-',     # left/right
-    600 => '|',     # up/down
-    700 => '+',     # all four directions
+    500 => '-',         # left/right
+    600 => '|',         # up/down
+    700 => '+',         # all four directions
 
-    49 => '/',     # invert
+    49 => '/',          # invert
 
-    52 => 'u',
-    53 => 'w',
-    54 => 'y',
+    52 => 'u',          # movable block:  x2
+    53 => 'w',          #                 x3
+    54 => 'y',          #                 x4, etc
     55 => 'z',
     56 => 'U',
     57 => 'W',
