@@ -19,7 +19,9 @@
 
   Some possible solutions to try to reduce this:
 
-        - Do a deep-dive on this.  And chat with the Math Office Hours folks, ask them for help.
+        - Try to pre-calculate the results for IsUnsolvabe::noclipping(), for all solutions less
+          than N pieces.  Find out if it can be stored using sparse matrix techniques, since this
+          could help reduce the exponential nature of the problem.
 
         - Try storing the memoize cache on disk, see if that helps.
 
