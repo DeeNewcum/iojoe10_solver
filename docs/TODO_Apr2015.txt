@@ -1,0 +1,12 @@
+- What happened to the IsUnsolvable::islands() routine?  1) It doesn't look like it's used in any
+  code, but 2) it *does* look like it's finished (see t/islands.t)
+
+    - It's POSSIBLE it takes a large amount of time to compute, but I don't see any information
+      anywhere that this was actually tested.
+
+    - If it does take a very long time, there's caching that can be done to speed it up!
+      BUT we won't know until we try   ("premature optimization is the root of all evil")
+
+    > Oh, boards/special_difficulties.txt mentions that it fails for these two specific boards.
+
+        - TODO: Confirm this still fails here.  If so, fix that bug.
