@@ -1,0 +1,12 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Difficult", level 6
+#
+# 4x4 16pcs
+
+-1  3 -2  6
+ 7  8  7  7
+ 2  9  3  5
+ 3  1  5  7
+
+shortest_solution: 13

@@ -12,3 +12,5 @@
         - TODO: Confirm this still fails here.  If so, fix that bug.
 
         - Find a way to dump the island data, to visualize it.
+
+    - Good boards to test this on:          Difficult-8
