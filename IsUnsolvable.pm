@@ -55,6 +55,11 @@ sub noclipping {
             "and " . TreeTraversal::commify($noclipping_subcalls) . " subcalls",
             ($ret ? "unsolvable" : "solvable");
     }
+
+    #if (!$ret) {
+    #    $ret = islands($board);
+    #}
+
     return $ret;
 }
 

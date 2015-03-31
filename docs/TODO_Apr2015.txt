@@ -10,3 +10,5 @@
     > Oh, boards/special_difficulties.txt mentions that it fails for these two specific boards.
 
         - TODO: Confirm this still fails here.  If so, fix that bug.
+
+        - Find a way to dump the island data, to visualize it.
