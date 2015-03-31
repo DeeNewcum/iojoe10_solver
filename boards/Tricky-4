@@ -1,0 +1,15 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Tricky", level 4
+# 
+# 6x6 26pcs
+
+ -1  2 XX  4  2  9
+  8  5 vv  2  4  6
+ XX XX >>  1  4  2
+  6  4  5 << XX XX
+  4  1  8 ^^  6  7
+  3 -2  4 XX  5  1
+
+
+    ## Doesn't finish within 5 minutes.

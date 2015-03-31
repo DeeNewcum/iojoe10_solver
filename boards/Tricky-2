@@ -8,3 +8,5 @@
   1  XX  XX   6
   5  rk  rk   2
   4   5   2   1
+
+approx_solution: 21         # --relax=5

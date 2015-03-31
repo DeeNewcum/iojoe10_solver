@@ -13,3 +13,5 @@
 #shortest_solution: 11
         # I don't want to run t/verify_solution.t on this.
         # --relax=1 takes a surprisingly long time -- 3:30 on my Intel i5 / 8GB RAM
+
+approx_solution: 11         # Actually this is a precise count.  But this is marked "approx" per above.
