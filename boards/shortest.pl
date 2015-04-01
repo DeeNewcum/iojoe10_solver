@@ -20,6 +20,8 @@ open my $our_out, '|-', q[ less -p '\*.*']      or die;
 select $our_out;
 
 
+my @sort;
+
 open my $pin, './pcs.sh|'       or die;
 while (<$pin>) {
     chomp;
@@ -39,14 +41,33 @@ while (<$pin>) {
         $num_moves = "$board->{file_fields}{approx_solution} moves";
     }
 
-    printf "%s  %-32s%4s    %10s\n",
+    push @sort, sprintf "%s  %-32s%4s    %10s\n",
             ($has_shortest_field ? "**" : "  "),
             $line,
             (@pcs_mults ? "[" . scalar(@pcs_mults) . "]" : ""),
             $num_moves;
 }
 
+@sort = sort {
+             moves($b) <=> moves($a)
+            || pcs($a) <=> pcs ($b)
+        } @sort;
 
+print @sort;
+
+
+
+sub moves {
+    if ($_[0] =~ /(\d+) moves$/) {
+        return $1;
+    }
+}
+
+sub pcs {
+    if ($_[0] =~ /(\d+)pcs\b/) {
+        return $1;
+    }
+}
 
 # quickly read a whole file     (like File::Slurp or IO::All->slurp)
 sub slurp {my$p=open(my$f,"$_[0]")or die$!;my@o=<$f>;close$f;waitpid($p,0);wantarray?@o:join("",@o)}
