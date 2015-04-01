@@ -138,7 +138,9 @@ sub new_from_string {
         my %fields;
         foreach my $f (@fields) {
             $f =~ /$re/o;
-            $fields{$1} = $2;
+            my ($var, $val) = ($1, $2);
+            $val =~ s/\s+$//s;
+            $fields{$var} = $val;
         }
         return \%fields, @$lines;
     }
