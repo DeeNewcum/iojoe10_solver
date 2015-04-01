@@ -10,4 +10,4 @@
  6  5 x2  5
 
 
-shortest_solution: 9         # --relax=1
+approx_solution: 9         # --relax=1

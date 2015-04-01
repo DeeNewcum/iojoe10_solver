@@ -12,4 +12,4 @@ XX  8  .  . +- XX
  .  .  .  .  .  .
 
 
-shortest_solution: 5
+shortest_solution: 5            # confirmed with --yardstick, 1 Apr 2015
