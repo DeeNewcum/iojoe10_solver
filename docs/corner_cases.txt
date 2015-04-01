@@ -8,7 +8,7 @@ and scroll down to the bottom where there's a "current version" mentioned.
 
 what happens when you create a -10?
 ===================================
-In v1.1.2, it turns into a wall, just like a 10.
+In v2.0.1, it turns into a wall, just like a 10.
 
 To confirm, go to Inverting-5, and do these moves:
     B3v E3< B4< B2^ F3< B3v B1> E1^ B4v B1> E1^
@@ -17,7 +17,7 @@ To confirm, go to Inverting-5, and do these moves:
 
 What happens if you leave an invert-block, but deal with all other blocks?
 ==========================================================================
-In v1.1.2, you win the game.
+In v2.0.1, you win the game.
 
 To confirm, go to Inverting-7, and do these moves:
     E2<
@@ -32,7 +32,7 @@ To confirm, go to Inverting-7, and do these moves:
 
 What happens if you leave a multiply-block, but deal with all other blocks?
 ===========================================================================
-In v1.1.2, you win the game.
+In v2.0.1, you win the game.
 
 To confirm, go to Multiplying-4, and do these moves:
     b3^ b4> c2> d2^ d4v
