@@ -371,6 +371,8 @@ sub islands {
 
     return 0    if ($num_islands <= 1);             # there's zero or one islands...  nothing special to check
 
+    ## ==== TODO -- Memoize, right at this point.  Probably store it as a member of $board too.  ====
+
     # gather up the pieces for each island, and check them separately
     foreach my $color (2 .. $num_islands+1) {
         my @pieces;
