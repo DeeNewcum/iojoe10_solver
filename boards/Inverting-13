@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "Inverting Is Fun", level 13
+#
+# 7x7 33pcs
+
+ 3  2  5  7  5  4  6
+ 3  5  4 XX  2  5  2
+XX +- XX XX XX +- XX
+ 5  4  2 XX  2  3  2
+ 3 -2  4  5  3  4  5
+XX +- XX XX XX +- XX
+ 4  4 -2  2  6  4  3

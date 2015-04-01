@@ -13,4 +13,17 @@
 
         - Find a way to dump the island data, to visualize it.
 
-    - Good boards to test this on:          Difficult-12    Difficult-8     Tricky-4
+                - There's _immobile_grid_toString(), but that's not the same thing as the islands
+                  themselves.
+    
+        - Add some tests to islands.t, to confirm the actual shape of each island
+
+    - Good boards to test this on:          Difficult-12    Difficult-8     Tricky-4        Difficult-15
+
+
+
+- (maybe)  implement the new features that the author added to the game:
+
+    - Division  (see the "Dividing is Fun" series)
+
+    - Target locations      (see the "10 is Here" and "10 is There" series)

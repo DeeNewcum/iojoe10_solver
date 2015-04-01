@@ -42,7 +42,13 @@ sub noclipping {
     my $started = time();
 
     $noclipping_subcalls = 0;
-    my $ret = _noclipping( _list_pieces($board) );
+
+    my $ret = 0;
+    #$ret = islands($board);
+
+    if (!$ret) {
+        $ret = _noclipping( _list_pieces($board) );
+    }
 
     my $elapsed = int((time() - $started) * 1000);       # in milliseconds
     $total_time += $elapsed;
@@ -55,10 +61,6 @@ sub noclipping {
             "and " . TreeTraversal::commify($noclipping_subcalls) . " subcalls",
             ($ret ? "unsolvable" : "solvable");
     }
-
-    #if (!$ret) {
-    #    $ret = islands($board);
-    #}
 
     return $ret;
 }
