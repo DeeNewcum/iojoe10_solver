@@ -13,4 +13,4 @@
 
         - Find a way to dump the island data, to visualize it.
 
-    - Good boards to test this on:          Difficult-8
+    - Good boards to test this on:          Difficult-8     Tricky-4
