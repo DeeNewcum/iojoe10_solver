@@ -2,9 +2,12 @@
 
 # Official level :   "Multiplying is Fun", level 7
 # 
-# 4x4 14pcs
+# 4x4 15pcs
 
- 4 x3  6 -1
+ 4 XX  6 -1
  6  6  2  3
  4  7  3  2
  6  5 x2  5
+
+
+shortest_solution: 9         # --relax=1
