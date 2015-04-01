@@ -42,6 +42,8 @@ if (defined($move_list)) {
     my $soln_len = sprintf(",    solution length: %d moves", scalar(@$move_list));
     $soln_len .= "    (of minimum $board->{file_fields}{shortest_solution})"
                 if $board->{file_fields}{shortest_solution};
+    $soln_len .= "    (of minimum approx ~$board->{file_fields}{approx_solution})"
+                if $board->{file_fields}{approx_solution};
     # Because the command-line uses Getopt::Casual semantics, the user isn't always 100% confident
     # whether the Yardstick data was being generated.  Make it explicitely clear.
     print "\t\t\t\t\t\t >>>> YARDSTICK <<<<\n\n"      if $ARGV{'--yardstick'};
