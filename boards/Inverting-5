@@ -13,4 +13,4 @@
 
 
 
-shortest_solution: 10
+shortest_solution: 10           # confirmed with --yardstick, 1 Apr 2015

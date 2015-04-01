@@ -10,5 +10,5 @@
 XX  7  4  5
 
 
-shortest_solution: 10
+approx_solution: 10
         # a2^ c2^ c3> d1^ b3v b2> c4< b4v c1^ a4>

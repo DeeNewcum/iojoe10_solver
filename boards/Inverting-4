@@ -9,4 +9,4 @@
   2   5   3
 
 
-shortest_solution: 9
+shortest_solution: 9            # confirmed with --yardstick, 1 Apr 2015

@@ -10,5 +10,5 @@
   5   .   5   2
 
 
-shortest_solution: 7
+shortest_solution: 7            # confirmed with --yardstick, 1 Apr 2015
             # a1> d2^ d3^ a3^ a4> a2> d1^

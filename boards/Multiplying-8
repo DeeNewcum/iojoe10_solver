@@ -9,4 +9,4 @@
  4  6 x3
 
 
-shortest_solution: 9
+shortest_solution: 9            # confirmed with --yardstick, 1 Apr 2015

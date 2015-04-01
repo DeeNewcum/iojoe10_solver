@@ -10,4 +10,4 @@ XX  3  6  1
 XX  3  8 XX
 
 
-shortest_solution: 8
+shortest_solution: 8            # confirmed with --yardstick, 1 Apr 2015
