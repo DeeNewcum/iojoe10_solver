@@ -1,0 +1,13 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Difficult", level 14
+#
+# 4x4 14pcs
+
+ 6  3  8  3
+ 2  4  5 XX
+ 7  1  3  5
+ 5  4  4 XX
+
+
+approx_solution: 13         # --relax=1
