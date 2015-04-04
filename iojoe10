@@ -15,6 +15,7 @@
     use TreeTraversal;
     use Board;
     use Move;
+    use Islands;
 
     use Time::HiRes qw( time );
     use Data::Dumper;
@@ -118,7 +119,7 @@ sub parse_cmdline {
         *IsUnsolvable::_noclipping = sub { 0 };
     }
     if ($ARGV{'--disable-islands'}) {
-        *IsUnsolvable::islands = sub { 0 };
+        *Islands::islands = sub { 0 };
     }
 
     use warnings;

@@ -11,6 +11,7 @@
 
     use Test::More tests => 4;
 
+    use Islands;
     use IsUnsolvable;
     use Board;
     use Move;
@@ -33,16 +34,16 @@ my $board_1island = Board::new_from_string(<<'EOF');
 EOF
 
 
-is(IsUnsolvable::_immobile_grid_toString(
-    IsUnsolvable::_islands_calculate_immobile($board_2islands)), trim(<<'EOF'), 'immobile grid for 2islands');
+is(Islands::_immobile_grid_toString(
+    Islands::_islands_calculate_immobile($board_2islands)), trim(<<'EOF'), 'immobile grid for 2islands');
             XX..
             XX..
             ..XX
             ....
 EOF
 
-is(IsUnsolvable::_immobile_grid_toString(
-    IsUnsolvable::_islands_calculate_immobile($board_1island)), trim(<<'EOF'), 'immobile grid for 1islands');
+is(Islands::_immobile_grid_toString(
+    Islands::_islands_calculate_immobile($board_1island)), trim(<<'EOF'), 'immobile grid for 1islands');
             X...
             X...
             ..XX
@@ -50,8 +51,8 @@ is(IsUnsolvable::_immobile_grid_toString(
 EOF
 
 
-ok(IsUnsolvable::islands($board_2islands),      "2islands is unsolvable");
-ok(!IsUnsolvable::islands($board_1island),      "1island is solvable");
+ok(Islands::islands($board_2islands),      "2islands is unsolvable");
+ok(!Islands::islands($board_1island),      "1island is solvable");
 
 
 

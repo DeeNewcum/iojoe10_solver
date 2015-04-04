@@ -6,6 +6,7 @@ package TreeTraversal;
     use Board;
     use Move;
     use IsUnsolvable;
+    use Islands;
 
     use List::PriorityQueue;
     use List::Util;
@@ -211,7 +212,7 @@ sub _IDDFS {
             if ($piece == 10 || ($piece % 100 == 0 && $piece >= 100 && $piece <= 700)) {
                 # We've created a new wall, or moved a slider. Therefore it's possible we've created
                 # a new island.  Check that each island is still solvable even though they're isolated.
-                next if IsUnsolvable::islands($new_board);
+                next if Islands::islands($new_board);
             }
             $new_board->{came_from_moves} = [ @{$board->{came_from_moves} || []}, $move ];
             push @neighbors, $new_board;
