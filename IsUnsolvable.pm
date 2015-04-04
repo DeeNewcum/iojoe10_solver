@@ -366,10 +366,11 @@ sub islands {
             if ($immobile_grid->[$y][$x] == 0) {
                 $num_islands++;
                 _islands_flood_fill($immobile_grid, $y, $x, $num_islands + 1);
+                #print _immobile_grid_toString($immobile_grid);
             }
         }
     }
-    #print _immobile_grid_toString($immobile_grid); exit;
+    #print _immobile_grid_toString($immobile_grid); #exit;
 
     return 0    if ($num_islands <= 1);             # there's zero or one islands...  nothing special to check
 
@@ -503,7 +504,7 @@ sub _immobile_grid_toString {
         }
         $str .= "\n";
     }
-    return $str;
+    return "$str\n";
 }
 
 

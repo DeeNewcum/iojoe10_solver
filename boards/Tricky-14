@@ -1,0 +1,15 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Tricky", level 14
+#
+# 7x7 45pcs
+
+ 7  2  1 XX  4  4  3
+ 1  6 rk XX XX  1  5
+ 4 XX  2  5  4 rk  1
+ XX XX 7  6  5 XX XX
+ 3 rk  5  2  9 XX  2
+ 1  2 XX XX rk  1  2
+ 2  7  4 XX  2  6  4
+
+#approx_solution: 11             # --relax=1

@@ -1,0 +1,12 @@
+#!/usr/bin/env ../iojoe10
+
+# Official level :   "10 is Again", level 4
+#
+# 6x6 30pcs
+
+ 2  2  3  1 -3  3
+ 6  4  4  9  7  8
+XX  2 <>  4 XX  1
+ 7 XX  5 <>  5 XX
+ 6  2  9  6 -1  4
+ 7  3  2  3  6  3

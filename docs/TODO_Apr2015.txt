@@ -1,24 +1,28 @@
 - What happened to the IsUnsolvable::islands() routine?  1) It doesn't look like it's used in any
   code, but 2) it *does* look like it's finished (see t/islands.t)
+    
+    - Split the code off into Islands.pm
 
     - It's POSSIBLE it takes a large amount of time to compute, but I don't see any information
       anywhere that this was actually tested.
 
-    - If it does take a very long time, there's caching that can be done to speed it up!
-      BUT we won't know until we try   ("premature optimization is the root of all evil")
+        - If it does take a very long time, there's caching that can be done to speed it up!
+          BUT we won't know until we try   ("premature optimization is the root of all evil")
 
-    > Oh, boards/special_difficulties.txt mentions that it fails for these two specific boards.
+    > Oh, boards/special_difficulties.txt mentions that it fails for two specific boards.
 
         - TODO: Confirm this still fails here.  If so, fix that bug.
 
-        - Find a way to dump the island data, to visualize it.
+    - Find a way to dump the island data, to visualize it.
 
-                - There's _immobile_grid_toString(), but that's not the same thing as the islands
-                  themselves.
-    
-        - Add some tests to islands.t, to confirm the actual shape of each island
+            - There's _immobile_grid_toString(), but that's not the same thing as the islands
+              themselves.
+
+    - Add some tests to islands.t, to confirm the actual shape of each island
+
 
     - Good boards to test this on:          Difficult-12    Difficult-8     Tricky-4        Difficult-15
+                Tricky-9
 
 
 
