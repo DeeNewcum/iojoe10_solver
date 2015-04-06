@@ -11,10 +11,10 @@
 
     use Test::More tests => 4;
 
-    use Islands;
     use IsUnsolvable;
     use Board;
     use Move;
+    use Islands;
 
     use Data::Dumper;
 
@@ -34,7 +34,7 @@ my $board_1island = Board::new_from_string(<<'EOF');
 EOF
 
 
-is(Islands::_immobile_grid_toString(
+is(Islands::_toString(
     Islands::_islands_calculate_immobile($board_2islands)), trim(<<'EOF'), 'immobile grid for 2islands');
             XX..
             XX..
@@ -42,7 +42,7 @@ is(Islands::_immobile_grid_toString(
             ....
 EOF
 
-is(Islands::_immobile_grid_toString(
+is(Islands::_toString(
     Islands::_islands_calculate_immobile($board_1island)), trim(<<'EOF'), 'immobile grid for 1islands');
             X...
             X...
@@ -51,8 +51,8 @@ is(Islands::_immobile_grid_toString(
 EOF
 
 
-ok(Islands::islands($board_2islands),      "2islands is unsolvable");
-ok(!Islands::islands($board_1island),      "1island is solvable");
+ok($board_2islands->{islands}->noclipping($board_2islands),     "2islands is unsolvable");
+ok(!$board_1island->{islands}->noclipping($board_1island),      "1island is solvable");
 
 
 

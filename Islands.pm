@@ -6,23 +6,24 @@ package Islands;
     use strict;
     use warnings;
 
-    use Board;
-    use Move;
-    use IsUnsolvable;
+    # We have to avoid a dependency-loop, so we just assume these are already loaded.
+    #               http://stackoverflow.com/questions/3428264/perl-subroutine-redefined
+    #use Board;
+    #use Move;
+    #use IsUnsolvable;
 
+    use Term::ExtendedColor ':attributes';
     use Time::HiRes qw( time );
 
     use Data::Dumper;
 
 
-
-# If a wall has split the numerical pieces into two or more totally separate groups, then find those
-# groups, and call noclipping() on each separate group.
-#
-# Returns true if it's unsolvable, false if it's solvable.
-sub islands {
+# Calculates the shape of each island.  This should be cached across boards, and updated only when
+# there's reasonable suspicion that the island shape may have changed.
+sub new {
+    my $class = shift;
     my ($board) = @_;
-    
+
     my $immobile_grid = _islands_calculate_immobile($board);
 
     # do a flood-fill everywhere that there's a combinable piece
@@ -33,23 +34,34 @@ sub islands {
             if ($immobile_grid->[$y][$x] == 0) {
                 $num_islands++;
                 _islands_flood_fill($immobile_grid, $y, $x, $num_islands + 1);
-                #print _immobile_grid_toString($immobile_grid), "\n";
+                #print _toString($immobile_grid), "\n";
             }
         }
     }
-    #print _immobile_grid_toString($immobile_grid); #exit;
+    #print _toString($immobile_grid); #exit;
 
-    return 0    if ($num_islands <= 1);             # there's zero or one islands...  nothing special to check
+    return bless {
+            grid        => $immobile_grid,
+            num_islands => $num_islands,
+        }, $class;
+}
 
-    ## ==== TODO -- Memoize, right at this point.  Probably store it as a member of $board too.  ====
+
+# Calls IsUnsolvable::noclipping() on each island.
+#
+# Returns true if it's unsolvable, false if it's solvable.
+sub noclipping {
+    my ($self, $board) = @_;
+    
+    #return 0    if ($self->{num_islands} <= 1);             # there's zero or one islands...  nothing special to check
 
     # gather up the pieces for each island, and check them separately
-    foreach my $color (2 .. $num_islands+1) {
+    foreach my $color (2 .. $self->{num_islands}+1) {
         my @pieces;
         for (my $y=0; $y<$board->{height}; $y++) {
             for (my $x=0; $x<$board->{width}; $x++) {
                 my $cell = $board->at($y, $x);
-                if ($immobile_grid->[$y][$x] == $color
+                if ($self->{grid}[$y][$x] == $color
                    && Move::_is_piece_combinable($cell))
                 {
                     push @pieces, $cell;
@@ -66,7 +78,7 @@ sub islands {
 
 
 sub _islands_flood_fill {
-    my ($grid, $start_y, $start_x, $color) = @_;            # 0 = mobile, 1 = immobile, 2/3/4/...  "colors" for each unique region
+    my ($grid, $start_y, $start_x, $color) = @_;            # 0 = mobile,  1 = immobile,  2/3/4/...  "colors" for each unique region
 
     my $width = scalar(@{$grid->[0]});
     my $height = scalar(@$grid);
@@ -150,7 +162,7 @@ sub _islands_is_slider_immobile {
         # We found a way that this slider could move!  So....  it's not immobile.
         if (1) {
             my $m = new Move(x => $x, y => $y, dir => $dir);
-            #print "  this piece can move ", $m->toString(), ", so it isn't immobile\n";
+            #print "  this piece can move ", $m->_toString(), ", so it isn't immobile\n";
         }
         return 0;
     }
@@ -160,8 +172,8 @@ sub _islands_is_slider_immobile {
 }
 
 
-# just for debugging pruposes
-sub _immobile_grid_toString {
+# for testing in t/islands.t
+sub _toString {
     my ($grid) = @_;
     my $str = '';
     foreach my $row (reverse @$grid) {
@@ -172,6 +184,34 @@ sub _immobile_grid_toString {
         $str .= "\n";
     }
     return $str;
+}
+
+
+# for debugging
+sub dump {
+    my ($self, $board) = @_;
+
+    if (!defined($board)) {         # $board is optional, if it's not included, we'll just dump the islands data
+        if (!defined($self)) {
+            print "ERROR -- \$self = null\n";
+        }
+        printf "---- \$num_islands = %s\n", defined($self->{num_islands}) ? $self->{num_islands} : "<undef>";
+        print _toString( $self->{grid} );;
+    } else {
+
+        #die "TODO\t";
+        # # display_one_piece()
+        for (my $y=0; $y<$board->height; $y++) {
+            for (my $x=0; $x<$board->width; $x++) {
+                my $piece = sprintf "%2s", Board::piece_toString( $board->at($y, $x) );
+                my $odd = ($x + $y) % 2;
+                my $bg = $odd ? "gray16" : "gray24";
+                print bg($bg, $piece);
+            }
+            print "\n";
+        }
+        print "\n";
+    }
 }
 
 

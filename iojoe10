@@ -119,7 +119,7 @@ sub parse_cmdline {
         *IsUnsolvable::_noclipping = sub { 0 };
     }
     if ($ARGV{'--disable-islands'}) {
-        *Islands::islands = sub { 0 };
+        *Islands::noclipping = sub { 0 };
     }
 
     use warnings;

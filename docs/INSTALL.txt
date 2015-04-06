@@ -1,6 +1,6 @@
 To install:
 
-    sudo cpan Moo List::PriorityQueue Getopt::Casual
+    sudo cpan Moo List::PriorityQueue Getopt::Casual Term::ExtendedColor
 
 Optional, but may be useful:
     

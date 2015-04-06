@@ -211,8 +211,11 @@ sub _IDDFS {
             my $piece = $new_board->at(@$apply_loc);       # the piece when we finished moving
             if ($piece == 10 || ($piece % 100 == 0 && $piece >= 100 && $piece <= 700)) {
                 # We've created a new wall, or moved a slider. Therefore it's possible we've created
-                # a new island.  Check that each island is still solvable even though they're isolated.
-                next if Islands::islands($new_board);
+                # a new island.  Update the island shapes.
+                $new_board->{islands} = Islands->new($new_board);
+                #$new_board->{islands}->dump();
+                $new_board->{islands}->dump(  $new_board  );
+                next if $new_board->{islands}->noclipping( $new_board );
             }
             $new_board->{came_from_moves} = [ @{$board->{came_from_moves} || []}, $move ];
             push @neighbors, $new_board;

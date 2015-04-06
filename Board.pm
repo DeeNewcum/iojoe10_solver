@@ -126,6 +126,8 @@ sub new_from_string {
         $board->{cells}[$y] = \@cells;
     }
 
+    $board->{islands} = Islands->new($board);
+
     return $board;
 }
 
@@ -154,6 +156,7 @@ sub clone {
         cells  => Storable::dclone( $self->cells ),
         file_fields => $self->{file_fields},
         g => $self->{g},
+        islands => $self->{islands}
     );
 }
 
