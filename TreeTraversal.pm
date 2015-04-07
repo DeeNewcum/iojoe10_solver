@@ -213,8 +213,9 @@ sub _IDDFS {
                 # We've created a new wall, or moved a slider. Therefore it's possible we've created
                 # a new island.  Update the island shapes.
                 $new_board->{islands} = Islands->new($new_board);
-                #$new_board->{islands}->dump();
-                $new_board->{islands}->dump(  $new_board  );
+                if ($new_board->{islands}{num_islands} > 1) {
+                    $new_board->{islands}->dump(  $new_board  );
+                }
                 next if $new_board->{islands}->noclipping( $new_board );
             }
             $new_board->{came_from_moves} = [ @{$board->{came_from_moves} || []}, $move ];

@@ -1,6 +1,19 @@
 # Sometimes the board gets permanently split in two (or three, four, etc) sections.
 # When this happens, it's useful to analyze these sections separately.
 
+
+# TODO:
+#
+#   - _islands_calculate_immobile() fails to detect this condition:
+#
+#             . >>  2
+#             .  . XX
+#
+#     because it doesn't realize that the "2" itself is immobile.
+#     Two questions:  1) is this important enough that we do need to detect it?  2) if we do, then how exactly do we do this?
+#
+#   - on Difficult-8, _islands_calculate_immobile() is wrong about the ^^ piece
+
 package Islands;
 
     use strict;
@@ -188,6 +201,10 @@ sub _toString {
 
 
 # for debugging
+INIT {
+    no warnings 'redefine';
+    *TreeTraversal::display_solution = sub {exit};          # FOR DEBUGGING ONLY -- once we get to the part where we display a solution, exit so the Islands::dump() output can be more easily seen.
+}
 sub dump {
     my ($self, $board) = @_;
 
@@ -198,15 +215,33 @@ sub dump {
         printf "---- \$num_islands = %s\n", defined($self->{num_islands}) ? $self->{num_islands} : "<undef>";
         print _toString( $self->{grid} );;
     } else {
-
         #die "TODO\t";
         # # display_one_piece()
+        my @island_colors = (
+                "gray1/7",              # not marked as either an island or immobile
+                "red1/3",               # immobile per _islands_calculate_immobile()
+                "blue1/10",             # island #1
+                "green1/18",            # island #2
+                "purple4/10",           # island #3
+                "orange1/3",            # island #4
+        );
         for (my $y=0; $y<$board->height; $y++) {
             for (my $x=0; $x<$board->width; $x++) {
                 my $piece = sprintf "%2s", Board::piece_toString( $board->at($y, $x) );
+
+                my $island_num = $self->{grid}[$y][$x];
+                my $bg = $island_colors[ $island_num ];
                 my $odd = ($x + $y) % 2;
-                my $bg = $odd ? "gray16" : "gray24";
-                print bg($bg, $piece);
+                if ($odd) {
+                    $bg =~ s#\d.*/##;
+                } else {
+                    $bg =~ s#/.*##;
+                }
+                #my $fg = ($island_num == 1) ?
+                #        'gray1' :       # foreground-color = white,   for immobile blocks;
+                #        'gray24';       # foreground-color = black    normally
+                my $fg = 'gray24';
+                print fg($fg, bg($bg,  $piece));
             }
             print "\n";
         }
