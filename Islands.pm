@@ -11,8 +11,6 @@
 #
 #     because it doesn't realize that the "2" itself is immobile.
 #     Two questions:  1) is this important enough that we do need to detect it?  2) if we do, then how exactly do we do this?
-#
-#   - on Difficult-8, _islands_calculate_immobile() is wrong about the ^^ piece
 
 package Islands;
 
@@ -225,7 +223,8 @@ sub dump {
                 "purple4/10",           # island #3
                 "orange1/3",            # island #4
         );
-        for (my $y=0; $y<$board->height; $y++) {
+
+        for (my $y=$board->height-1; $y>=0; $y--) {
             for (my $x=0; $x<$board->width; $x++) {
                 my $piece = sprintf "%2s", Board::piece_toString( $board->at($y, $x) );
 
