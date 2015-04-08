@@ -1,8 +1,6 @@
 - What happened to the IsUnsolvable::islands() routine?  1) It doesn't look like it's used in any
   code, but 2) it *does* look like it's finished (see t/islands.t)
     
-    - Split the code off into Islands.pm
-
     - It's POSSIBLE it takes a large amount of time to compute, but I don't see any information
       anywhere that this was actually tested.
 
@@ -13,12 +11,9 @@
 
         - TODO: Confirm this still fails here.  If so, fix that bug.
 
-    - Find a way to dump the island data, to visualize it.
-
-            - There's _immobile_grid_toString(), but that's not the same thing as the islands
-              themselves.
-
     - Add some tests to islands.t, to confirm the actual shape of each island
+
+        - Also, to make sure that noclipping() is being called on the correct set of pieces
 
 
     - Good boards to test this on:          Difficult-12    Difficult-8     Tricky-4        Difficult-15
