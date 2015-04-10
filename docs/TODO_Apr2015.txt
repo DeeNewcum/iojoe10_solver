@@ -11,7 +11,9 @@
 
         - TODO: Confirm this still fails here.  If so, fix that bug.
 
-    - Add some tests to islands.t, to confirm the actual shape of each island
+    = Add some tests to islands.t, to confirm the actual shape of each island
+        
+        - We have the verification-code written, but we need to add a few more test cases.
 
         - Also, to make sure that noclipping() is being called on the correct set of pieces
 
