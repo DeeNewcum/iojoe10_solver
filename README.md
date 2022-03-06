@@ -1,4 +1,4 @@
-This is a solver for iojoe's game ["10"](http://www.iojoe.com/10/)
+This is a solver for iojoe's game ["10"](https://play.google.com/store/apps/details?id=air.com.iojoe.A10)
 
 Current status: Simpler boards can be solved, but more complex boards take 15 minutes or more to solve.
 
